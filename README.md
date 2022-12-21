@@ -1,6 +1,5 @@
 
 # <p align = 'center'> Mail - Web Application </p>
-<p align = 'center'><a href="https://ibb.co/jg6x8dy"><img src="https://i.ibb.co/2gnLFwv/1671653267.png" alt="1671653267" border="0"></a></p>
 
 ## Repository Description
 - This project is an academic course (CSE 223: Programming II) related - assignment.
