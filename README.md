@@ -1,6 +1,6 @@
 
 # <p align = 'center'> Mail - Web Application </p>
-
+***
 ## Repository Description
 - This project is an academic course (CSE 223: Programming II) related - assignment.
 - We've been asked to design & implement a Mail web based application.
