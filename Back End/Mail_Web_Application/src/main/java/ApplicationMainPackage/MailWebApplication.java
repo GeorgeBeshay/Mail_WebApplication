@@ -1,13 +1,13 @@
-package Programming.II.Course.Assignments.Mail_WebApplication_BE;
+package ApplicationMainPackage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MailWebApplicationBeApplication {
+public class MailWebApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MailWebApplicationBeApplication.class, args);
+		SpringApplication.run(MailWebApplication.class, args);
 	}
 
 }

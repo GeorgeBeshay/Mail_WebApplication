@@ -1,10 +1,10 @@
-package Programming.II.Course.Assignments.Mail_WebApplication_BE;
+package ApplicationMainPackage;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MailWebApplicationBeApplicationTests {
+class MailWebApplicationTests {
 
 	@Test
 	void contextLoads() {

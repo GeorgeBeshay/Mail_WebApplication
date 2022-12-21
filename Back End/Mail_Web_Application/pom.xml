@@ -8,10 +8,10 @@
 		<version>3.0.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>Programming.II-Course.Assignments</groupId>
-	<artifactId>Mail_WebApplication_BE</artifactId>
+	<groupId>Programming2Assignments</groupId>
+	<artifactId>Mail_Web_Application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Mail_WebApplication_BE</name>
+	<name>Mail_Web_Application</name>
 	<description>Academic Course Assignment - CSE 223: Programming II - Mail Web Application</description>
 	<properties>
 		<java.version>17</java.version>
