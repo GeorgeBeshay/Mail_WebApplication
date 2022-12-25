@@ -1,0 +1,7 @@
+.container {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--SecColor2);
+  color: white;
+}

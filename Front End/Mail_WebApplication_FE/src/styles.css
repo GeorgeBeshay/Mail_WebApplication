@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@300&display=swap");
+:root {
+  font-family: "Pattaya", sans-serif;
+  --PrimColor: #277cc271;
+  --SecColor1: #0a314b;
+  --SecColor2: #0b1015;
+  --SecColor3: #f3f3f3;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: 'Unbounded', cursive;
+}
