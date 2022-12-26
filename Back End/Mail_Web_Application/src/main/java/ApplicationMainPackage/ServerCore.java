@@ -1,0 +1,27 @@
+package ApplicationMainPackage;
+
+import org.springframework.stereotype.Service;
+
+@Service
+/*
+ * Class considered to be the functionality core of the application, 
+ * all the requests received by the requests controller class will be delegated to
+ * a parallel function here to do a certain task.
+ */
+public class ServerCore {
+	// ---------------------------- Class Fields ----------------------------
+	/*
+	 * Singleton design pattern is applied here, as we want a single class managing
+	 * all the front end requests and manipulating the data base.
+	 */
+	private static ServerCore serverCore;
+	// ---------------------------- Class Constructors ----------------------------
+	private ServerCore() {
+	}
+	public static ServerCore getServerCoreInstance() {
+		if(ServerCore.serverCore == null) 
+			serverCore = new ServerCore();
+		return ServerCore.serverCore;
+	}
+	// ---------------------------- Class Methods ----------------------------
+}
