@@ -1,6 +1,9 @@
 package ApplicationMainPackage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ComponentsPackage.User;
+import java.util.*;
 
 @Service
 /*
@@ -15,6 +18,9 @@ public class ServerCore {
 	 * all the front end requests and manipulating the data base.
 	 */
 	private static ServerCore serverCore;
+	
+	@Autowired
+	UserRepository userRepo;
 	// ---------------------------- Class Constructors ----------------------------
 	private ServerCore() {
 	}
@@ -24,4 +30,13 @@ public class ServerCore {
 		return ServerCore.serverCore;
 	}
 	// ---------------------------- Class Methods ----------------------------
+	public List<User> getAllUsers(){
+		return userRepo.findAll();
+	}
+	public User saveNewUser(User user) {
+		return userRepo.save(user);
+	}
+	public User getUserByEmail(String emailAddress) {
+		return userRepo.findById(emailAddress).get();
+	}
 }

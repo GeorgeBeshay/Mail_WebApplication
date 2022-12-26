@@ -12,7 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Users")
 public class User {
 	// ------------------------ Class Fields ------------------------
-	@Id
+//	@Id
+	private String _id;
 	private String emailAddress;
 	private String emailPassword;
 	private ArrayList<Folder> folders;
@@ -22,6 +23,7 @@ public class User {
 		 * Creating the id field to be the same as the email address, 
 		 * so as to be used on fetching the user from the DB. 
 		 */
+		this._id = emailAddress;
 		this.emailAddress = emailAddress;
 		this.emailPassword = emailPassword;
 		this.folders = new ArrayList<Folder>();
@@ -45,8 +47,11 @@ public class User {
 	public void setFolders(ArrayList<Folder> folders) {
 		this.folders = folders;
 	}
-	
-	
-	
+	public String get_id() {
+		return _id;
+	}
+	public void set_id(String _id) {
+		this._id = _id;
+	}
 
 }

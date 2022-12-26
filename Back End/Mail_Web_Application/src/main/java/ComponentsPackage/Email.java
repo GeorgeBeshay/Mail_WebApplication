@@ -4,6 +4,8 @@ import java.util.*;
 
 public class Email {
 	// ------------------------ Class Fields ------------------------
+	private String sender;
+	private String receiver;
 	private String subject;
 	private String body;
 	private ArrayList<Object> attachments;
@@ -29,6 +31,18 @@ public class Email {
 	}
 	public void setAttachments(ArrayList<Object> attachments) {
 		this.attachments = attachments;
+	}
+	public String getSender() {
+		return sender;
+	}
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+	public String getReceiver() {
+		return receiver;
+	}
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
 	}
 	
 
