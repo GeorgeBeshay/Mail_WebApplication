@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,12 +13,21 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { MailPageComponent } from './Components/mail-page/mail-page.component';
+import { ErrorComponent } from './error/error.component';
+
+const appRoute: Routes = [
+  {path: '' , component: LandingPageComponent},
+  {path: 'SignUp' , component: MailPageComponent},
+  {path: 'SignIn' , component: MailPageComponent},
+  {path: '**', component: ErrorComponent}
+]
 
 @NgModule({
-  declarations: [AppComponent, LandingPageComponent, MailPageComponent],
+  declarations: [AppComponent, LandingPageComponent, MailPageComponent, ErrorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule.forRoot(appRoute),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
