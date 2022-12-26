@@ -1,7 +1,98 @@
 .container {
   display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  justify-content: center;
+  align-content: center;
   width: 100%;
   height: 100vh;
   background-color: var(--SecColor2);
   color: white;
+  padding: 10px;
+  
+}
+.box {
+  display: grid;
+  grid-template-columns: 0.25fr repeat(9, 1fr) 0.25fr;
+  grid-template-rows: 0.25fr  0.5fr repeat(8, 1fr) 0.25fr;
+  background-color: var(--PrimColor);
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  padding: 10px;
+}
+/* .compose { grid-area: 3 / 2 / 4 / 3;}
+.inbox { grid-area: 4 / 2 / 5 / 3; }
+.sent { grid-area: 5 / 2 / 6 / 3; }
+.draft { grid-area: 6 / 2 / 7 / 3;}
+.trash { grid-area: 7 / 2 / 8 / 3; }
+.contacts { grid-area: 8 / 2 / 9 / 3; } */
+.mails { 
+  grid-area: 3 / 2 / 11 / 11;
+  background-color: var(--SecColor3);
+ }
+.search { 
+  grid-area: 2 / 2 / 3 / 8;
+  display:flex;
+  width: 100%;
+  height: 100%;
+}
+.search input{
+  width: 100%;
+  height: 100%;
+}
+.searchButton{
+  grid-area: 2 / 8 / 3 / 9;
+  display:flex;
+  width: 100%;
+  height: 100%;
+ }
+.sort { grid-area: 2 / 9 / 3 / 11; }
+
+.common{
+  /* display: flex;
+  align-items: end;
+  justify-content: center; */
+  margin-bottom: 5px;
+}
+
+.leftToolBar{
+  grid-area: 3 / 1 / 9 / 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(7, 1fr);
+  height: 50%;
+}
+
+button {
+    background-color: var(--SecColor3);
+    letter-spacing: 2px;
+    font-family: "Courgette", cursive;
+    display: block;
+    width: 100%;
+    outline: none;
+    padding: 10px 20px;
+    /* margin-right: 10%; */
+    border: none;
+    transition-duration: 300ms;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+}
+button:hover {
+    background-color: black;
+    color: white;
+    /* padding: 10px 25px; */
+}
+.common button{
+  font-size: 15px;
+  height: 100%;
 }
