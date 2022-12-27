@@ -44,7 +44,7 @@ p {
   font-family: "Permanent Marker", cursive;
   font-size: 30px;
 }
-input[type="text"] {
+input{
   width: 60%;
   color: white;
   padding: 12px 20px;
