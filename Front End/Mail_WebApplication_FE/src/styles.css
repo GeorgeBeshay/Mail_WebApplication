@@ -5,7 +5,7 @@
   --PrimColor: #277cc271;
   --SecColor1: #0a314b;
   --SecColor2: #0b1015;
-  --SecColor3: #f3f3f3;
+  --SecColor3: #f3f3f3a6;
 }
 * {
   margin: 0;
@@ -19,5 +19,5 @@ body {
 }
 body {
   margin: 0;
-  font-family: 'Unbounded', cursive;
+  font-family: "Unbounded", cursive;
 }

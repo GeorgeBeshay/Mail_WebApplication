@@ -1,21 +1,77 @@
 <div class="container">
-    <div class="box">
-        <div class="leftToolBar">
-            <div class="compose common"> <button>Compose</button></div>
-            <div class="inbox common"> <button>Inbox</button></div>
-            <div class="sent common"> <button>Sent</button></div>
-            <div class="draft common"> <button>Draft</button></div>
-            <div class="trash common"> <button>Trash</button></div>
-            <div class="contacts common"> <button>Contacts</button></div>
-        </div>
-        <div class="div7"> </div>
-        <div class="div8"> </div>
-        <div class="div9"> </div>
-        <div class="div10"> </div>
-        <div class="mails"> </div>
-        <div class="div12"> </div>
-        <div class="search"><input type="search" id="site-search" name="q"></div>
-        <div class="searchButton"><button>Search</button></div>
-        <div class="sort"> sort</div>
+  <div class="overlay"></div>
+  <div class="box">
+    <div class="SB">
+      <input
+        type="search"
+        id="site-search"
+        name="q"
+        placeholder="Search Via Your Emails"
+      />
+      <div class="searchBtnHolder">
+        <button class="searchButton"><mat-icon>search</mat-icon></button>
+      </div>
+      <div class="sort">Sort</div>
     </div>
+    <div class="LTB">
+      <div class="compose">
+        <button>
+          <mat-icon>edit</mat-icon>
+          <p>Compose</p>
+        </button>
+      </div>
+      <div class="inbox">
+        <button>
+          <mat-icon>inbox</mat-icon>
+          <p>Inbox</p>
+        </button>
+      </div>
+      <div class="sent">
+        <button>
+          <mat-icon>send</mat-icon>
+          <p>Sent</p>
+        </button>
+      </div>
+      <div class="trash">
+        <button>
+          <mat-icon>delete</mat-icon>
+          <p>Trash</p>
+        </button>
+      </div>
+      <div class="contacts">
+        <button>
+          <mat-icon>star</mat-icon>
+          <p>Starred</p>
+        </button>
+      </div>
+    </div>
+    <div class="board">
+      <div class="optionBar">
+        <div class="refreshBtn">
+          <button>
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+        <div class="folderName">
+          <mat-icon>folder</mat-icon>: Selected Folder - Selected Email
+        </div>
+      </div>
+      <div class="emails">
+        <!-- Delete the following -->
+        <div class="emailSubj">~ Email Subject</div>
+        <div class="emailSubj">~ Email Subject</div>
+        <!-- Separator -->
+      </div>
+      <div class="emailContent">
+        <div>Email Content Here</div>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Designed & Implemented By:</p>
+      <p>
+        <span>Mariam Aziz </span>, <span>Maria Bassem</span>,
+        <span>Eman Samir</span>, <span>George Beshay</span>.
+      </p>
+    </div>
+  </div>
 </div>

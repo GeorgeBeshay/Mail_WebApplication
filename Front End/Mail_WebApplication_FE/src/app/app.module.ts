@@ -11,19 +11,25 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MailPageComponent } from './Components/mail-page/mail-page.component';
-import { ErrorComponent } from './error/error.component';
+import { ErrorComponent } from './Components/error/error.component';
 
 const appRoute: Routes = [
-  {path: '' , component: LandingPageComponent},
-  {path: 'SignUp' , component: MailPageComponent},
-  {path: 'SignIn' , component: MailPageComponent},
-  {path: '**', component: ErrorComponent}
-]
+  { path: '', component: LandingPageComponent },
+  { path: 'SignUp', component: MailPageComponent },
+  { path: 'SignIn', component: MailPageComponent },
+  { path: '**', component: ErrorComponent },
+];
 
 @NgModule({
-  declarations: [AppComponent, LandingPageComponent, MailPageComponent, ErrorComponent],
+  declarations: [
+    AppComponent,
+    LandingPageComponent,
+    MailPageComponent,
+    ErrorComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,6 +42,7 @@ const appRoute: Routes = [
     MatInputModule,
     MatButtonModule,
     HttpClientModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
