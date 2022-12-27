@@ -21,25 +21,25 @@
         </button>
       </div>
       <div class="inbox">
-        <button>
+        <button (click)="selectFolder('Inbox')">
           <mat-icon>inbox</mat-icon>
           <p>Inbox</p>
         </button>
       </div>
       <div class="sent">
-        <button>
+        <button (click)="selectFolder('Sent')">
           <mat-icon>send</mat-icon>
           <p>Sent</p>
         </button>
       </div>
       <div class="trash">
-        <button>
+        <button (click)="selectFolder('Trash')">
           <mat-icon>delete</mat-icon>
           <p>Trash</p>
         </button>
       </div>
-      <div class="contacts">
-        <button>
+      <div class="starred">
+        <button (click)="selectFolder('Starred')">
           <mat-icon>star</mat-icon>
           <p>Starred</p>
         </button>
@@ -53,17 +53,21 @@
           </button>
         </div>
         <div class="folderName">
-          <mat-icon>folder</mat-icon>: Selected Folder - Selected Email
+          <mat-icon>folder</mat-icon>: {{ selectedFolder }} -
+          {{ selectedEmail.subject }}
         </div>
       </div>
-      <div class="emails">
-        <!-- Delete the following -->
-        <div class="emailSubj">~ Email Subject</div>
-        <div class="emailSubj">~ Email Subject</div>
-        <!-- Separator -->
+      <div class="emails" id="emailsHolder">
+        <div
+          class="emailSubj"
+          (click)="selectEmail(tempEmail)"
+          *ngFor="let tempEmail of myEmails"
+        >
+          ~ {{ tempEmail.subject }}
+        </div>
       </div>
       <div class="emailContent">
-        <div>Email Content Here</div>
+        <div>{{selectedEmailSubject}</div>
       </div>
     </div>
     <div class="footer">
