@@ -17,6 +17,7 @@ public class User {
 	private String emailAddress;
 	private String emailPassword;
 	private ArrayList<Folder> folders;
+	private ArrayList<Contact> contacts;
 	// ------------------------ Class Constructors ------------------------
 	public User(String emailAddress, String emailPassword) {
 		/**
@@ -27,6 +28,7 @@ public class User {
 		this.emailAddress = emailAddress;
 		this.emailPassword = emailPassword;
 		this.folders = new ArrayList<Folder>();
+		this.contacts = new ArrayList<Contact>();
 	}
 	// ------------------------ Class Methods ------------------------	
 	public String getEmailAddress() {
@@ -52,6 +54,12 @@ public class User {
 	}
 	public void set_id(String _id) {
 		this._id = _id;
+	}
+	public ArrayList<Contact> getContacts() {
+		return contacts;
+	}
+	public void setContacts(ArrayList<Contact> contacts) {
+		this.contacts = contacts;
 	}
 
 }

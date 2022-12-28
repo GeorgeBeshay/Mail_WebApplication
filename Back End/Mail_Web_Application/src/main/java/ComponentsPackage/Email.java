@@ -8,10 +8,12 @@ public class Email {
 	private String receiver;
 	private String subject;
 	private String body;
+	private Date mailDate;
 	private ArrayList<Object> attachments;
 	// ------------------------ Class Constructors ------------------------
 	public Email() {
 		this.attachments = new ArrayList<Object>();
+		this.mailDate = new Date();
 	}
 	// ------------------------ Class Methods ------------------------
 	public String getSubject() {
@@ -43,6 +45,18 @@ public class Email {
 	}
 	public void setReceiver(String receiver) {
 		this.receiver = receiver;
+	}
+	public Date getMailDate() {
+		return mailDate;
+	}
+	public void setMailDate(Date mailDate) {
+		this.mailDate = mailDate;
+	}
+	// --------------------------- Separator ---------------------------
+	@Override
+	public String toString() {
+		return "Email [sender=" + sender + ", receiver=" + receiver + ", subject=" + subject + ", body=" + body
+				+ ", attachments=" + attachments + "]";
 	}
 	
 
