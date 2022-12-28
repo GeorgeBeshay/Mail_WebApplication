@@ -15,7 +15,7 @@
     </div>
     <div class="LTB">
       <div class="compose">
-        <button>
+        <button (click)="compose_email()">
           <mat-icon>edit</mat-icon>
           <p>Compose</p>
         </button>
@@ -66,8 +66,8 @@
           ~ {{ tempEmail.subject }}
         </div>
       </div>
-      <div class="emailContent">
-        <div>{{selectedEmailSubject}</div>
+      <div class="emailContent" id="content">
+        <!-- <div>{{selectedEmailSubject}</div> -->
       </div>
     </div>
     <div class="footer">

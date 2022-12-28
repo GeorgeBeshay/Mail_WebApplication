@@ -198,8 +198,10 @@ button {
   font-size: 20px;
   font-family: "Lobster Two", cursive;
   display: flex;
+  flex-direction: column;
   overflow-y: scroll;
 }
+
 .box .board .optionBar {
   display: flex;
   align-items: center;
@@ -252,3 +254,29 @@ button {
   font-size: 25px;
   font-family: "Dancing Script", cursive;
 }
+.composeEmail {
+  display: grid;
+  grid-template-columns: repeat(1 , 1fr);
+  grid-template-rows: repeat(3 , 0.3fr) 1fr;
+}
+
+.composeEmail div{
+  display: flex;
+  flex-direction: column;
+}
+.composeEmail input , .composeEmail textarea{
+  width: 80%;
+  height:30%;
+  padding: 3px 10px;
+  margin-right: 10px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: black;
+  border-radius: 5px;
+  background-color: white;
+  border-color: black;
+  font-size: medium;
+  resize: none;
+}
+

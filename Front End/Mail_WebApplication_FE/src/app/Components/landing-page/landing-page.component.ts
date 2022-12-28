@@ -31,7 +31,7 @@ export class LandingPageComponent implements OnInit {
     let tempEmail: any = document.getElementById('newEmail');
     let tempPw: any = document.getElementById('newPw');
     this.myBECaller.reqSignUp(tempEmail, tempPw);
-    let flag = false;
+    let flag = true;
     if(flag){
       this._router.navigate(['SignUp'])
     }
