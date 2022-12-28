@@ -15,7 +15,7 @@
     </div>
     <div class="LTB">
       <div class="compose">
-        <button>
+        <button (click)="compose_email()">
           <mat-icon>edit</mat-icon>
           <p>Compose</p>
         </button>
@@ -44,6 +44,18 @@
           <p>Starred</p>
         </button>
       </div>
+      <div class="contacts">
+        <button (click)="selectFolder('contacts')">
+          <mat-icon>perm_identity</mat-icon>
+          <p>Contacts</p>
+        </button>
+      </div>
+      <div class="draft">
+        <button (click)="selectFolder('draft')">
+          <mat-icon>description</mat-icon>
+          <p>Drafts</p>
+        </button>
+      </div>
     </div>
     <div class="board">
       <div class="optionBar">
@@ -66,9 +78,7 @@
           ~ {{ tempEmail.subject }}
         </div>
       </div>
-      <div class="emailContent">
-        <div>{{selectedEmailSubject}</div>
-      </div>
+      <div class="emailContent" id="content"></div>
     </div>
     <div class="footer">
       <p>Designed & Implemented By:</p>
