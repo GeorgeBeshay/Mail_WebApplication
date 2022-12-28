@@ -46,11 +46,39 @@ export class MailPageComponent implements OnInit {
   selectFolder(folderName: string) {
     this.selectedFolder = folderName;
     this.generateMails();
-    // console.log("emails" , this.myEmails);
     this.resetSelectedEmail();
   }
-  selectEmail(emailSubject: Email) {
-    this.selectedEmail = emailSubject;
+
+  selectEmail(email: Email) {
+    this.selectedEmail = email;
+    console.log("in select email");
+    const elem = document.getElementById("content");
+    if(elem == null) return;
+    elem.innerHTML = `
+    <div class="composeEmail"> 
+      <div>
+        From:
+        <input value="${this.selectedEmail.sender}" disabled type="email">
+      </div>
+
+      <div>
+        To:
+        <input value="${this.selectedEmail.receiver}" disabled type="email">
+      </div>
+      
+      <div>
+      Subject:
+      <input value="${this.selectedEmail.subject}" disabled type="text">
+      </div>
+
+      <div>
+        Body:
+        <textarea readonly rows="20" cols="50">${this.selectedEmail.body}
+        </textarea>
+      </div>
+    </div>
+    `;
+
   }
   refreshMailBox() {}
   // -------------- Separator --------------
@@ -70,24 +98,27 @@ export class MailPageComponent implements OnInit {
     if(elem == null) return;
     elem.innerHTML = `
     <div class="composeEmail"> 
-      <div>
-        From:
+      <div class="from" >
+        <div>From:</div>
         <input disabled type="email">
       </div>
 
-      <div>
+      <div class="to">
         To:
         <input type="email">
       </div>
       
-      <div>
+      <div class="subject">
       Subject:
       <input type="text">
       </div>
 
-      <div>
+      <div class="body">
         Body:
         <textarea rows="20" cols="50" ></textarea>
+      </div>
+      <div class="sendB">
+        <button >send</button>
       </div>
     </div>
     `;
