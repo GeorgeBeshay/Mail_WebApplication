@@ -73,30 +73,28 @@ export class MailPageComponent implements OnInit {
         <div>From:</div>
         <input value="${this.selectedEmail.sender}" disabled type="email">
       </div>
-
       <div>
         <div>To:</div>
         <input value="${this.selectedEmail.receiver}" disabled type="email">
       </div>
-
       <div>
         <div>Subject:</div>
         <input value="${this.selectedEmail.subject}" disabled type="text">
       </div>
-
       <div>
         <div>Body:</div>
         <textarea style="font-size: 17px;" readonly>${this.selectedEmail.body}
         </textarea>
       </div>
-
       <div>
         <div>Attachments:</div>
         <div class="attachmentsHolder" id ='attachmentsHolderID'>
-          <button>Attach</button>
+          <div>
+          <button onclick="document.getElementById('fileUpload').click()">Attach</button>
+          <input type="file" (change)="onFileSelected($event)" id = "fileUpload" multiple style="visibility:hidden;">
+          </div>
         </div>
       </div>
-
     </div>
     `;
   }
@@ -111,17 +109,14 @@ export class MailPageComponent implements OnInit {
         <div>From:</div>
         <input disabled type="email" placeholder="userAccount@mail.com"">
       </div>
-
       <div class="to">
         <div>To:</div>
         <input type="email" placeholder="JohnDoe@mail.com">
       </div>
-
       <div class="subject">
       <div>Subject:</div>
       <input type="text" placeholder="Email Subject">
       </div>
-
       <div class="body">
         <div>Body:</div>
         <textarea style="font-size: 17px;"></textarea>
@@ -131,7 +126,6 @@ export class MailPageComponent implements OnInit {
           </button>
         </div>
       </div>
-
       <div>
         <div>Attachments:</div>
         <div class="attachmentsHolder"></div>
@@ -181,5 +175,7 @@ export class MailPageComponent implements OnInit {
       attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
     });
   }
+  // -------------- Separator --------------
+  
   // -------------- Separator --------------
 }

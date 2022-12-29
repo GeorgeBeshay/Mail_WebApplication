@@ -264,7 +264,7 @@ button {
   display: grid;
   /* grid-template-columns: 10fr; */
   height: 100%;
-  grid-template-rows: repeat(3, 0.4fr) 2.5fr 1.5fr;
+  grid-template-rows: repeat(3, 0.4fr) 1fr 1fr;
   row-gap: 5px;
   padding-bottom: 5px;
 }
@@ -361,6 +361,7 @@ textarea {
 }
 .attachmentsHolder {
   display: flex;
+  flex-wrap: wrap;
   max-width: 100%;
   background-color: rgb(0 0 0 / 50%);
   margin: 5px;
@@ -374,12 +375,19 @@ textarea {
   margin: initial;
   letter-spacing: initial;
   margin: 10px;
-  width: 80%;
+  width: 100%;
   height: 50%;
+  padding: 5px;
 }
 .attachmentsHolder button:hover {
   padding: initial;
+  padding: 10px;
   letter-spacing: initial;
   background-color: black;
   color: white;
+}
+.attachmentsHolder .attachedFile {
+  width: 80%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.535);
 }
