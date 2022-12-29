@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BackEndCallerService } from 'src/app/Services/back-end-caller.service';
+import { FileUploadDownloadService } from 'src/app/Services/file-upload-download.service';
 import { Email } from 'src/app/Interfaces/email';
 import { User } from 'src/app/Interfaces/user';
 import { Folder } from 'src/app/Interfaces/folder';
@@ -14,12 +15,14 @@ import { ViewEncapsulation } from '@angular/core';
 })
 export class MailPageComponent implements OnInit {
   private myBECaller: BackEndCallerService;
+  private fileUploadDownload: FileUploadDownloadService;
   public selectedFolder: string = '';
   public selectedEmail!: Email;
   private myEmails: Email[] = [];
   // -------------- Separator --------------
   constructor(private http: HttpClient) {
     this.myBECaller = new BackEndCallerService(this.http);
+    this.fileUploadDownload = new FileUploadDownloadService(this.http);
   }
   // -------------- Separator --------------
   ngOnInit(): void {
@@ -91,12 +94,16 @@ export class MailPageComponent implements OnInit {
         <div class="attachmentsHolder" id ='attachmentsHolderID'>
           <div>
           <button onclick="document.getElementById('fileUpload').click()">Attach</button>
-          <input type="file" (change)="onFileSelected($event)" id = "fileUpload" multiple style="visibility:hidden;">
+          <input type="file" (change)="onFileSelected($event)" id = "fileUpload" multiple style="visibility: hidden;">
           </div>
         </div>
       </div>
     </div>
     `;
+    let tempInput = document.getElementById('fileUpload');
+    tempInput?.addEventListener('change', (event) => {
+      this.onFileSelected(event);
+    });
   }
   // -------------- Separator --------------
   compose_email() {
@@ -176,12 +183,15 @@ export class MailPageComponent implements OnInit {
     });
   }
   // -------------- Separator --------------
-  onFileSelected(event:any){
-    let selectedFiles = event.target.files; let fileArray: File[] = []; let filenames: string[] = [];
-    for(let i=0;i<selectedFiles.length; i++){
+  onFileSelected(event: any) {
+    let selectedFiles = event.target.files;
+    let fileArray: File[] = [];
+    let filenames: string[] = [];
+    for (let i = 0; i < selectedFiles.length; i++) {
       fileArray[i] = selectedFiles[i];
       filenames.push(fileArray[i].name);
     }
+    this.fileUploadDownload.onUploadFiles(fileArray);
   }
   // -------------- Separator --------------
 }
