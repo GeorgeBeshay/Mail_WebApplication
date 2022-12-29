@@ -41,6 +41,7 @@ public class FileRequestsController {
 	
 	@PostMapping("/file/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
+		System.out.println("In upload");
         List<String> filenames = new ArrayList<>();
         for(MultipartFile file : multipartFiles) {
         	File newFile = new File(DIRECTORY + file.getOriginalFilename());

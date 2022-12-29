@@ -10,7 +10,7 @@ export class FileUploadDownloadService {
 
   constructor(private http:HttpClient) { }
 
-  private server = 'http://localhost:8080';
+  private server = 'http://localhost:8080/callBackEndServer';
 
   onUploadFiles(fileArray: File[]): void {
     let files = fileArray;
