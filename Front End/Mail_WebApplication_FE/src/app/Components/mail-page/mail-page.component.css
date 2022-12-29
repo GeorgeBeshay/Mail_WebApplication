@@ -386,8 +386,49 @@ textarea {
   background-color: black;
   color: white;
 }
-.attachmentsHolder .attachedFile {
-  width: 80%;
-  height: 50%;
-  background-color: rgba(255, 255, 255, 0.535);
+.attachmentsHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.attachmentsHolder #attachedFiles {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* width: 80%; */
+  width: fit-content;
+  /* padding: 7px; */
+  /* height: 50%;
+  background-color: rgba(255, 255, 255, 0.194); */
+}
+.attachmentsHolder #attachedFiles .attachment {
+  font-size: 15px;
+  background-color: rgba(255, 255, 255, 0.845);
+  border: 2px solid black;
+  text-align: center;
+  padding: 5px 7px;
+  font-family: "Libre Caslon Text", serif;
+  transition-duration: 250ms;
+}
+.attachmentsHolder #attachedFiles .attachment:hover {
+  padding: 7px 9px;
+  background-color: black;
+  color: white;
+}
+.attachmentsHolder #attachedFiles .attachment button {
+  font-size: initial;
+  padding: initial;
+  width: initial;
+  height: initial;
+  margin: initial;
+  letter-spacing: initial;
+  border-radius: initial;
+  -webkit-border-radius: initial;
+  -moz-border-radius: initial;
+  -ms-border-radius: initial;
+  -o-border-radius: initial;
+  border: initial;
+  margin-left: 10px;
+  background-color: red;
+  padding: 10px 12px;
 }

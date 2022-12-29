@@ -135,11 +135,20 @@ export class MailPageComponent implements OnInit {
       </div>
       <div>
         <div>Attachments:</div>
-        <div class="attachmentsHolder"></div>
+        <div class="attachmentsHolder">
+          <div>
+          <button onclick="document.getElementById('fileUpload').click()">Attach</button>
+          <input type="file" id = "fileUpload" multiple style="visibility: hidden;">
+          </div>
+          <div id="attachedFiles"></div>
+        </div>
       </div>
-
     </div>
     `;
+    let tempInput = document.getElementById('fileUpload');
+    tempInput?.addEventListener('change', (event) => {
+      this.onFileSelected(event);
+    });
   }
   // -------------- Separator --------------
   refreshMailBox() {
@@ -192,6 +201,29 @@ export class MailPageComponent implements OnInit {
       filenames.push(fileArray[i].name);
     }
     this.fileUploadDownload.onUploadFiles(fileArray);
+    this.showFilesAttached(filenames);
+  }
+  // -------------- Separator --------------
+  showFilesAttached(fileNames: string[]) {
+    let attachmentsHolder = document.getElementById('attachedFiles');
+    console.log(attachmentsHolder);
+    for (let i = 0; i < fileNames.length; i++) {
+      let tempDiv = document.createElement('div');
+      let tempPar = document.createElement('p');
+      let tempButton = document.createElement('button');
+      tempButton.appendChild(document.createTextNode('X'));
+      tempPar.appendChild(document.createTextNode(fileNames[i]));
+      tempDiv.appendChild(tempPar);
+      tempDiv.appendChild(tempButton);
+      attachmentsHolder?.appendChild(tempDiv);
+      tempDiv.classList.add('attachment');
+      tempPar.id = 'downloadFile';
+      tempButton.id = 'deleteButton';
+      tempPar.addEventListener('click', (func) => {
+        this.fileUploadDownload.onDownloadFile(fileNames[i]);
+      });
+      
+    }
   }
   // -------------- Separator --------------
 }
