@@ -270,7 +270,7 @@ button {
 }
 .composeEmail div {
   display: grid;
-  grid-template-columns: 0.95fr 10fr;
+  grid-template-columns: 1fr 10fr;
 }
 .composeEmail div div {
   display: flex;
@@ -358,4 +358,11 @@ input:focus {
 textarea {
   font-size: 17px;
   height: 100%;
+}
+.attachmentsHolder {
+  display: flex;
+  max-width: 100%;
+  background-color: rgb(0 0 0 / 50%);
+  margin: 5px;
+  overflow-y: scroll;
 }
