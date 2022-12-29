@@ -4,13 +4,13 @@ import { BackEndCallerService } from 'src/app/Services/back-end-caller.service';
 import { Email } from 'src/app/Interfaces/email';
 import { User } from 'src/app/Interfaces/user';
 import { Folder } from 'src/app/Interfaces/folder';
-import { ViewEncapsulation } from '@angular/core'
+import { ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-mail-page',
   templateUrl: './mail-page.component.html',
   styleUrls: ['./mail-page.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class MailPageComponent implements OnInit {
   private myBECaller: BackEndCallerService;
@@ -51,34 +51,39 @@ export class MailPageComponent implements OnInit {
 
   selectEmail(email: Email) {
     this.selectedEmail = email;
-    console.log("in select email");
-    const elem = document.getElementById("content");
-    if(elem == null) return;
+    console.log('in select email');
+    const elem = document.getElementById('content');
+    if (elem == null) return;
     elem.innerHTML = `
-    <div class="composeEmail"> 
+    <div class="composeEmail">
       <div>
-        From:
+        <div>From:</div>
         <input value="${this.selectedEmail.sender}" disabled type="email">
       </div>
 
       <div>
-        To:
+        <div>To:</div>
         <input value="${this.selectedEmail.receiver}" disabled type="email">
       </div>
-      
+
       <div>
-      Subject:
-      <input value="${this.selectedEmail.subject}" disabled type="text">
+        <div>Subject:</div>
+        <input value="${this.selectedEmail.subject}" disabled type="text">
       </div>
 
       <div>
-        Body:
-        <textarea readonly rows="20" cols="50">${this.selectedEmail.body}
+        <div>Body:</div>
+        <textarea style="font-size: 17px;" readonly>${this.selectedEmail.body}
         </textarea>
       </div>
+
+      <div>
+        <div>Attachments:</div>
+        <div class="attachmentsHolder"></div>
+      </div>
+
     </div>
     `;
-
   }
   refreshMailBox() {}
   // -------------- Separator --------------
@@ -91,38 +96,45 @@ export class MailPageComponent implements OnInit {
       attachments: [],
     };
   }
-  // -------------- Separator --------------  
+  // -------------- Separator --------------
   compose_email() {
-    console.log("in compose email")
-    const elem = document.getElementById("content");
-    if(elem == null) return;
+    console.log('in compose email');
+    const elem = document.getElementById('content');
+    if (elem == null) return;
     elem.innerHTML = `
-    <div class="composeEmail"> 
+    <div class="composeEmail">
       <div class="from" >
         <div>From:</div>
-        <input disabled type="email">
+        <input disabled type="email" placeholder="userAccount@mail.com"">
       </div>
 
       <div class="to">
-        To:
-        <input type="email">
+        <div>To:</div>
+        <input type="email" placeholder="JohnDoe@mail.com">
       </div>
-      
+
       <div class="subject">
-      Subject:
-      <input type="text">
+      <div>Subject:</div>
+      <input type="text" placeholder="Email Subject">
       </div>
 
       <div class="body">
-        Body:
-        <textarea rows="20" cols="50" ></textarea>
+        <div>Body:</div>
+        <textarea style="font-size: 17px;"></textarea>
+        <div class="sendB">
+          <button>
+            SEND
+          </button>
+        </div>
       </div>
-      <div class="sendB">
-        <button >send</button>
+
+      <div>
+        <div>Attachments:</div>
+        <div class="attachmentsHolder"></div>
       </div>
+
     </div>
     `;
-
   }
   // -------------- Separator --------------
 }
