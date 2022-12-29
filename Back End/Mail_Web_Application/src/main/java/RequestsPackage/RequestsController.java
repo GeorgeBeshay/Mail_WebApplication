@@ -81,34 +81,5 @@ public class RequestsController {
 	public User write(@RequestBody User user){
 		return this.myServerCore.saveNewUser(user);
 	}
-	
-	// -------------------------Uploading Attachements---------------------------------------------
-	
-	@PostMapping("/file/upload")
-    public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
-        List<String> filenames = new ArrayList<>();
-        for(MultipartFile file : multipartFiles) {
-        	File newFile = new File(DIRECTORY + file.getOriginalFilename());
-        	file.transferTo(newFile);
-            filenames.add(newFile.getName());
-        }
-        return ResponseEntity.ok().body(filenames);
-    }
-
-	// -------------------------Downlaoding Attachements-------------------------------------------
-	
-	@GetMapping("/file/download/{filename}")
-    public ResponseEntity<Resource> downloadFiles(@PathVariable("filename") String filename) throws IOException {
-        Path filePath = get(DIRECTORY).toAbsolutePath().normalize().resolve(filename);
-        if(!Files.exists(filePath)) {
-            throw new FileNotFoundException(filename + " was not found on the server");
-        }
-        Resource resource = new UrlResource(filePath.toUri());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("File-Name", filename);
-        httpHeaders.add(CONTENT_DISPOSITION, "attachment;File-Name=" + resource.getFilename());
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
-                .headers(httpHeaders).body(resource);
-    }
 
 }
