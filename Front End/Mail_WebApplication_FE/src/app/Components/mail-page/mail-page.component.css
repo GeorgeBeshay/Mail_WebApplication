@@ -264,7 +264,7 @@ button {
   display: grid;
   /* grid-template-columns: 10fr; */
   height: 100%;
-  grid-template-rows: repeat(3, 0.4fr) 3fr 1fr;
+  grid-template-rows: repeat(3, 0.4fr) 2.5fr 1.5fr;
   row-gap: 5px;
   padding-bottom: 5px;
 }
@@ -272,7 +272,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 10fr;
 }
-.composeEmail div div {
+.composeEmail div div:not(.attachmentsHolder) {
   display: flex;
   padding-left: 5px;
   align-items: center;
@@ -365,4 +365,21 @@ textarea {
   background-color: rgb(0 0 0 / 50%);
   margin: 5px;
   overflow-y: scroll;
+}
+.attachmentsHolder button {
+  font-size: initial;
+  padding: initial;
+  width: initial;
+  height: initial;
+  margin: initial;
+  letter-spacing: initial;
+  margin: 10px;
+  width: 80%;
+  height: 50%;
+}
+.attachmentsHolder button:hover {
+  padding: initial;
+  letter-spacing: initial;
+  background-color: black;
+  color: white;
 }

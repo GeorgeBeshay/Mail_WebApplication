@@ -92,7 +92,9 @@ export class MailPageComponent implements OnInit {
 
       <div>
         <div>Attachments:</div>
-        <div class="attachmentsHolder" id ='attachmentsHolderID'></div>
+        <div class="attachmentsHolder" id ='attachmentsHolderID'>
+          <button>Attach</button>
+        </div>
       </div>
 
     </div>
