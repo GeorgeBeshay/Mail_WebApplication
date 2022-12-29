@@ -16,6 +16,7 @@ export class MailPageComponent implements OnInit {
   private myBECaller: BackEndCallerService;
   public selectedFolder: string = '';
   public selectedEmail!: Email;
+  private myEmails: Email[] = [];
   // -------------- Separator --------------
   constructor(private http: HttpClient) {
     this.myBECaller = new BackEndCallerService(this.http);
@@ -23,32 +24,44 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   ngOnInit(): void {
     this.resetSelectedEmail();
-  }
-  // -------------- Separator --------------
-  myEmails: Email[] = [];
-  generateMails() {
-    this.myEmails.push({
-      sender: 'UserA',
-      receiver: 'UserB',
-      subject: 'Party Invitation',
-      body: "Hey UserB, I'd like to invite you to my birthday party next tuesday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-      attachments: [{ Name: 'Invitation Card', 'Card Number': '#22342342' }],
-    });
-    this.myEmails.push({
-      sender: 'UserX',
-      receiver: 'UserB',
-      subject: 'Wedding Invitation',
-      body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-      attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
-    });
+    this.generateMails();
   }
   // -------------- Separator --------------
   selectFolder(folderName: string) {
     this.selectedFolder = folderName;
-    this.generateMails();
     this.resetSelectedEmail();
+    const tempEmailsHolder = document.getElementById('emailsHolder');
+    if (!tempEmailsHolder) return;
+    tempEmailsHolder.innerHTML = ``;
+    for (let email of this.myEmails) {
+      tempEmailsHolder.innerHTML += `<div>${email.subject}</div>`;
+      tempEmailsHolder.lastElementChild?.classList.add('emailSubj');
+    }
+    for (let i = 0; i < tempEmailsHolder.children.length; i++) {
+      let tempButtonsHolder = document.createElement('div');
+      let tempViewButtonElement = document.createElement('button');
+      tempViewButtonElement.appendChild(document.createTextNode('View'));
+      tempViewButtonElement.addEventListener('click', (func3) => {
+        this.selectEmail(this.myEmails[i]);
+      });
+      let tempDeleteButtonElement = document.createElement('button');
+      tempDeleteButtonElement.appendChild(document.createTextNode('Delete'));
+      tempDeleteButtonElement.addEventListener('click', (func2) => {
+        this.deleteEmail(this.myEmails[i]);
+      });
+      tempButtonsHolder.appendChild(tempViewButtonElement);
+      tempButtonsHolder.appendChild(tempDeleteButtonElement);
+      tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
+    }
   }
-
+  // -------------- Separator --------------
+  deleteEmail(email: Email) {
+    console.log('Delete Email');
+    this.myEmails.splice(this.myEmails.indexOf(email), 1);
+    this.selectFolder(this.selectedFolder);
+    // this.resetSelectedEmail();
+  }
+  // -------------- Separator --------------
   selectEmail(email: Email) {
     this.selectedEmail = email;
     console.log('in select email');
@@ -84,17 +97,6 @@ export class MailPageComponent implements OnInit {
 
     </div>
     `;
-  }
-  refreshMailBox() {}
-  // -------------- Separator --------------
-  resetSelectedEmail() {
-    this.selectedEmail = {
-      sender: 'NA',
-      receiver: 'NA',
-      subject: 'NA',
-      body: 'NA',
-      attachments: [],
-    };
   }
   // -------------- Separator --------------
   compose_email() {
@@ -135,6 +137,47 @@ export class MailPageComponent implements OnInit {
 
     </div>
     `;
+  }
+  // -------------- Separator --------------
+  refreshMailBox() {
+    this.selectFolder(this.selectedFolder);
+    this.resetSelectedEmail();
+  }
+  // -------------- Separator --------------
+  resetSelectedEmail() {
+    this.selectedEmail = {
+      sender: 'NA',
+      receiver: 'NA',
+      subject: 'NA',
+      body: 'NA',
+      attachments: [],
+    };
+    const elem = document.getElementById('content');
+    if (elem) elem.innerHTML = ``;
+  }
+  // -------------- Separator --------------
+  generateMails() {
+    this.myEmails.push({
+      sender: 'UserA',
+      receiver: 'UserB',
+      subject: 'Party Invitation',
+      body: "Hey UserB, I'd like to invite you to my birthday party next tuesday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
+      attachments: [{ Name: 'Invitation Card', 'Card Number': '#22342342' }],
+    });
+    this.myEmails.push({
+      sender: 'UserX',
+      receiver: 'UserB',
+      subject: 'Wedding Invitation',
+      body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
+      attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
+    });
+    this.myEmails.push({
+      sender: 'UserZ',
+      receiver: 'UserY',
+      subject: 'Wedding Invitationnnn',
+      body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
+      attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
+    });
   }
   // -------------- Separator --------------
 }

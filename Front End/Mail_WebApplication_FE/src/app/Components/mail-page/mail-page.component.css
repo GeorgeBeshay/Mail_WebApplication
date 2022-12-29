@@ -169,10 +169,12 @@ button {
   overflow-y: scroll;
 }
 .box .board .emails .emailSubj {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
-  height: 15%;
+  height: 30%;
   font-size: 13px;
-  padding: 2px 5px;
+  padding: 5px 5px;
   background-color: rgba(0, 0, 0, 0.6);
   transition-duration: 200ms;
   display: flex;
@@ -181,8 +183,18 @@ button {
 }
 .box .board .emails .emailSubj:hover {
   background-color: rgba(0, 0, 0, 0.756);
-  height: 20%;
+  height: 35%;
   border: 1px solid black;
+}
+.box .board .emails .emailSubj button {
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  margin-right: 10px;
+  transition-duration: 250ms;
+}
+.box .board .emails .emailSubj button:hover {
+  padding: 5px 12px;
 }
 .box .board .emailContent {
   grid-area: 4 / 1 / 10 / 10;
@@ -196,7 +208,6 @@ button {
   flex-direction: column;
   padding-bottom: 5px;
 }
-
 .box .board .optionBar {
   display: flex;
   align-items: center;

@@ -20,6 +20,12 @@
           <p>Compose</p>
         </button>
       </div>
+      <div class="contacts">
+        <button (click)="selectFolder('Contacts')">
+          <mat-icon>perm_identity</mat-icon>
+          <p>Contacts</p>
+        </button>
+      </div>
       <div class="inbox">
         <button (click)="selectFolder('Inbox')">
           <mat-icon>inbox</mat-icon>
@@ -44,12 +50,6 @@
           <p>Starred</p>
         </button>
       </div>
-      <div class="contacts">
-        <button (click)="selectFolder('contacts')">
-          <mat-icon>perm_identity</mat-icon>
-          <p>Contacts</p>
-        </button>
-      </div>
       <div class="draft">
         <button (click)="selectFolder('draft')">
           <mat-icon>description</mat-icon>
@@ -60,7 +60,7 @@
     <div class="board">
       <div class="optionBar">
         <div class="refreshBtn">
-          <button>
+          <button (click)="refreshMailBox()">
             <mat-icon>refresh</mat-icon>
           </button>
         </div>
@@ -69,15 +69,7 @@
           {{ selectedEmail.subject }}
         </div>
       </div>
-      <div class="emails" id="emailsHolder">
-        <div
-          class="emailSubj"
-          (click)="selectEmail(tempEmail)"
-          *ngFor="let tempEmail of myEmails"
-        >
-          ~ {{ tempEmail.subject }}
-        </div>
-      </div>
+      <div class="emails" id="emailsHolder"></div>
       <div class="emailContent" id="content"></div>
     </div>
     <div class="footer">
