@@ -176,6 +176,12 @@ export class MailPageComponent implements OnInit {
     });
   }
   // -------------- Separator --------------
-  
+  onFileSelected(event:any){
+    let selectedFiles = event.target.files; let fileArray: File[] = []; let filenames: string[] = [];
+    for(let i=0;i<selectedFiles.length; i++){
+      fileArray[i] = selectedFiles[i];
+      filenames.push(fileArray[i].name);
+    }
+  }
   // -------------- Separator --------------
 }
