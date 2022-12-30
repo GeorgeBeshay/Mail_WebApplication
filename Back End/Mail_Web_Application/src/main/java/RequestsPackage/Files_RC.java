@@ -30,7 +30,7 @@ import java.util.*;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/callBackEndServer")
 @RestController
-public class FileRequestsController {
+public class Files_RC {
 	
 	@Autowired
 	private ServerCore myServerCore = ServerCore.getServerCoreInstance();

@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import ApplicationMainPackage.ServerCore;
 import ComponentsPackage.*;
-
 import static java.nio.file.Paths.get;
 import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -66,22 +63,5 @@ public class SignIn_SignUp_RC {
 				"\nBack End Server is Replying By: \n");
 		return this.myServerCore.signUp(user);
 	}
-	
-	// ----------------- Testing ----------------- 
-	
-	@PostMapping(value = {"/testingDB/read"})
-	public List<User> read(){
-		return this.myServerCore.getAllUsers();
-	}
-	
-//	@PostMapping(value = {"/testingDB/read/{emailAddress}"})
-//	public User readById(@PathVariable String emailAddress){
-//		return this.myServerCore.getUserByEmail(emailAddress);
-//	}
-	
-//	@PostMapping(value = {"/testingDB/write"})
-//	public User write(@RequestBody User user){
-//		return this.myServerCore.saveNewUser(user);
-//	}
 
 }

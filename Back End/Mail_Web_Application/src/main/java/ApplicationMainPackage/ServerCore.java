@@ -18,7 +18,6 @@ public class ServerCore {
 	 * all the front end requests and manipulating the data base.
 	 */
 	private static ServerCore serverCore;
-	
 	@Autowired
 	UserRepository userRepo;
 	// ---------------------------- Class Constructors ----------------------------
@@ -29,10 +28,7 @@ public class ServerCore {
 			serverCore = new ServerCore();
 		return ServerCore.serverCore;
 	}
-	// ---------------------------- Class Methods ----------------------------
-	public List<User> getAllUsers(){
-		return userRepo.findAll();
-	}
+	// -------------------------------------------------------------------------------
 	
 	/**
 	 * Method implements the sign up process, by taking the user data (User object), 
@@ -41,7 +37,13 @@ public class ServerCore {
 	 * @return
 	 */
 	public User signUp(User user) {
-		return userRepo.save(user);
+		try {
+			userRepo.findById(user.getEmailAddress()).get();
+			System.out.println("User Email Address is already taken.");
+			return null;
+		} catch(Exception e) {			
+			return userRepo.save(user);
+		}
 	}
 	
 	/**
@@ -67,5 +69,13 @@ public class ServerCore {
 			System.out.println("Email Address Doesn't exist");
 			return null;
 		}
+	}
+	
+	/**
+	 * Method updates / overwrite the current saved document by the new updated document.
+	 * @param modifiedUser
+	 */
+	public void updateUser(User modifiedUser) {
+		userRepo.save(modifiedUser);
 	}
 }
