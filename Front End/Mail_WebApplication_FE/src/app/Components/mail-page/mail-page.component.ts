@@ -206,6 +206,7 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   showFilesAttached(fileNames: string[]) {
     let attachmentsHolder = document.getElementById('attachedFiles');
+    if (attachmentsHolder) attachmentsHolder.innerHTML = ``;
     console.log(attachmentsHolder);
     for (let i = 0; i < fileNames.length; i++) {
       let tempDiv = document.createElement('div');
@@ -222,7 +223,14 @@ export class MailPageComponent implements OnInit {
       tempPar.addEventListener('click', (func) => {
         this.fileUploadDownload.onDownloadFile(fileNames[i]);
       });
-      
+      tempButton.addEventListener('click', (func) => {
+        fileNames = this.fileUploadDownload.deleteAttachement(
+          fileNames[i],
+          fileNames
+        );
+        console.log(fileNames);
+        this.showFilesAttached(fileNames);
+      });
     }
   }
   // -------------- Separator --------------
