@@ -33,7 +33,14 @@ public class ServerCore {
 	public List<User> getAllUsers(){
 		return userRepo.findAll();
 	}
-	public User saveNewUser(User user) {
+	
+	/**
+	 * Method implements the sign up process, by taking the user data (User object), 
+	 * and put the filled data into the class fields, then save it the the mongoDB
+	 * @param user
+	 * @return
+	 */
+	public User signUp(User user) {
 		return userRepo.save(user);
 	}
 	

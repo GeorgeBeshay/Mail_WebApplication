@@ -59,11 +59,12 @@ public class SignIn_SignUp_RC {
 	 * not (in case that the email address given was already taken.)
 	 * @param emailPassword
 	 */
-	@PostMapping(value = {"/signUp/{emailAddress}"})
-	public void signUp(@RequestBody String emailPassword, @PathVariable String emailAddress) {
+	@PostMapping(value = {"/signUp"})
+	public User signUp(@RequestBody User user) {
+		System.out.println("------------------------------------------------");
 		System.out.println("Front End Server Requested a Sign Up Request" + 
 				"\nBack End Server is Replying By: \n");
-		System.out.println("------------------------------------------------");
+		return this.myServerCore.signUp(user);
 	}
 	
 	// ----------------- Testing ----------------- 
@@ -78,9 +79,9 @@ public class SignIn_SignUp_RC {
 //		return this.myServerCore.getUserByEmail(emailAddress);
 //	}
 	
-	@PostMapping(value = {"/testingDB/write"})
-	public User write(@RequestBody User user){
-		return this.myServerCore.saveNewUser(user);
-	}
+//	@PostMapping(value = {"/testingDB/write"})
+//	public User write(@RequestBody User user){
+//		return this.myServerCore.saveNewUser(user);
+//	}
 
 }
