@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ApplicationMainPackage.ServerCore;
-import ComponentsPackage.SignInData;
-import ComponentsPackage.User;
+import ComponentsPackage.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/callBackEndServer")
