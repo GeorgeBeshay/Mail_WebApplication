@@ -4,9 +4,11 @@ import java.util.*;
 
 public class Folder {
 	// ------------------------ Class Fields ------------------------
+	private String name;
 	private ArrayList<Email> emails;
 	// ------------------------ Class Constructors ------------------------
-	public Folder() {
+	public Folder(String name) {
+		this.name = name;
 		this.emails = new ArrayList<Email>();
 	}
 	// ------------------------ Class Methods ------------------------
@@ -45,6 +47,12 @@ public class Folder {
 	}
 	public void setEmails(ArrayList<Email> emails) {
 		this.emails = emails;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

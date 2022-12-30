@@ -21,10 +21,10 @@ class FolderControllerTest {
 		tempMail2.setBody("This is an automatic email sent to all CF users.");
 		tempMail2.setSender("Codeforces");
 		// ------------------- Separator -------------------
-		Folder tempFolder = new Folder();
+		Folder tempFolder = new Folder("1");
 		tempFolder.addEmail(tempMail1);
 		tempFolder.addEmail(tempMail2);
-		Folder tempFolder2 = new Folder();
+		Folder tempFolder2 = new Folder("2");
 		tempFolder2.addEmail(tempMail1);
 		tempFolder2.addEmail(tempMail2);
 		// ------------------- Separator -------------------
@@ -54,7 +54,7 @@ class FolderControllerTest {
 		tempMail3.setBody("This is an automatic email sent to all CF users.");
 		tempMail3.setSender("Codeforces");
 		// ------------------- Separator -------------------
-		Folder tempFolder = new Folder();
+		Folder tempFolder = new Folder("3");
 		tempFolder.addEmail(tempMail1);
 		tempFolder.addEmail(tempMail2);
 		tempFolder.addEmail(tempMail3);

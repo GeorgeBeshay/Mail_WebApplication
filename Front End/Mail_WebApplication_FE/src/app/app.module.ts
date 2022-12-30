@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MailPageComponent } from './Components/mail-page/mail-page.component';
 import { ErrorComponent } from './Components/error/error.component';
+import { RegistrationPageComponent } from './Components/registration-page/registration-page.component';
 
 const appRoute: Routes = [
   { path: '', component: LandingPageComponent },
@@ -29,6 +30,7 @@ const appRoute: Routes = [
     LandingPageComponent,
     MailPageComponent,
     ErrorComponent,
+    RegistrationPageComponent,
   ],
   imports: [
     BrowserModule,

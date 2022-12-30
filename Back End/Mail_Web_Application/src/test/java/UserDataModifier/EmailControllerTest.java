@@ -51,9 +51,9 @@ class EmailControllerTest {
 		tempMail7.setSubject("Meeting Reminder COPY");
 		tempMail7.setReceiver("Receiver2");
 		// ------------------- Separator -------------------
-		Folder tempFolder1 = new Folder();
-		Folder tempFolder2 = new Folder();
-		Folder tempFolder3 = new Folder();
+		Folder tempFolder1 = new Folder("1");
+		Folder tempFolder2 = new Folder("2");
+		Folder tempFolder3 = new Folder("3");
 		tempFolder1.addEmail(tempMail1);
 		tempFolder1.addEmail(tempMail2);
 		tempFolder1.addEmail(tempMail2_);
