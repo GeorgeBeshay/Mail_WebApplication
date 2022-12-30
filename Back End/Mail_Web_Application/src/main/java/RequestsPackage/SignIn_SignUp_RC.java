@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import ApplicationMainPackage.ServerCore;
-import ComponentsPackage.User;
+import ComponentsPackage.*;
 
 import static java.nio.file.Paths.get;
 import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
@@ -32,12 +32,11 @@ import java.util.*;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/callBackEndServer")
 @RestController
-public class RequestsController {
+public class SignIn_SignUp_RC {
 	
 	@Autowired
 	private ServerCore myServerCore = ServerCore.getServerCoreInstance();
 	
-	private static final String DIRECTORY = System.getProperty("user.dir") + "\\src\\main\\resources\\Attachements\\";;
 	
 	/**
 	 * The sign In request method manages the front end requests of signing in,
@@ -45,13 +44,15 @@ public class RequestsController {
 	 * and return a boolean value indicating whether the email address and password given are valid or not
 	 * @param emailPassword
 	 */
-	@PostMapping(value = {"/signIn/{emailAddress}"})
-	public void signIn(@RequestBody String emailPassword, @PathVariable String emailAddress) {
-		System.out.println("Front End Server Requested a Sign In Request" + 
-				"\nBack End Server is Replying By: \n");
+	@PostMapping(value = {"/signIn"})
+	public User signIn(@RequestBody SignInData signInData) {
+		System.out.println();
 		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested a Sign In" + 
+				"\nBack End Server is Replying By: \n");
+		return this.myServerCore.authenticate(signInData);
 	}
-	
+		
 	/**
 	 * The sign up request method manages the front end requests of signing up,
 	 * and return a boolean value indicating whether the registration process was successful or 
@@ -72,10 +73,10 @@ public class RequestsController {
 		return this.myServerCore.getAllUsers();
 	}
 	
-	@PostMapping(value = {"/testingDB/read/{emailAddress}"})
-	public User readById(@PathVariable String emailAddress){
-		return this.myServerCore.getUserByEmail(emailAddress);
-	}
+//	@PostMapping(value = {"/testingDB/read/{emailAddress}"})
+//	public User readById(@PathVariable String emailAddress){
+//		return this.myServerCore.getUserByEmail(emailAddress);
+//	}
 	
 	@PostMapping(value = {"/testingDB/write"})
 	public User write(@RequestBody User user){

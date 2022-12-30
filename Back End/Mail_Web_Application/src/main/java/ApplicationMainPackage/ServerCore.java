@@ -2,7 +2,7 @@ package ApplicationMainPackage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ComponentsPackage.User;
+import ComponentsPackage.*;
 import java.util.*;
 
 @Service
@@ -36,7 +36,29 @@ public class ServerCore {
 	public User saveNewUser(User user) {
 		return userRepo.save(user);
 	}
-	public User getUserByEmail(String emailAddress) {
-		return userRepo.findById(emailAddress).get();
+	
+	/**
+	 * Method used to check the user email address and password, if they match the
+	 * given email address and password, the login is considered to be authenticated
+	 * else, user log in is not enabled.
+	 * @param signInData: the sign in data form, containing the email address and password.
+	 * @return In case of being authenticated, User is returned else, null is returned.
+	 */
+	public User authenticate(SignInData signInData) {
+		String emailAddress = signInData.getEmailAddress();
+		String emailPassword = signInData.getEmailPassword();
+		try {
+			User tempUser =  userRepo.findById(emailAddress).get();
+			if(tempUser.getEmailPassword().compareTo(emailPassword) == 0) {
+				System.out.println("Password has been authenticated.");
+				return tempUser;
+			} else {
+				System.out.println("Password is incorrect.");
+				return null;
+			}
+		} catch(Exception e) {
+			System.out.println("Email Address Doesn't exist");
+			return null;
+		}
 	}
 }
