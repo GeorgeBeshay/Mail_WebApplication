@@ -32,8 +32,8 @@ export class RegistrationPageComponent implements OnInit {
       fullName.value.length == 0 ||
       bd.value.length == 0
     ) {
-      // alert('The Registeration Form is not completely filled.');
-      alert(bd.value);
+      alert('The Registeration Form is not completely filled.');
+      // alert(bd.value);
       return;
     }
     if (emailPassword.value != confirmPassword.value) {
@@ -47,5 +47,6 @@ export class RegistrationPageComponent implements OnInit {
       birthDate: new Date(bd.value),
     };
     // Call the sign up request method
+    this._router.navigate(['ViewEmails'])
   }
 }

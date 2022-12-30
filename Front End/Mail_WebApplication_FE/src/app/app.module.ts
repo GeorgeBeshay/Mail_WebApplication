@@ -19,8 +19,8 @@ import { RegistrationPageComponent } from './Components/registration-page/regist
 
 const appRoute: Routes = [
   { path: '', component: LandingPageComponent },
-  { path: 'SignUp', component: MailPageComponent },
-  { path: 'SignIn', component: MailPageComponent },
+  { path: 'SignUp', component: RegistrationPageComponent },
+  { path: 'ViewEmails', component: MailPageComponent },
   { path: '**', component: ErrorComponent },
 ];
 

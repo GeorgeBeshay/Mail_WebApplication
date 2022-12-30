@@ -23,7 +23,7 @@ export class LandingPageComponent implements OnInit {
     this.myBECaller.reqSignIn(tempEmail, tempPw);
     let flag = true;
     if(flag){
-      this._router.navigate(['SignIn'])
+      this._router.navigate(['ViewEmails'])
     }
   }
   // -------------- Separator --------------
