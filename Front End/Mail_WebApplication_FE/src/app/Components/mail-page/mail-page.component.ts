@@ -6,7 +6,7 @@ import { Email } from 'src/app/Interfaces/email';
 import { User } from 'src/app/Interfaces/user';
 import { Folder } from 'src/app/Interfaces/folder';
 import { ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-mail-page',
@@ -22,7 +22,7 @@ export class MailPageComponent implements OnInit {
   private myEmails: Email[] = [];
   private myUser!: User;
   // -------------- Separator --------------
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private _router:Router) {
     this.myBECaller = new BackEndCallerService(this.http);
     this.fileUploadDownload = new FileUploadDownloadService(this.http);
     this.route.queryParams.subscribe((params) => {
@@ -289,4 +289,9 @@ export class MailPageComponent implements OnInit {
     tempDiv.style.visibility = 'visible';
   }
   // -------------- Separator --------------
+  ContactsInfo(){
+    this._router.navigate(['Contacts'],{
+      queryParams:{ userObj: JSON.stringify(this.myUser)}
+    });
+  }
 }

@@ -16,11 +16,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MailPageComponent } from './Components/mail-page/mail-page.component';
 import { ErrorComponent } from './Components/error/error.component';
 import { RegistrationPageComponent } from './Components/registration-page/registration-page.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 const appRoute: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'SignUp', component: RegistrationPageComponent },
   { path: 'ViewEmails', component: MailPageComponent },
+  { path: 'Contacts', component: ContactsComponent },
   { path: '**', component: ErrorComponent },
 ];
 
@@ -31,6 +33,7 @@ const appRoute: Routes = [
     MailPageComponent,
     ErrorComponent,
     RegistrationPageComponent,
+    ContactsComponent,
   ],
   imports: [
     BrowserModule,

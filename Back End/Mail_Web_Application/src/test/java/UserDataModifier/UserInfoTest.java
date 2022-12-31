@@ -15,7 +15,7 @@ class UserInfoTest {
 	@Test
 	void testBirthDate() {
 		User user = new User("test@gmail.com", "123", "2022-12-29");
-		Date birthDate = user.getBirthDate();
+		String birthDate = user.getBd();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
 		String strDate = dateFormat.format(birthDate);  
 		assertEquals("2022-12-29", strDate);
