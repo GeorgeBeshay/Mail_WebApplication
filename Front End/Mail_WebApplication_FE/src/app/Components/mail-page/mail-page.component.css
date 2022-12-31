@@ -7,6 +7,7 @@
   height: 100vh;
   background-image: url(https://c1.wallpaperflare.com/path/190/979/712/paper-wood-table-aerial-7c6a19e5e473095c1f8cc09706be6d67.jpg);
   background-size: cover;
+  position: relative;
 }
 .overlay {
   position: absolute;
@@ -90,6 +91,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.box .LTB #foldersHolder {
+  flex-direction: column;
+}
+.box .LTB #foldersHolder div {
+  width: 100%;
 }
 .box .LTB button {
   width: 95%;
@@ -450,4 +457,63 @@ textarea {
   margin-left: 10px;
   background-color: red;
   padding: 10px 12px;
+}
+#createFolder {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.83);
+}
+#createFolder #cfButtonHolder {
+  display: flex;
+  padding: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  width: 25%;
+  height: 27%;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+#createFolder #cfButtonHolder input {
+  background-color: #555;
+  border: none;
+  outline: none;
+  height: 30%;
+  width: 80%;
+  color: white;
+  padding: 10px;
+  transition-duration: 300ms;
+  margin-top: 10px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+}
+#createFolder #cfButtonHolder input:focus {
+  width: 90%;
+  height: 35%;
+  background-color: rgba(0, 0, 0, 0.872);
+}
+#createFolder #cfButtonHolder button {
+  width: initial;
+  height: initial;
+  padding: initial;
+  margin: initial;
+  width: 50%;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #555;
+  -webkit-border-radius: initial;
+  -moz-border-radius: initial;
+  -ms-border-radius: initial;
+  -o-border-radius: initial;
+  border-radius: 2px;
 }

@@ -56,6 +56,14 @@
           <p>Drafts</p>
         </button>
       </div>
+      <div id="foldersHolder"></div>
+      <div id="createFolder" style="visibility: hidden;">
+        <div id="cfButtonHolder">
+          Enter The Folder Name
+          <input id="newFolderName" type="text" />
+          <button (click)="addFolder()">Add</button>
+        </div>
+      </div>
     </div>
     <div class="board">
       <div class="optionBar">

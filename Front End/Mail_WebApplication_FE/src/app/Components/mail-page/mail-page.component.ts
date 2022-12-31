@@ -34,9 +34,30 @@ export class MailPageComponent implements OnInit {
     this.resetSelectedEmail();
     this.generateMails();
     this.selectedFolder = this.myUser.folders[0].name;
+    this.generateFolders();
   }
   // -------------- Separator --------------
-  selectFolder(folderName: string) {
+  generateFolders() {
+    let foldersHolders = document.getElementById('foldersHolder');
+    if (!foldersHolders) return;
+    foldersHolders.innerHTML = ``;
+    for (let i = 5; i < this.myUser.folders.length; i++) {
+      let currentFolder = this.myUser.folders[i];
+      let tempFolder = document.createElement('div');
+      let tempButton = document.createElement('button');
+      tempButton.addEventListener('click', (func) => {
+        this.selectFolder(i);
+      });
+      let tempPar = document.createElement('p');
+      tempPar.appendChild(document.createTextNode(currentFolder.name));
+      tempButton.appendChild(tempPar);
+      tempFolder.appendChild(tempButton);
+      foldersHolders.appendChild(tempFolder);
+      console.log(tempFolder);
+    }
+  }
+  // -------------- Separator --------------
+  selectFolder(folderName: any) {
     this.selectedFolder = folderName;
     this.resetSelectedEmail();
     const tempEmailsHolder = document.getElementById('emailsHolder');
@@ -238,6 +259,24 @@ export class MailPageComponent implements OnInit {
         this.showFilesAttached(fileNames);
       });
     }
+  }
+  // -------------- Separator --------------
+  addFolder() {
+    let folderName = document.getElementById(
+      'newFolderName'
+    ) as HTMLInputElement;
+    if (folderName.value.length > 0) {
+      let tempDiv = document.getElementById('createFolder') as HTMLDivElement;
+      tempDiv.style.visibility = 'hidden';
+    } else {
+      alert('Folder name is invalid');
+      return;
+    }
+  }
+  // -------------- Separator --------------
+  showFolderCreationPage() {
+    let tempDiv = document.getElementById('createFolder') as HTMLDivElement;
+    tempDiv.style.visibility = 'visible';
   }
   // -------------- Separator --------------
 }

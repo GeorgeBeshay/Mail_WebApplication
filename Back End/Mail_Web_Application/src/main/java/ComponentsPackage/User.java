@@ -48,6 +48,7 @@ public class User {
 		this.folders.add(new Folder("Trash"));		
 		this.folders.add(new Folder("Starred"));
 		this.folders.add(new Folder("Draft"));
+		this.folders.add(new Folder("Test Folder"));
 	}
 	// ------------------------ Class Methods ------------------------	
 	public String getEmailAddress() {
