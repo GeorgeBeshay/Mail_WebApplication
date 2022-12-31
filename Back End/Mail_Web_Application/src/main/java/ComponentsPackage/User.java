@@ -45,8 +45,9 @@ public class User {
 		this.contacts = new ArrayList<Contact>();
 		this.folders.add(new Folder("Inbox"));
 		this.folders.add(new Folder("Sent"));
-		this.folders.add(new Folder("Draft"));
+		this.folders.add(new Folder("Trash"));		
 		this.folders.add(new Folder("Starred"));
+		this.folders.add(new Folder("Draft"));
 	}
 	// ------------------------ Class Methods ------------------------	
 	public String getEmailAddress() {

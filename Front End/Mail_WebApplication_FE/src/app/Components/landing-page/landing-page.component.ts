@@ -24,9 +24,10 @@ export class LandingPageComponent implements OnInit {
     let tempPw: any = (document.getElementById('pw') as HTMLInputElement | null)
       ?.value;
     let tempReturned = await this.myBECaller.reqSignIn(tempEmail, tempPw);
-    console.log(tempReturned);
     if (tempReturned !== null) {
-      this._router.navigate(['ViewEmails']);
+      this._router.navigate(['ViewEmails'], {
+        queryParams: { userObj: JSON.stringify(tempReturned) },
+      });
     } else {
       alert('Authentication Failed.');
     }

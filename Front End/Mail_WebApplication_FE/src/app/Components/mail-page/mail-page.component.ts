@@ -6,6 +6,7 @@ import { Email } from 'src/app/Interfaces/email';
 import { User } from 'src/app/Interfaces/user';
 import { Folder } from 'src/app/Interfaces/folder';
 import { ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mail-page',
@@ -19,15 +20,20 @@ export class MailPageComponent implements OnInit {
   public selectedFolder: string = '';
   public selectedEmail!: Email;
   private myEmails: Email[] = [];
+  private myUser!: User;
   // -------------- Separator --------------
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.myBECaller = new BackEndCallerService(this.http);
     this.fileUploadDownload = new FileUploadDownloadService(this.http);
+    this.route.queryParams.subscribe((params) => {
+      this.myUser = JSON.parse(params['userObj']);
+    });
   }
   // -------------- Separator --------------
   ngOnInit(): void {
     this.resetSelectedEmail();
     this.generateMails();
+    this.selectedFolder = this.myUser.folders[0].name;
   }
   // -------------- Separator --------------
   selectFolder(folderName: string) {
