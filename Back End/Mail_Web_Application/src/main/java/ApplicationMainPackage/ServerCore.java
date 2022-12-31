@@ -67,6 +67,7 @@ public class ServerCore {
 			}
 		} catch(Exception e) {
 			System.out.println("Email Address Doesn't exist");
+			e.printStackTrace();
 			return null;
 		}
 	}

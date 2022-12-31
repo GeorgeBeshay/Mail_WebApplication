@@ -44,7 +44,8 @@ export class RegistrationPageComponent implements OnInit {
       emailAddress: emailAddress.value,
       emailPassword: emailPassword.value,
       fullName: fullName.value,
-      birthDate: new Date(bd.value),
+      // birthDate: new Date(bd.value),
+      bd: bd.value,
     };
     // Call the sign up request method
     let tempReturned = await this.myBECaller.reqSignUp(user);

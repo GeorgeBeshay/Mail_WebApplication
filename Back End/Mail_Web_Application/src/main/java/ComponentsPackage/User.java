@@ -19,11 +19,11 @@ public class User {
 	private String emailAddress;
 	private String emailPassword;
 	private String fullName;
-	private Date bd;
+	private String bd;
 	private ArrayList<Folder> folders;
 	private ArrayList<Contact> contacts;
 	// ------------------------ Class Constructors ------------------------
-	public User(String emailAddress, String emailPassword, String birthDate) {
+	public User(String emailAddress, String emailPassword, String bd) {
 		/**
 		 * Creating the id field to be the same as the email address, 
 		 * so as to be used on fetching the user from the DB. 
@@ -31,15 +31,16 @@ public class User {
 		this._id = emailAddress;
 		this.emailAddress = emailAddress;
 		this.emailPassword = emailPassword;
+		this.bd = bd;
 		
 		// SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			bd = new SimpleDateFormat("yyyy-MM-dd").parse(birthDate);
-//			this.birthDate = simpleDateFormat.parse(birthDate);
-//			System.out.println(birthDate+"\t"+bd);
-		} catch (ParseException e) {
-			System.out.println("Birth Date Invalid");
-		}
+//		try {
+//			bd = new SimpleDateFormat("yyyy-MM-dd").parse(birthDate);
+////			this.birthDate = simpleDateFormat.parse(birthDate);
+////			System.out.println(birthDate+"\t"+bd);
+//		} catch (ParseException e) {
+//			System.out.println("Birth Date Invalid");
+//		}
 		this.folders = new ArrayList<Folder>();
 		this.contacts = new ArrayList<Contact>();
 		this.folders.add(new Folder("Inbox"));
@@ -84,12 +85,13 @@ public class User {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-	public Date getBirthDate() {
+	public String getBd() {
 		return bd;
 	}
-	public void setBirthDate(Date birthDate) {
-		this.bd = birthDate;
+	public void setBd(String bd) {
+		this.bd = bd;
 	}
+	
 	
 
 }
