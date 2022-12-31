@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 import { User } from '../Interfaces/user';
 import { Contact } from '../Interfaces/contact';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-contacts',
@@ -64,7 +65,7 @@ export class ContactsComponent implements OnInit {
     elem.innerHTML = `
       <div class="Name" >
         <div>Name:</div>
-        <input type="text" placeholder="John">
+        <input id="cName" type="text" placeholder="John">
       </div>
     `;
       elem.innerHTML += 
@@ -81,8 +82,19 @@ export class ContactsComponent implements OnInit {
         let emailCont = document.getElementById('Emails');
         emailCont?.appendChild(tempInput);
       });
+
+      elem.appendChild(tempButtonsHolder);
+  
       tempButtonsHolder.appendChild(tempEditButtonElement);
-      elem.appendChild(tempButtonsHolder)
+      let tempSaveD=document.createElement('div');
+      let tempSaveB=document.createElement('button');
+      tempSaveB.appendChild(document.createTextNode('SAVE'));
+      tempSaveB.classList.add("SaveButton");
+      tempSaveB.addEventListener('click', (func5) => {
+        this.saveContact();
+      });
+      tempSaveD.appendChild(tempSaveB);
+      elem.appendChild(tempSaveD);
   
   }
 
@@ -93,6 +105,17 @@ export class ContactsComponent implements OnInit {
   }
   
   ViewContact(contact:any){
+  }
+
+  saveContact(){
+    let name: any = (document.getElementById('cName') as HTMLInputElement | null)?.value;
+    let data=document.getElementById('Emails') as HTMLDivElement;
+    let addresses =[];
+    for(let i=0; i<data.children.length;i++){
+      addresses.push((data.children[i] as HTMLInputElement).value);
+    }
+    console.log(addresses);
+    
   }
 
   generateMails() {
