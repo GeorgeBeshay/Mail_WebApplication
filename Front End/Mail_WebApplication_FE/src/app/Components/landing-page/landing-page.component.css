@@ -20,7 +20,7 @@
 .box {
   z-index: 1;
   width: 50%;
-  height: 70%;
+  height: 55%;
   background-color: rgba(0, 0, 0, 0.512);
   border-radius: 20px;
   -webkit-border-radius: 20px;
@@ -121,4 +121,16 @@ button:hover {
 .footer span {
   font-size: 25px;
   font-family: "Dancing Script", cursive;
+}
+.signUp {
+  justify-content: center;
+  margin-top: 20px;
+}
+.signUp button {
+  padding: 10px 30px;
+  font-size: 20px;
+  margin: initial;
+}
+.signUp button:hover {
+  padding: 10px 40px;
 }

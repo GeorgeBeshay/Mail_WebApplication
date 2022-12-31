@@ -43,6 +43,7 @@ public class SignIn_SignUp_RC {
 	 */
 	@PostMapping(value = {"/signIn"})
 	public User signIn(@RequestBody SignInData signInData) {
+		System.out.println(signInData);
 		System.out.println();
 		System.out.println("------------------------------------------------");
 		System.out.println("Front End Server Requested a Sign In" + 

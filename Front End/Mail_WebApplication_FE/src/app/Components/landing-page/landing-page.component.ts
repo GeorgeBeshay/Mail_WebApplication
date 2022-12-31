@@ -20,22 +20,17 @@ export class LandingPageComponent implements OnInit {
   signIn() {
     let tempEmail: any = document.getElementById('email');
     let tempPw: any = document.getElementById('pw');
-    this.myBECaller.reqSignIn(tempEmail, tempPw);
-    let flag = true;
-    if(flag){
-      this._router.navigate(['ViewEmails'])
+    let tempReturned = this.myBECaller.reqSignIn(tempEmail, tempPw);
+    console.log(tempReturned);
+    if (tempReturned != null) {
+      this._router.navigate(['ViewEmails']);
+    } else {
+      alert('Authentication Failed.');
     }
   }
   // -------------- Separator --------------
   signUp() {
-    let tempEmail: any = document.getElementById('newEmail');
-    let tempPw: any = document.getElementById('newPw');
-    this.myBECaller.reqSignUp(tempEmail, tempPw);
-    let flag = true;
-    if(flag){
-      this._router.navigate(['SignUp'])
-    }
-    
+    this._router.navigate(['SignUp']);
   }
   // -------------- Separator --------------
 }

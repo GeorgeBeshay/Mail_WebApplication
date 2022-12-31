@@ -19,7 +19,7 @@ export class RegistrationPageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  register() {
+  async register() {
     let emailAddress = document.getElementById('email') as HTMLInputElement;
     let emailPassword = document.getElementById('pw') as HTMLInputElement;
     let confirmPassword = document.getElementById('cpw') as HTMLInputElement;
@@ -47,6 +47,11 @@ export class RegistrationPageComponent implements OnInit {
       birthDate: new Date(bd.value),
     };
     // Call the sign up request method
-    this._router.navigate(['ViewEmails'])
+    let tempReturned = await this.myBECaller.reqSignUp(user);
+    console.log(tempReturned);
+    if (tempReturned != null) this._router.navigate(['ViewEmails']);
+    else {
+      alert('The Email Address Specified is already taken.');
+    }
   }
 }
