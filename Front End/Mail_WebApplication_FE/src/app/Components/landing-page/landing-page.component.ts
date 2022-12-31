@@ -18,8 +18,8 @@ export class LandingPageComponent implements OnInit {
   ngOnInit(): void {}
   // -------------- Separator --------------
   signIn() {
-    let tempEmail: any = document.getElementById('email');
-    let tempPw: any = document.getElementById('pw');
+    let tempEmail: any = (document.getElementById('email') as HTMLInputElement | null)?.value;
+    let tempPw: any = (document.getElementById('pw') as HTMLInputElement | null)?.value;
     let tempReturned = this.myBECaller.reqSignIn(tempEmail, tempPw);
     console.log(tempReturned);
     if (tempReturned != null) {
