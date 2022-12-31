@@ -7,6 +7,7 @@ public class Folder {
 	private String name;
 	private ArrayList<Email> emails;
 	// ------------------------ Class Constructors ------------------------
+	public Folder() {}
 	public Folder(String name) {
 		this.name = name;
 		this.emails = new ArrayList<Email>();

@@ -57,11 +57,21 @@
         </button>
       </div>
       <div id="foldersHolder"></div>
-      <div id="createFolder" style="visibility: hidden;">
+      <div class="addFolderOption">
+        <button (click)="showFolderCreationPage()">
+          <mat-icon>
+            create_new_folder
+          </mat-icon>
+        </button>
+      </div>
+      <div id="createFolder" style="visibility: hidden">
         <div id="cfButtonHolder">
           Enter The Folder Name
           <input id="newFolderName" type="text" />
+          <div>
           <button (click)="addFolder()">Add</button>
+          <button (click)="cancelAdding()">Cancel</button>
+        </div>
         </div>
       </div>
     </div>

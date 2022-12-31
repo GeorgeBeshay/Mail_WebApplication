@@ -76,7 +76,13 @@ public class ServerCore {
 	 * Method updates / overwrite the current saved document by the new updated document.
 	 * @param modifiedUser
 	 */
-	public void updateUser(User modifiedUser) {
-		userRepo.save(modifiedUser);
+	public User updateUser(User modifiedUser) {
+		return userRepo.save(modifiedUser);
+	}
+	
+	
+	public User addFolder(User modifiedUser, String newFolderName) {
+		modifiedUser.getFolders().add(new Folder(newFolderName));
+		return this.updateUser(modifiedUser);
 	}
 }

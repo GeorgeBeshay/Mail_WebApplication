@@ -261,17 +261,27 @@ export class MailPageComponent implements OnInit {
     }
   }
   // -------------- Separator --------------
-  addFolder() {
+  async addFolder() {
     let folderName = document.getElementById(
       'newFolderName'
     ) as HTMLInputElement;
     if (folderName.value.length > 0) {
+      this.myUser = await this.myBECaller.reqAddFolder(
+        this.myUser,
+        folderName.value
+      );
+      this.generateFolders();
       let tempDiv = document.getElementById('createFolder') as HTMLDivElement;
       tempDiv.style.visibility = 'hidden';
     } else {
       alert('Folder name is invalid');
       return;
     }
+  }
+  // -------------- Separator --------------
+  cancelAdding() {
+    let tempDiv = document.getElementById('createFolder') as HTMLDivElement;
+    tempDiv.style.visibility = 'hidden';
   }
   // -------------- Separator --------------
   showFolderCreationPage() {

@@ -485,7 +485,7 @@ textarea {
   background-color: #555;
   border: none;
   outline: none;
-  height: 30%;
+  height: 40%;
   width: 80%;
   color: white;
   padding: 10px;
@@ -497,17 +497,52 @@ textarea {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
 }
+.addFolderOption {
+  /* background-color: white; */
+  width: initial;
+  height: initial;
+  background-color: transparent;
+}
+.LTB .addFolderOption button {
+  background-color: rgba(255, 255, 255, 0.739);
+  padding: 10px;
+  color: black;
+  width: fit-content;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+.LTB .addFolderOption button:hover {
+  width: initial;
+  height: initial;
+  padding: 10px 20px;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
 #createFolder #cfButtonHolder input:focus {
   width: 90%;
   height: 35%;
   background-color: rgba(0, 0, 0, 0.872);
+}
+#createFolder #cfButtonHolder div {
+  width: 100%;
+  display: flex;
+  gap: 5%;
+  justify-content: space-around;
 }
 #createFolder #cfButtonHolder button {
   width: initial;
   height: initial;
   padding: initial;
   margin: initial;
-  width: 50%;
+  width: 40%;
   margin-top: 20px;
   padding: 10px;
   background-color: #555;
@@ -516,4 +551,10 @@ textarea {
   -ms-border-radius: initial;
   -o-border-radius: initial;
   border-radius: 2px;
+  transition-duration: 300ms;
+}
+#createFolder #cfButtonHolder button:hover {
+  width: 45%;
+  background-color: black;
+  color: white;
 }

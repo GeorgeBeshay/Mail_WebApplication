@@ -24,10 +24,14 @@ export class BackEndCallerService {
     return await firstValueFrom(this.http.post(this.url + 'signUp', user));
   }
   // ---------------- Separator ----------------
-  async reqAddFolder(newFolderName: string) {
+  async reqAddFolder(currentUser: User, newFolderName: string) {
     return await firstValueFrom(
-      this.http.post(this.url + 'createNewFolder', newFolderName)
+      this.http.post<User>(this.url + 'createNewFolder/' + newFolderName, currentUser)
     );
+    // return await this.http.post<User>(
+    //   this.url + 'createNewFolder/' + newFolderName,
+    //   currentUser
+    // );
   }
   // ---------------- Separator ----------------
 }

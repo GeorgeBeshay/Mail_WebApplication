@@ -2,6 +2,7 @@ package RequestsPackage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,15 @@ public class UpdateUserData_RC {
 		System.out.println("Front End Server Requested an update for the user data." + 
 				"\nBack End Server is Replying By: \n");
 		this.myServerCore.updateUser(modifiedUser);
+	}
+	
+	@PostMapping(value = {"/createNewFolder/{folderName}"})
+	public User addFolder(@PathVariable String folderName, @RequestBody User user) {
+		System.out.println();
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to create a new Folder." + 
+				"\nBack End Server is Replying By: \n");
+		return this.myServerCore.addFolder(user, folderName);
 	}
 
 }
