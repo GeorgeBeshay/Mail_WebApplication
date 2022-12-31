@@ -17,12 +17,15 @@ export class LandingPageComponent implements OnInit {
   // -------------- Separator --------------
   ngOnInit(): void {}
   // -------------- Separator --------------
-  signIn() {
-    let tempEmail: any = (document.getElementById('email') as HTMLInputElement | null)?.value;
-    let tempPw: any = (document.getElementById('pw') as HTMLInputElement | null)?.value;
-    let tempReturned = this.myBECaller.reqSignIn(tempEmail, tempPw);
+  async signIn() {
+    let tempEmail: any = (
+      document.getElementById('email') as HTMLInputElement | null
+    )?.value;
+    let tempPw: any = (document.getElementById('pw') as HTMLInputElement | null)
+      ?.value;
+    let tempReturned = await this.myBECaller.reqSignIn(tempEmail, tempPw);
     console.log(tempReturned);
-    if (tempReturned != null) {
+    if (tempReturned !== null) {
       this._router.navigate(['ViewEmails']);
     } else {
       alert('Authentication Failed.');
