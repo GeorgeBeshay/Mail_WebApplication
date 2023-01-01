@@ -27,13 +27,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+import FileHandlingRequests.FileServer;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/callBackEndServer")
 @RestController
 public class Files_RC {
 	
-	@Autowired
-	private ServerCore myServerCore = ServerCore.getServerCoreInstance();
+	@Autowired(required = false)
+	private FileServer fileServer = FileServer.getInstanceFileServer();
 	
 	private static final String DIRECTORY = System.getProperty("user.dir") + "\\src\\main\\resources\\Attachements\\";;
 	
@@ -41,10 +43,9 @@ public class Files_RC {
 	
 	@PostMapping("/file/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("files")List<MultipartFile> multipartFiles) throws IOException {
-		System.out.println("In upload");
         List<String> filenames = new ArrayList<>();
         for(MultipartFile file : multipartFiles) {
-        	File newFile = new File(DIRECTORY + file.getOriginalFilename());
+        	File newFile = new File(DIRECTORY + fileServer.getPath(file.getOriginalFilename()) + file.getOriginalFilename());
         	file.transferTo(newFile);
             filenames.add(newFile.getName());
         }
@@ -55,7 +56,7 @@ public class Files_RC {
 	
 	@GetMapping("/file/download/{filename}")
     public ResponseEntity<Resource> downloadFiles(@PathVariable("filename") String filename) throws IOException {
-        Path filePath = get(DIRECTORY).toAbsolutePath().normalize().resolve(filename);
+        Path filePath = get(DIRECTORY).toAbsolutePath().normalize().resolve(fileServer.getPath(filename) + filename);
         if(!Files.exists(filePath)) {
             throw new FileNotFoundException(filename + " was not found on the server");
         }
