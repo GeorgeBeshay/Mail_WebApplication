@@ -38,7 +38,7 @@ public class Contacts_RC {
 	public User newCont( @RequestBody User currentUser) {
 		System.out.println();
 		System.out.println("------------------------------------------------");
-		System.out.println("Front End Server Requested to create a new Folder." + 
+		System.out.println("Front End Server Requested to create a new contact." + 
 				"\nBack End Server is Replying By: \n");
 		//return this.myServerCore.addContact(newContact, currentUser);
 		return myServerCore.updateUser(currentUser);
@@ -48,7 +48,7 @@ public class Contacts_RC {
 	public User deleteCont( @PathVariable int i,@RequestBody User currentUser) {
 		System.out.println();
 		System.out.println("------------------------------------------------");
-		System.out.println("Front End Server Requested to create a new Folder." + 
+		System.out.println("Front End Server Requested to delete a contact." + 
 				"\nBack End Server is Replying By: \n");
 		//return this.myServerCore.addContact(newContact, currentUser);
 		return myServerCore.deleContact(i,currentUser);

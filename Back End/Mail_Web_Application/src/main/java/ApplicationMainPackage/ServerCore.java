@@ -56,6 +56,10 @@ public class ServerCore {
 	 * @return In case of being authenticated, User is returned else, null is returned.
 	 */
 	public User authenticate(SignInData signInData) {
+		if(signInData.getEmailAddress().equals("") || signInData.getEmailPassword().equals("")) {
+			System.out.println("No data entererd");
+			return null;
+		}
 		String emailAddress = signInData.getEmailAddress();
 		String emailPassword = signInData.getEmailPassword();
 		try {
