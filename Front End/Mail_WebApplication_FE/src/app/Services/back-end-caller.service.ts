@@ -3,12 +3,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { User } from '../Interfaces/user';
 import { Contact } from '../Interfaces/contact';
+import { Email } from '../Interfaces/email';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BackEndCallerService {
-
   private port = 8081;
   private url = `http://localhost:${this.port}/callBackEndServer/`;
   constructor(private http: HttpClient) {}
@@ -28,23 +28,38 @@ export class BackEndCallerService {
   // ---------------- Separator ----------------
   async reqAddFolder(currentUser: User, newFolderName: string) {
     return await firstValueFrom(
-      this.http.post<User>(this.url + 'createNewFolder/' + newFolderName, currentUser)
+      this.http.post<User>(
+        this.url + 'createNewFolder/' + newFolderName,
+        currentUser
+      )
     );
-    // return await this.http.post<User>(
-    //   this.url + 'createNewFolder/' + newFolderName,
-    //   currentUser
-    // );
   }
   // ---------------- Separator ----------------
   async addNewContact(currentUser: User) {
-    return await firstValueFrom(this.http.post<User>(this.url + 'addnewContact/', currentUser));
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'addnewContact/', currentUser)
+    );
   }
-  
-  async deletContact(currentUser: User, i: number ) {
-    return await firstValueFrom(this.http.post<User>(this.url + 'deleteContact/'+i, currentUser));
+  // ---------------- Separator ----------------
+  async deletContact(currentUser: User, i: number) {
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'deleteContact/' + i, currentUser)
+    );
   }
-
+  // ---------------- Separator ----------------
+  async sendAnEmail(currentUser: User, emailInstance: Email) {
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'sendEmail/', {
+        activeUser: currentUser,
+        email: emailInstance,
+      })
+    );
+  }
+  // ---------------- Separator ----------------
   async updateUserData(currentUser: User) {
-    return await firstValueFrom(this.http.post<User>(this.url + 'updateUserInfo/', currentUser));
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'updateUserInfo/', currentUser)
+    );
   }
+  // ---------------- Separator ----------------
 }

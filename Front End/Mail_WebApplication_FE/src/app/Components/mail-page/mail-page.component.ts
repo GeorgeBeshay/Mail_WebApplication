@@ -8,6 +8,7 @@ import { Folder } from 'src/app/Interfaces/folder';
 import { ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from 'src/app/Interfaces/contact';
+import { EmailBuilderService } from 'src/app/Services/email-builder.service';
 
 @Component({
   selector: 'app-mail-page',
@@ -22,6 +23,7 @@ export class MailPageComponent implements OnInit {
   public selectedEmail!: Email;
   private myEmails: Email[] = [];
   private myUser!: User;
+  private attachedFiles!: string[];
   // -------------- Separator --------------
   constructor(
     private http: HttpClient,
@@ -37,8 +39,9 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   ngOnInit(): void {
     this.resetSelectedEmail();
-    this.generateMails();
+    // this.generateMails();
     this.selectedFolder = this.myUser.folders[0].name;
+    this.attachedFiles = [];
     this.generateFolders();
   }
   // -------------- Separator --------------
@@ -65,6 +68,7 @@ export class MailPageComponent implements OnInit {
   selectFolder(folderName: any) {
     this.selectedFolder = folderName;
     this.resetSelectedEmail();
+    this.myEmails = this.myUser.folders[folderName].emails;
     const tempEmailsHolder = document.getElementById('emailsHolder');
     if (!tempEmailsHolder) return;
     tempEmailsHolder.innerHTML = ``;
@@ -146,65 +150,6 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   compose_email() {
     console.log('in compose email');
-    // const elem = document.getElementById('content');
-    // if (elem == null) return;
-    // elem.innerHTML = `
-    //   <div class="composeEmail" >
-    //     <div class="From">from: </div>
-    //     <input disabled type="email" placeholder="userAccount@mail.com" id="FromID">
-    //   </div>
-    // `;
-    // elem.innerHTML +=
-    // `<div class="to">
-    //     <div>To:</div>
-    //     <input type="email" placeholder="JohnDoe@mail.com" id="ToID">
-    // </div>`;
-
-    // elem.innerHTML +=
-    // `<div class="subject">
-    //     <div>Subject:</div>
-    //     <input type="text" placeholder="Email Subject" id="SubjID">
-    // </div>`;
-
-    // elem.innerHTML +=
-    // `<div class="body">
-    //     <div>Body:</div>
-    //     <textarea style="font-size: 17px;" id="TextID"></textarea>
-    // </div>`;
-
-    // elem.innerHTML +=
-    // `<div class="sendB">
-    //     <button>
-    //         SEND
-    //       </button>
-    // </div>`;
-
-    // let tempdb=document.createElement('div');
-    // tempdb.classList.add("ButtonsDiv");
-    // let tempButtonsHolder = document.createElement('div');
-    //   tempButtonsHolder.classList.add('buttonHolder');
-    //   let tempEditButtonElement = document.createElement('button');
-    //   tempEditButtonElement.appendChild(document.createTextNode('+'));
-    //   tempEditButtonElement.addEventListener('click', (func4) => {
-    //     let tempInput = document.createElement('input');
-    //     tempInput.type="email";
-    //     let emailCont = document.getElementById('Emails');
-    //     emailCont?.appendChild(tempInput);
-    //   });
-
-    //   tempButtonsHolder.appendChild(tempEditButtonElement);
-    //   tempdb.appendChild(tempButtonsHolder);
-    //   elem.appendChild(tempdb);
-
-    //   let tempSaveD=document.createElement('div');
-    //   let tempSaveB=document.createElement('button');
-    //   tempSaveB.appendChild(document.createTextNode('SAVE'));
-    //   tempSaveB.classList.add("SaveButton");
-
-    //   tempdb.appendChild(tempSaveB);
-    //   tempSaveD.appendChild(tempdb);
-    //   elem.appendChild(tempSaveD);
-
     const elem = document.getElementById('content');
     if (elem == null) return;
     elem.innerHTML = '';
@@ -222,6 +167,8 @@ export class MailPageComponent implements OnInit {
     let fromInput = document.createElement('input');
     fromInput.disabled = true;
     fromInput.type = 'email';
+    fromInput.id = 'fromInputId';
+    fromInput.value = this.myUser.emailAddress;
     fromInput.placeholder = 'userAccount@csedmail.com';
     fromInnerDiv.appendChild(document.createTextNode('From:'));
     fromDiv.appendChild(fromInnerDiv);
@@ -234,12 +181,13 @@ export class MailPageComponent implements OnInit {
     // </div>
     let toDiv = document.createElement('div');
     toDiv.classList.add('to');
-    toDiv.id = "To";
+    toDiv.id = 'To';
     let toInnerDiv = document.createElement('div');
     let toInput = document.createElement('input');
     toInput.type = 'email';
+    toInput.id = 'toInputId';
     // toInput.list = 'receiver';
-    toInput.setAttribute("list", 'receiver');
+    toInput.setAttribute('list', 'receiver');
     toInput.placeholder = 'JohnDoe@csedmail.com';
     toInnerDiv.appendChild(document.createTextNode('To:'));
     toDiv.appendChild(toInnerDiv);
@@ -258,6 +206,7 @@ export class MailPageComponent implements OnInit {
     let subjectInnerDiv = document.createElement('div');
     let subjectInput = document.createElement('input');
     subjectInput.type = 'text';
+    subjectInput.id = 'subjectInputId';
     subjectInput.placeholder = 'Email Subject';
     subjectInnerDiv.appendChild(document.createTextNode('Subject:'));
     subjectDiv.appendChild(subjectInnerDiv);
@@ -279,10 +228,14 @@ export class MailPageComponent implements OnInit {
     bodyInnerDiv.appendChild(document.createTextNode('Body:'));
     let bodyText = document.createElement('textarea');
     bodyText.style.fontSize = '17px';
+    bodyText.id = 'bodyInputId';
     let buttonDiv = document.createElement('div');
     buttonDiv.classList.add('sendB');
     let buttonElement = document.createElement('button');
     buttonElement.appendChild(document.createTextNode('SEND'));
+    buttonElement.addEventListener('click', (func) => {
+      this.sendTheEmail();
+    });
     buttonDiv.appendChild(buttonElement);
     bodyDiv.appendChild(bodyInnerDiv);
     bodyDiv.appendChild(bodyText);
@@ -367,33 +320,31 @@ export class MailPageComponent implements OnInit {
       this.onFileSelected(event);
     });
   }
-  
   // -------------- Separator --------------
-  recievers(){
-    console.log("in receivers")
+  recievers() {
+    console.log('in receivers');
     let toEmails = [];
     let myContacts: Contact[] = this.myUser.contacts;
-    for(let contact of myContacts){
-      for(let email of contact.emails){
+    for (let contact of myContacts) {
+      for (let email of contact.emails) {
         toEmails.push(email);
       }
     }
     let div = document.getElementById('To');
-    if(!div) return
+    if (!div) return;
     // div.innerHTML += `
     // <div>To:</div>
     // <input type="email" placeholder="JohnDoe@mail.com" list="receiver">
     // `;
     let tempData = document.createElement('datalist');
-    tempData.id = "receiver";
-    for(let email of toEmails){
+    tempData.id = 'receiver';
+    for (let email of toEmails) {
       let tempOption = document.createElement('option');
       tempOption.value = email;
       tempData.appendChild(tempOption);
     }
     div.appendChild(tempData);
   }
-
   // -------------- Separator --------------
   refreshMailBox() {
     this.selectFolder(this.selectedFolder);
@@ -456,6 +407,7 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   showFilesAttached(fileNames: string[]) {
+    this.attachedFiles = fileNames;
     let attachmentsHolder = document.getElementById('attachedFiles');
     if (attachmentsHolder) attachmentsHolder.innerHTML = ``;
     console.log(attachmentsHolder);
@@ -526,6 +478,28 @@ export class MailPageComponent implements OnInit {
       queryParams: { userObj: JSON.stringify(this.myUser) },
       replaceUrl: true,
     });
+  }
+  // -------------- Separator --------------
+  async sendTheEmail() {
+    let emailBuilder: EmailBuilderService = new EmailBuilderService();
+    let tempContent = document.getElementById(
+      'fromInputId'
+    ) as HTMLInputElement;
+    emailBuilder.buildSender(tempContent.value);
+    tempContent = document.getElementById('toInputId') as HTMLInputElement;
+    emailBuilder.buildReceiver(tempContent.value);
+    tempContent = document.getElementById('subjectInputId') as HTMLInputElement;
+    emailBuilder.buildSubject(tempContent.value);
+    emailBuilder.buildAttachments(this.attachedFiles);
+    let bodyContent = document.getElementById(
+      'bodyInputId'
+    ) as HTMLTextAreaElement;
+    emailBuilder.buildBody(bodyContent.value);
+    this.myUser = await this.myBECaller.sendAnEmail(
+      this.myUser,
+      emailBuilder.buildEmail()
+    );
+    this.reloadPage();
   }
   // -------------- Separator --------------
 }

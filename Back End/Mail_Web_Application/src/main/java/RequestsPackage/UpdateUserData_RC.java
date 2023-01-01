@@ -41,5 +41,14 @@ public class UpdateUserData_RC {
 		return this.myServerCore.addFolder(user, folderName);
 	}
 	
+	@PostMapping(value = {"/sendEmail/"})
+	public User sendAnEmail(@RequestBody SendingEmail_Template  emailReqData) {
+		System.out.println();
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to send a mail." + 
+				"\nBack End Server is Replying \n");
+		return this.myServerCore.sendAnEmail(emailReqData);
+	}
+	
 
 }

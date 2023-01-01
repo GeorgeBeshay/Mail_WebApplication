@@ -86,6 +86,24 @@ public class ServerCore {
 		return userRepo.save(modifiedUser);
 	}
 	
+	/**
+	 * Method receives an email template data, then push the mail to the receiver inbox folder, 
+	 * and place the mail inside the sent folder of the sender user.
+	 * @param emailReqData
+	 * @return
+	 */
+	public User sendAnEmail(SendingEmail_Template emailReqData) {
+		try {
+		User receiverUser =  userRepo.findById(emailReqData.getEmail().getReceiver()).get();
+		receiverUser.getFolders().get(0).addEmail(emailReqData.getEmail());
+		this.updateUser(receiverUser); 
+		} catch (Exception E) {
+			System.out.println("User Error: Receiver mail does not exist.");
+		}
+		emailReqData.getActiveUser().getFolders().get(1).addEmail(emailReqData.getEmail());
+		return this.updateUser(emailReqData.getActiveUser());
+	}
+	
 	
 	public User addFolder(User modifiedUser, String newFolderName) {
 		modifiedUser.getFolders().add(new Folder(newFolderName));

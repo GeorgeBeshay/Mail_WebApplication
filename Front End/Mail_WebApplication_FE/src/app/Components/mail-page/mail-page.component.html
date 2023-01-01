@@ -27,31 +27,31 @@
         </button>
       </div>
       <div class="inbox">
-        <button (click)="selectFolder('Inbox')">
+        <button (click)="selectFolder(0)">
           <mat-icon>inbox</mat-icon>
           <p>Inbox</p>
         </button>
       </div>
       <div class="sent">
-        <button (click)="selectFolder('Sent')">
+        <button (click)="selectFolder(1)">
           <mat-icon>send</mat-icon>
           <p>Sent</p>
         </button>
       </div>
       <div class="trash">
-        <button (click)="selectFolder('Trash')">
+        <button (click)="selectFolder(2)">
           <mat-icon>delete</mat-icon>
           <p>Trash</p>
         </button>
       </div>
       <div class="starred">
-        <button (click)="selectFolder('Starred')">
+        <button (click)="selectFolder(3)">
           <mat-icon>star</mat-icon>
           <p>Starred</p>
         </button>
       </div>
       <div class="draft">
-        <button (click)="selectFolder('draft')">
+        <button (click)="selectFolder(4)">
           <mat-icon>description</mat-icon>
           <p>Drafts</p>
         </button>
@@ -59,9 +59,7 @@
       <div id="foldersHolder"></div>
       <div class="addFolderOption">
         <button (click)="showFolderCreationPage()">
-          <mat-icon>
-            create_new_folder
-          </mat-icon>
+          <mat-icon> create_new_folder </mat-icon>
         </button>
       </div>
       <div id="createFolder" style="visibility: hidden">
@@ -69,9 +67,9 @@
           Enter The Folder Name
           <input id="newFolderName" type="text" />
           <div>
-          <button (click)="addFolder()">Add</button>
-          <button (click)="cancelAdding()">Cancel</button>
-        </div>
+            <button (click)="addFolder()">Add</button>
+            <button (click)="cancelAdding()">Cancel</button>
+          </div>
         </div>
       </div>
     </div>
