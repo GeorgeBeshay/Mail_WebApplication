@@ -162,9 +162,6 @@
 
   .Box .contactDetails {
     grid-area: 6/3/12/11;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     background-color: rgba(255, 255, 255, 0.444);
     overflow-y: scroll;
     border-radius: 20px;
@@ -172,6 +169,63 @@
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
+  }
+  .Box .contactDetails #Emails{
+    padding: 0px 10px;
+    font-family: "Unbounded", cursive;
+  }
+  .Box .contactDetails .Name{
+    padding: 0px 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    display: flex;
+    font-family: "Unbounded", cursive;
+  }
+  .Box .contactDetails .Name .Namelabel{
+    padding: 5px 0px;
+    padding-right: 9px;
+  }
+  .Box .contactDetails  input{
+    width: 60%;
+    border: none;
+    outline: none;
+    padding: 5px 5px;
+    margin: 5px 0px;
+    background-color: rgba(0, 0, 0, 0.495);
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+  }
+  .Box .contactDetails .ButtonsDiv{
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr; */
+    display: flex;
+    margin-left: 15px;
+    padding: 10px,10px;
+  }
+  .Box .contactDetails button{
+    padding: 5px 5px;
+    margin: 10px;
+    width: auto;
+    font-family: "Unbounded", cursive;
+    border: none;
+    border-radius: 5px;
+  }
+  .Box .contactDetails .buttonHolder button{
+    padding: 5px 5px;
+    margin: 10px;
+    width: 60%;
+    font-family: "Unbounded", cursive;
+    border: none;
+    border-radius: 5px;
+  }
+  .Box .contactDetails button:hover {
+    color: rgb(255, 255, 255);
+    background-color: black;
   }
  
   .Box .footer {

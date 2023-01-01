@@ -31,6 +31,7 @@ export class ContactsComponent implements OnInit {
     this.myContacts=this.myUser.contacts;
     this.viewContacts();
   }
+
   viewContacts(){
     const tempEmailsHolder = document.getElementById('contactsViewId');
     if (!tempEmailsHolder) return;
@@ -68,7 +69,7 @@ export class ContactsComponent implements OnInit {
     if (elem == null) return;
     elem.innerHTML = `
       <div class="Name" >
-        <div>Name:</div>
+        <div class="Namelabel">Name: </div>
         <input id="cName" type="text" placeholder="John">
       </div>
     `;
@@ -76,6 +77,9 @@ export class ContactsComponent implements OnInit {
       `<div id ="Emails"> Emails:
         <input type="email" placeholder="John@ac.com"">
       </div>`;
+      
+      let tempdb=document.createElement('div');
+      tempdb.classList.add("ButtonsDiv");
       let tempButtonsHolder = document.createElement('div');
       tempButtonsHolder.classList.add('buttonHolder');
       let tempEditButtonElement = document.createElement('button');
@@ -87,9 +91,10 @@ export class ContactsComponent implements OnInit {
         emailCont?.appendChild(tempInput);
       });
 
-      elem.appendChild(tempButtonsHolder);
-  
       tempButtonsHolder.appendChild(tempEditButtonElement);
+      tempdb.appendChild(tempButtonsHolder);
+      elem.appendChild(tempdb);
+
       let tempSaveD=document.createElement('div');
       let tempSaveB=document.createElement('button');
       tempSaveB.appendChild(document.createTextNode('SAVE'));
@@ -97,12 +102,59 @@ export class ContactsComponent implements OnInit {
       tempSaveB.addEventListener('click', (func5) => {
         this.saveContact();
       });
-      tempSaveD.appendChild(tempSaveB);
+      
+      tempdb.appendChild(tempSaveB);
+      tempSaveD.appendChild(tempdb);
       elem.appendChild(tempSaveD);
   
   }
 
-  editContact(contact:any){
+  editContact(contact:Contact){
+    const elem = document.getElementById('contactDetailsId');
+    if (elem == null) return;
+    elem.innerHTML = `
+      <div class="Name" >
+        <div class="Namelabel">Name: </div>
+        <input id="cName" type="text" value=${contact.name}>
+      </div>
+    `;
+    elem.innerHTML += 
+    `<div id ="Emails"> Emails:
+    </div>`;
+    for(let i=0;i<contact.emails.length;i++){
+      let tempInput = document.createElement('input');
+      tempInput.type="email";
+      tempInput.value=contact.emails[i];
+      let emailCont = document.getElementById('Emails');
+      emailCont?.appendChild(tempInput);
+    }
+    let tempdb=document.createElement('div');
+    tempdb.classList.add("ButtonsDiv");
+    let tempButtonsHolder = document.createElement('div');
+      tempButtonsHolder.classList.add('buttonHolder');
+      let tempEditButtonElement = document.createElement('button');
+      tempEditButtonElement.appendChild(document.createTextNode('+'));
+      tempEditButtonElement.addEventListener('click', (func4) => {
+        let tempInput = document.createElement('input');
+        tempInput.type="email";
+        let emailCont = document.getElementById('Emails');
+        emailCont?.appendChild(tempInput);
+      });
+      
+      tempButtonsHolder.appendChild(tempEditButtonElement);
+      tempdb.appendChild(tempButtonsHolder);
+      elem.appendChild(tempdb);
+
+      let tempSaveD=document.createElement('div');
+      let tempSaveB=document.createElement('button');
+      tempSaveB.appendChild(document.createTextNode('SAVE'));
+      tempSaveB.classList.add("SaveButton");
+      tempSaveB.addEventListener('click', (func5) => {
+        this.edit(contact);
+      });
+      tempdb.appendChild(tempSaveB);
+      tempSaveD.appendChild(tempdb);
+      elem.appendChild(tempSaveD);
   }
   
   async deletContact(contact:Contact){
@@ -110,9 +162,29 @@ export class ContactsComponent implements OnInit {
     this.myUser = await this.myBECaller.deletContact(this.myUser,i);
     this.myContacts=this.myUser.contacts;
     this.viewContacts();
+
   }
   
-  ViewContact(contact:any){
+  ViewContact(contact:Contact){
+    const elem = document.getElementById('contactDetailsId');
+    if (elem == null) return;
+    elem.innerHTML = `
+      <div class="Name" >
+        <div class="Namelabel" >Name: </div>
+        <input id="cName" type="text" value=${contact.name} disabled>
+      </div>
+    `;
+    elem.innerHTML += 
+    `<div id ="Emails"> Emails:
+    </div>`;
+    for(let i=0;i<contact.emails.length;i++){
+      let tempInput = document.createElement('input');
+      tempInput.type="email";
+      tempInput.disabled=true;
+      tempInput.value=contact.emails[i];
+      let emailCont = document.getElementById('Emails');
+      emailCont?.appendChild(tempInput);
+    }
   }
 
   async saveContact(){
@@ -130,6 +202,18 @@ export class ContactsComponent implements OnInit {
     this.myUser = await this.myBECaller.addNewContact(this.myUser);
     this.myContacts=this.myUser.contacts;
     this.viewContacts();
+    const elem = document.getElementById('contactDetailsId');
+    if (elem == null) return;
+    elem.innerHTML = ``;
     
+  }
+  async edit(contact:Contact){
+    await this.deletContact(contact);
+    await this.saveContact();
+    const elem = document.getElementById('contactDetailsId');
+    if (elem == null) return;
+    elem.innerHTML = ``;
+    console.log(this.myUser);
+
   }
 }
