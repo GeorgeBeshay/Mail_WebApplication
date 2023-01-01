@@ -2,6 +2,8 @@ package ApplicationMainPackage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import ComponentsPackage.*;
 import java.util.*;
 
@@ -84,5 +86,14 @@ public class ServerCore {
 	public User addFolder(User modifiedUser, String newFolderName) {
 		modifiedUser.getFolders().add(new Folder(newFolderName));
 		return this.updateUser(modifiedUser);
+	}
+	
+	public User addContact(Contact newContact, User user) {
+		user.getContacts().add(newContact);
+		return this.updateUser(user);
+	}
+	public User deleContact(int i, User user) {
+		user.getContacts().remove(i);
+		return this.updateUser(user);
 	}
 }

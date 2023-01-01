@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, UrlSerializer } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 import { User } from '../Interfaces/user';
 import { Contact } from '../Interfaces/contact';
 import { saveAs } from 'file-saver';
+import { BackEndCallerService } from '../Services/back-end-caller.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-contacts',
@@ -12,10 +14,12 @@ import { saveAs } from 'file-saver';
   encapsulation: ViewEncapsulation.None,
 })
 export class ContactsComponent implements OnInit {
+  private myBECaller: BackEndCallerService;
   private myUser!: User;
   private myContacts!:Contact[];
   // -------------- Separator --------------
-  constructor( private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+    this.myBECaller = new BackEndCallerService(this.http);
     this.route.queryParams.subscribe((params) => {
       this.myUser = JSON.parse(params['userObj']);
     });
@@ -24,7 +28,7 @@ export class ContactsComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.generateMails();
+    this.myContacts=this.myUser.contacts;
     this.viewContacts();
   }
   viewContacts(){
@@ -101,31 +105,31 @@ export class ContactsComponent implements OnInit {
   editContact(contact:any){
   }
   
-  deletContact(contact:any){
+  async deletContact(contact:Contact){
+    let i=this.myUser.contacts.indexOf(contact);
+    this.myUser = await this.myBECaller.deletContact(this.myUser,i);
+    this.myContacts=this.myUser.contacts;
+    this.viewContacts();
   }
   
   ViewContact(contact:any){
   }
 
-  saveContact(){
-    let name: any = (document.getElementById('cName') as HTMLInputElement | null)?.value;
+  async saveContact(){
+    let Name: string = (document.getElementById('cName') as HTMLInputElement )?.value;
     let data=document.getElementById('Emails') as HTMLDivElement;
     let addresses =[];
     for(let i=0; i<data.children.length;i++){
       addresses.push((data.children[i] as HTMLInputElement).value);
     }
     console.log(addresses);
+    console.log(Name);
+    let newContact: Contact=  {name:Name,emails:addresses};
+    console.log(newContact);
+    this.myUser.contacts.push(newContact);
+    this.myUser = await this.myBECaller.addNewContact(this.myUser);
+    this.myContacts=this.myUser.contacts;
+    this.viewContacts();
     
-  }
-
-  generateMails() {
-    this.myUser.contacts.push({
-      name:"hi",
-      emails:["hi@.com","by@.com"]
-    });
-    this.myUser.contacts.push({
-      name:"bye",
-      emails:["go@.com","come@.com"]
-    });
   }
 }

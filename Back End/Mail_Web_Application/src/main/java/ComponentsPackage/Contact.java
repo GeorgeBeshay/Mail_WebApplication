@@ -7,9 +7,9 @@ public class Contact {
 	String name;
 	ArrayList<String> emails;
 	
-	public Contact(String name) {
+	public Contact(String name,ArrayList<String> emails) {
 		this.name = name;
-		this.emails = new ArrayList<String>();
+		this.emails =emails;
 	}
 	
 	public String getName() {

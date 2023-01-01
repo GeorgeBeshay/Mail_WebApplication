@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { User } from '../Interfaces/user';
+import { Contact } from '../Interfaces/contact';
 
 @Injectable({
   providedIn: 'root',
@@ -34,4 +35,11 @@ export class BackEndCallerService {
     // );
   }
   // ---------------- Separator ----------------
+  async addNewContact(currentUser: User) {
+    return await firstValueFrom(this.http.post<User>(this.url + 'addnewContact/', currentUser));
+  }
+  
+  async deletContact(currentUser: User, i: number ) {
+    return await firstValueFrom(this.http.post<User>(this.url + 'deleteContact/'+i, currentUser));
+  }
 }
