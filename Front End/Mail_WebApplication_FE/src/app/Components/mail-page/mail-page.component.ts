@@ -22,7 +22,11 @@ export class MailPageComponent implements OnInit {
   private myEmails: Email[] = [];
   private myUser!: User;
   // -------------- Separator --------------
-  constructor(private http: HttpClient, private route: ActivatedRoute, private _router:Router) {
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private _router: Router
+  ) {
     this.myBECaller = new BackEndCallerService(this.http);
     this.fileUploadDownload = new FileUploadDownloadService(this.http);
     this.route.queryParams.subscribe((params) => {
@@ -82,6 +86,12 @@ export class MailPageComponent implements OnInit {
       tempButtonsHolder.appendChild(tempViewButtonElement);
       tempButtonsHolder.appendChild(tempDeleteButtonElement);
       tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
+    }
+    if (this.myEmails.length > 3) {
+      console.log('reached');
+      tempEmailsHolder.style.overflowY = 'scroll';
+    } else {
+      tempEmailsHolder.style.overflowY = 'hidden';
     }
   }
   // -------------- Separator --------------
@@ -143,31 +153,30 @@ export class MailPageComponent implements OnInit {
     //     <input disabled type="email" placeholder="userAccount@mail.com" id="FromID">
     //   </div>
     // `;
-    // elem.innerHTML += 
-    // `<div class="to"> 
+    // elem.innerHTML +=
+    // `<div class="to">
     //     <div>To:</div>
     //     <input type="email" placeholder="JohnDoe@mail.com" id="ToID">
     // </div>`;
 
-    // elem.innerHTML += 
-    // `<div class="subject"> 
+    // elem.innerHTML +=
+    // `<div class="subject">
     //     <div>Subject:</div>
     //     <input type="text" placeholder="Email Subject" id="SubjID">
     // </div>`;
 
-    // elem.innerHTML += 
-    // `<div class="body"> 
+    // elem.innerHTML +=
+    // `<div class="body">
     //     <div>Body:</div>
     //     <textarea style="font-size: 17px;" id="TextID"></textarea>
     // </div>`;
 
-    // elem.innerHTML += 
+    // elem.innerHTML +=
     // `<div class="sendB">
     //     <button>
     //         SEND
     //       </button>
     // </div>`;
-
 
     // let tempdb=document.createElement('div');
     // tempdb.classList.add("ButtonsDiv");
@@ -181,7 +190,7 @@ export class MailPageComponent implements OnInit {
     //     let emailCont = document.getElementById('Emails');
     //     emailCont?.appendChild(tempInput);
     //   });
-      
+
     //   tempButtonsHolder.appendChild(tempEditButtonElement);
     //   tempdb.appendChild(tempButtonsHolder);
     //   elem.appendChild(tempdb);
@@ -195,45 +204,157 @@ export class MailPageComponent implements OnInit {
     //   tempSaveD.appendChild(tempdb);
     //   elem.appendChild(tempSaveD);
 
-
-
     const elem = document.getElementById('content');
     if (elem == null) return;
-    elem.innerHTML = `
-    <div class="composeEmail">
-      <div class="from" >
-        <div>From:</div>
-        <input disabled type="email" placeholder="userAccount@mail.com"">
-      </div>
-      <div class="to">
-        <div>To:</div>
-        <input type="email" placeholder="JohnDoe@mail.com">
-      </div>
-      <div class="subject">
-      <div>Subject:</div>
-      <input type="text" placeholder="Email Subject">
-      </div>
-      <div class="body">
-        <div>Body:</div>
-        <textarea style="font-size: 17px;"></textarea>
-        <div class="sendB">
-          <button>
-            SEND
-          </button>
-        </div>
-      </div>
-      <div>
-        <div>Attachments:</div>
-        <div class="attachmentsHolder">
-          <div>
-          <button onclick="document.getElementById('fileUpload').click()">Attach</button>
-          <input type="file" id = "fileUpload" multiple style="visibility: hidden;">
-          </div>
-          <div id="attachedFiles"></div>
-        </div>
-      </div>
-    </div>
-    `;
+    elem.innerHTML = '';
+    // ------------------- Separator -------------------
+    let composeEmailDiv = document.createElement('div');
+    composeEmailDiv.classList.add('composeEmail');
+    // ------------------- Separator -------------------
+    // <div class="from" >
+    //     <div>From:</div>
+    //     <input disabled type="email" placeholder="userAccount@mail.com"">
+    // </div>
+    let fromDiv = document.createElement('div');
+    fromDiv.classList.add('from');
+    let fromInnerDiv = document.createElement('div');
+    let fromInput = document.createElement('input');
+    fromInput.disabled = true;
+    fromInput.type = 'email';
+    fromInput.placeholder = 'userAccount@csedmail.com';
+    fromInnerDiv.appendChild(document.createTextNode('From:'));
+    fromDiv.appendChild(fromInnerDiv);
+    fromDiv.appendChild(fromInput);
+    composeEmailDiv.appendChild(fromDiv);
+    // ------------------- Separator -------------------
+    // <div class="to">
+    //     <div>To:</div>
+    //     <input type="email" placeholder="JohnDoe@mail.com">
+    // </div>
+    let toDiv = document.createElement('div');
+    toDiv.classList.add('to');
+    let toInnerDiv = document.createElement('div');
+    let toInput = document.createElement('input');
+    toInput.type = 'email';
+    toInput.placeholder = 'JohnDoe@csedmail.com';
+    toInnerDiv.appendChild(document.createTextNode('To:'));
+    toDiv.appendChild(toInnerDiv);
+    toDiv.appendChild(toInput);
+    composeEmailDiv.appendChild(toDiv);
+    // ------------------- Separator -------------------
+    // <div class="subject">
+    //   <div>Subject:</div>
+    //   <input type="text" placeholder="Email Subject">
+    // </div>
+    let subjectDiv = document.createElement('div');
+    subjectDiv.classList.add('subject');
+    let subjectInnerDiv = document.createElement('div');
+    let subjectInput = document.createElement('input');
+    subjectInput.type = 'text';
+    subjectInput.placeholder = 'Email Subject';
+    subjectInnerDiv.appendChild(document.createTextNode('Subject:'));
+    subjectDiv.appendChild(subjectInnerDiv);
+    subjectDiv.appendChild(subjectInput);
+    composeEmailDiv.appendChild(subjectDiv);
+    // ------------------- Separator -------------------
+    // <div class="body">
+    //     <div>Body:</div>
+    //     <textarea style="font-size: 17px;"></textarea>
+    //     <div class="sendB">
+    //       <button>
+    //         SEND
+    //       </button>
+    //     </div>
+    // </div>
+    let bodyDiv = document.createElement('div');
+    bodyDiv.classList.add('body');
+    let bodyInnerDiv = document.createElement('div');
+    bodyInnerDiv.appendChild(document.createTextNode('Body:'));
+    let bodyText = document.createElement('textarea');
+    bodyText.style.fontSize = '17px';
+    let buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('sendB');
+    let buttonElement = document.createElement('button');
+    buttonElement.appendChild(document.createTextNode('SEND'));
+    buttonDiv.appendChild(buttonElement);
+    bodyDiv.appendChild(bodyInnerDiv);
+    bodyDiv.appendChild(bodyText);
+    bodyDiv.appendChild(buttonDiv);
+    composeEmailDiv.appendChild(bodyDiv);
+    // ------------------- Separator -------------------
+    // <div>
+    //     <div>Attachments:</div>
+    //     <div class="attachmentsHolder">
+    //       <div>
+    //       <button onclick="document.getElementById('fileUpload').click()">Attach</button>
+    //       <input type="file" id = "fileUpload" multiple style="visibility: hidden;">
+    //       </div>
+    //       <div id="attachedFiles"></div>
+    //     </div>
+    // </div>
+    let attachmentsDiv = document.createElement('div');
+    let attachmentInnerDiv = document.createElement('div');
+    attachmentInnerDiv.appendChild(document.createTextNode('Attachments:'));
+    let attachmentsHolderDiv = document.createElement('div');
+    attachmentsHolderDiv.classList.add('attachmentsHolder');
+    let tempDiv = document.createElement('div');
+    let tempButton = document.createElement('button');
+    tempButton.appendChild(document.createTextNode('Attach'));
+    tempButton.addEventListener('click', (func) => {
+      document.getElementById('fileUpload')?.click();
+    });
+    tempDiv.appendChild(tempButton);
+    let attachmentsFileInput = document.createElement('input');
+    attachmentsFileInput.type = 'file';
+    attachmentsFileInput.id = 'fileUpload';
+    attachmentsFileInput.multiple = true;
+    attachmentsFileInput.style.visibility = 'hidden';
+    tempDiv.appendChild(attachmentsFileInput);
+    attachmentsHolderDiv.appendChild(tempDiv);
+    let attachedFilesDiv = document.createElement('div');
+    attachedFilesDiv.id = 'attachedFiles';
+    attachmentsHolderDiv.appendChild(attachedFilesDiv);
+    attachmentsDiv.appendChild(attachmentInnerDiv);
+    attachmentsDiv.appendChild(attachmentsHolderDiv);
+    composeEmailDiv.appendChild(attachmentsDiv);
+    // ------------------- Separator -------------------
+    elem.appendChild(composeEmailDiv);
+
+    // elem.innerHTML += `
+    // <div class="composeEmail">
+    //   <div class="from" >
+    //     <div>From:</div>
+    //     <input disabled type="email" placeholder="userAccount@mail.com"">
+    //   </div>
+    //   <div class="to">
+    //     <div>To:</div>
+    //     <input type="email" placeholder="JohnDoe@mail.com">
+    //   </div>
+    //   <div class="subject">
+    //   <div>Subject:</div>
+    //   <input type="text" placeholder="Email Subject">
+    //   </div>
+    //   <div class="body">
+    //     <div>Body:</div>
+    //     <textarea style="font-size: 17px;"></textarea>
+    //     <div class="sendB">
+    //       <button>
+    //         SEND
+    //       </button>
+    //     </div>
+    //   </div>
+    //   <div>
+    //     <div>Attachments:</div>
+    //     <div class="attachmentsHolder">
+    //       <div>
+    //       <button onclick="document.getElementById('fileUpload').click()">Attach</button>
+    //       <input type="file" id = "fileUpload" multiple style="visibility: hidden;">
+    //       </div>
+    //       <div id="attachedFiles"></div>
+    //     </div>
+    //   </div>
+    // </div>
+    // `;
     let tempInput = document.getElementById('fileUpload');
     tempInput?.addEventListener('change', (event) => {
       this.onFileSelected(event);
@@ -269,6 +390,13 @@ export class MailPageComponent implements OnInit {
       sender: 'UserX',
       receiver: 'UserB',
       subject: 'Wedding Invitation',
+      body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
+      attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
+    });
+    this.myEmails.push({
+      sender: 'UserZ',
+      receiver: 'UserY',
+      subject: 'Wedding Invitationnnn',
       body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
       attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
     });
@@ -352,17 +480,18 @@ export class MailPageComponent implements OnInit {
     tempDiv.style.visibility = 'visible';
   }
   // -------------- Separator --------------
-  ContactsInfo(){
-    console.log("Going to contacts");
-    this._router.navigate(['Contacts'],{
-      queryParams:{ userObj: JSON.stringify(this.myUser)},
+  ContactsInfo() {
+    console.log('Going to contacts');
+    this._router.navigate(['Contacts'], {
+      queryParams: { userObj: JSON.stringify(this.myUser) },
     });
   }
-  reloadPage(){
+  // -------------- Separator --------------
+  reloadPage() {
     this._router.navigate(['ViewEmails'], {
       queryParams: { userObj: JSON.stringify(this.myUser) },
       replaceUrl: true,
     });
   }
-
+  // -------------- Separator --------------
 }
