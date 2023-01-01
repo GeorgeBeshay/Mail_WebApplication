@@ -8,6 +8,7 @@ import { Contact } from '../Interfaces/contact';
   providedIn: 'root',
 })
 export class BackEndCallerService {
+
   private port = 8081;
   private url = `http://localhost:${this.port}/callBackEndServer/`;
   constructor(private http: HttpClient) {}
@@ -41,5 +42,9 @@ export class BackEndCallerService {
   
   async deletContact(currentUser: User, i: number ) {
     return await firstValueFrom(this.http.post<User>(this.url + 'deleteContact/'+i, currentUser));
+  }
+
+  async updateUserData(currentUser: User) {
+    return await firstValueFrom(this.http.post<User>(this.url + 'updateUserInfo/', currentUser));
   }
 }

@@ -135,6 +135,68 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   compose_email() {
     console.log('in compose email');
+    // const elem = document.getElementById('content');
+    // if (elem == null) return;
+    // elem.innerHTML = `
+    //   <div class="composeEmail" >
+    //     <div class="From">from: </div>
+    //     <input disabled type="email" placeholder="userAccount@mail.com" id="FromID">
+    //   </div>
+    // `;
+    // elem.innerHTML += 
+    // `<div class="to"> 
+    //     <div>To:</div>
+    //     <input type="email" placeholder="JohnDoe@mail.com" id="ToID">
+    // </div>`;
+
+    // elem.innerHTML += 
+    // `<div class="subject"> 
+    //     <div>Subject:</div>
+    //     <input type="text" placeholder="Email Subject" id="SubjID">
+    // </div>`;
+
+    // elem.innerHTML += 
+    // `<div class="body"> 
+    //     <div>Body:</div>
+    //     <textarea style="font-size: 17px;" id="TextID"></textarea>
+    // </div>`;
+
+    // elem.innerHTML += 
+    // `<div class="sendB">
+    //     <button>
+    //         SEND
+    //       </button>
+    // </div>`;
+
+
+    // let tempdb=document.createElement('div');
+    // tempdb.classList.add("ButtonsDiv");
+    // let tempButtonsHolder = document.createElement('div');
+    //   tempButtonsHolder.classList.add('buttonHolder');
+    //   let tempEditButtonElement = document.createElement('button');
+    //   tempEditButtonElement.appendChild(document.createTextNode('+'));
+    //   tempEditButtonElement.addEventListener('click', (func4) => {
+    //     let tempInput = document.createElement('input');
+    //     tempInput.type="email";
+    //     let emailCont = document.getElementById('Emails');
+    //     emailCont?.appendChild(tempInput);
+    //   });
+      
+    //   tempButtonsHolder.appendChild(tempEditButtonElement);
+    //   tempdb.appendChild(tempButtonsHolder);
+    //   elem.appendChild(tempdb);
+
+    //   let tempSaveD=document.createElement('div');
+    //   let tempSaveB=document.createElement('button');
+    //   tempSaveB.appendChild(document.createTextNode('SAVE'));
+    //   tempSaveB.classList.add("SaveButton");
+
+    //   tempdb.appendChild(tempSaveB);
+    //   tempSaveD.appendChild(tempdb);
+    //   elem.appendChild(tempSaveD);
+
+
+
     const elem = document.getElementById('content');
     if (elem == null) return;
     elem.innerHTML = `
@@ -271,6 +333,7 @@ export class MailPageComponent implements OnInit {
         folderName.value
       );
       this.generateFolders();
+      this.reloadPage();
       let tempDiv = document.getElementById('createFolder') as HTMLDivElement;
       tempDiv.style.visibility = 'hidden';
     } else {
@@ -290,8 +353,16 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   ContactsInfo(){
+    console.log("Going to contacts");
     this._router.navigate(['Contacts'],{
-      queryParams:{ userObj: JSON.stringify(this.myUser)}
+      queryParams:{ userObj: JSON.stringify(this.myUser)},
     });
   }
+  reloadPage(){
+    this._router.navigate(['ViewEmails'], {
+      queryParams: { userObj: JSON.stringify(this.myUser) },
+      replaceUrl: true,
+    });
+  }
+
 }

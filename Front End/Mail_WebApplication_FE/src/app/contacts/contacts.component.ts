@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver';
 import { BackEndCallerService } from '../Services/back-end-caller.service';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -18,17 +19,20 @@ export class ContactsComponent implements OnInit {
   private myUser!: User;
   private myContacts!:Contact[];
   // -------------- Separator --------------
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private _router: Router) {
     this.myBECaller = new BackEndCallerService(this.http);
     this.route.queryParams.subscribe((params) => {
       this.myUser = JSON.parse(params['userObj']);
     });
+    console.log("In constructor");
     console.log(this.myUser);
     this.myContacts=this.myUser.contacts;
    }
 
   ngOnInit(): void {
     this.myContacts=this.myUser.contacts;
+    console.log("in init");
+    console.log(this.myContacts)
     this.viewContacts();
   }
 
@@ -36,7 +40,10 @@ export class ContactsComponent implements OnInit {
     const tempEmailsHolder = document.getElementById('contactsViewId');
     if (!tempEmailsHolder) return;
     tempEmailsHolder.innerHTML = ``;
-    for (let contact of this.myContacts) {
+    console.log("In viewContacts");
+    console.log(this.myContacts)
+    this.myUser.contacts = this.myContacts;
+    for (let contact of this.myUser.contacts) {
       tempEmailsHolder.innerHTML += `<div>${contact.name} : ${contact.emails[0]}</div>`;
       tempEmailsHolder.lastElementChild?.classList.add('contactInfo');
     }
@@ -102,11 +109,10 @@ export class ContactsComponent implements OnInit {
       tempSaveB.addEventListener('click', (func5) => {
         this.saveContact();
       });
-      
       tempdb.appendChild(tempSaveB);
       tempSaveD.appendChild(tempdb);
       elem.appendChild(tempSaveD);
-  
+      this.updateUser();
   }
 
   editContact(contact:Contact){
@@ -155,6 +161,7 @@ export class ContactsComponent implements OnInit {
       tempdb.appendChild(tempSaveB);
       tempSaveD.appendChild(tempdb);
       elem.appendChild(tempSaveD);
+      this.updateUser();
   }
   
   async deletContact(contact:Contact){
@@ -162,7 +169,7 @@ export class ContactsComponent implements OnInit {
     this.myUser = await this.myBECaller.deletContact(this.myUser,i);
     this.myContacts=this.myUser.contacts;
     this.viewContacts();
-
+    this.updateUser();
   }
   
   ViewContact(contact:Contact){
@@ -193,6 +200,7 @@ export class ContactsComponent implements OnInit {
     let addresses =[];
     for(let i=0; i<data.children.length;i++){
       addresses.push((data.children[i] as HTMLInputElement).value);
+      this.updateUser();
     }
     console.log(addresses);
     console.log(Name);
@@ -205,7 +213,7 @@ export class ContactsComponent implements OnInit {
     const elem = document.getElementById('contactDetailsId');
     if (elem == null) return;
     elem.innerHTML = ``;
-    
+    this.updateUser();
   }
   async edit(contact:Contact){
     await this.deletContact(contact);
@@ -213,7 +221,26 @@ export class ContactsComponent implements OnInit {
     const elem = document.getElementById('contactDetailsId');
     if (elem == null) return;
     elem.innerHTML = ``;
+    console.log("in edit")
     console.log(this.myUser);
+    this.updateUser();
+  }
 
+  updateUser(){
+    this._router.navigate(['Contacts'],
+     {
+      queryParams: { userObj: JSON.stringify(this.myUser) },
+      replaceUrl: true,
+      queryParamsHandling: "merge"
+    });   
+  }
+
+  goBack(){
+      this._router.navigate(['ViewEmails'],
+     {
+        queryParams: { userObj: JSON.stringify(this.myUser) },
+        replaceUrl: true,
+    }); 
   }
 }
+
