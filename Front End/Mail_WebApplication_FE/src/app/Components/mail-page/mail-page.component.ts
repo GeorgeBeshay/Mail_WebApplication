@@ -7,6 +7,7 @@ import { User } from 'src/app/Interfaces/user';
 import { Folder } from 'src/app/Interfaces/folder';
 import { ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Contact } from 'src/app/Interfaces/contact';
 
 @Component({
   selector: 'app-mail-page',
@@ -233,14 +234,20 @@ export class MailPageComponent implements OnInit {
     // </div>
     let toDiv = document.createElement('div');
     toDiv.classList.add('to');
+    toDiv.id = "To";
     let toInnerDiv = document.createElement('div');
     let toInput = document.createElement('input');
     toInput.type = 'email';
+    // toInput.list = 'receiver';
+    toInput.setAttribute("list", 'receiver');
     toInput.placeholder = 'JohnDoe@csedmail.com';
     toInnerDiv.appendChild(document.createTextNode('To:'));
     toDiv.appendChild(toInnerDiv);
     toDiv.appendChild(toInput);
     composeEmailDiv.appendChild(toDiv);
+    toInput.addEventListener('input', (func) => {
+      this.recievers();
+    });
     // ------------------- Separator -------------------
     // <div class="subject">
     //   <div>Subject:</div>
@@ -360,6 +367,33 @@ export class MailPageComponent implements OnInit {
       this.onFileSelected(event);
     });
   }
+  
+  // -------------- Separator --------------
+  recievers(){
+    console.log("in receivers")
+    let toEmails = [];
+    let myContacts: Contact[] = this.myUser.contacts;
+    for(let contact of myContacts){
+      for(let email of contact.emails){
+        toEmails.push(email);
+      }
+    }
+    let div = document.getElementById('To');
+    if(!div) return
+    // div.innerHTML += `
+    // <div>To:</div>
+    // <input type="email" placeholder="JohnDoe@mail.com" list="receiver">
+    // `;
+    let tempData = document.createElement('datalist');
+    tempData.id = "receiver";
+    for(let email of toEmails){
+      let tempOption = document.createElement('option');
+      tempOption.value = email;
+      tempData.appendChild(tempOption);
+    }
+    div.appendChild(tempData);
+  }
+
   // -------------- Separator --------------
   refreshMailBox() {
     this.selectFolder(this.selectedFolder);
