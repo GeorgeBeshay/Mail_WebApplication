@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import ComponentsPackage.*;
+import UserDataModifier.FolderController;
 import java.util.*;
 
 @Service
@@ -166,5 +167,8 @@ public class ServerCore {
 		return this.updateUser(user);
 	}
 	
-	
+	public User sort(User user, int folderIndex, boolean dateFlag) {
+		FolderController.sortPriority(user.getFolders().get(folderIndex), dateFlag);
+		return this.updateUser(user);
+	}
 }

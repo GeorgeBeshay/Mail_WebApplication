@@ -53,5 +53,15 @@ public class Contacts_RC {
 		//return this.myServerCore.addContact(newContact, currentUser);
 		return myServerCore.deleContact(i,currentUser);
 	}
+	
+	@PostMapping(value = {"/sort/{dateFlag}/{folderIndex}"})
+	public User sort( @PathVariable boolean dateFlag, @PathVariable int folderIndex, @RequestBody User currentUser) {
+		System.out.println();
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to create a new contact." + 
+				"\nBack End Server is Replying By: \n");
+		//return this.myServerCore.addContact(newContact, currentUser);
+		return myServerCore.sort(currentUser,folderIndex,dateFlag);
+	}
 
 }

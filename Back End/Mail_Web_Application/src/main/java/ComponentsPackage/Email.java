@@ -16,17 +16,7 @@ public class Email {
 		this.attachments = new ArrayList<Object>();
 		this.mailDate = new Date();
 	}
-//	public Email(String sender, String receiver, String subject, String body, Date mailDate, int priority,
-//			ArrayList<Object> attachments) {
-//		super();
-//		this.sender = sender;
-//		this.receiver = receiver;
-//		this.subject = subject;
-//		this.body = body;
-//		this.mailDate = mailDate;
-//		this.priority = priority;
-//		this.attachments = attachments;
-//	}
+
 	// ------------------------ Class Methods ------------------------
 	public String getSubject() {
 		return subject;
@@ -74,8 +64,9 @@ public class Email {
 	@Override
 	public String toString() {
 		return "Email [sender=" + sender + ", receiver=" + receiver + ", subject=" + subject + ", body=" + body
-				+ ", attachments=" + attachments + "]";
+				+ ", mailDate=" + mailDate + ", priority=" + priority + ", attachments=" + attachments + "]";
 	}
+	
 	
 
 }
