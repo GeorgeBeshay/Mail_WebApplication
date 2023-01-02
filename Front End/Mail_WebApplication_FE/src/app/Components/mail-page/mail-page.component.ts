@@ -164,7 +164,7 @@ export class MailPageComponent implements OnInit {
         <div>Attachments:</div>
         <div class="attachmentsHolder" id ='attachmentsHolderID'>
           <div id="attachedFiles">
-          
+
           </div>
         </div>
       </div>
@@ -175,19 +175,22 @@ export class MailPageComponent implements OnInit {
       this.onFileSelected(event);
     });
     let attachDiv = document.getElementById('attachedFiles');
-    for(let i = 0;i < email.attachments.length;i++ ){
+    for (let i = 0; i < email.attachments.length; i++) {
       let tempDiv = document.createElement('div');
       let tempPar = document.createElement('p');
-      tempPar.appendChild(document.createTextNode(this.selectedEmail.attachments[i]));
+      tempPar.appendChild(
+        document.createTextNode(this.selectedEmail.attachments[i])
+      );
       tempDiv.appendChild(tempPar);
       tempDiv.classList.add('attachment');
       tempPar.id = 'downloadFile';
       tempPar.addEventListener('click', (func) => {
-        this.fileUploadDownload.onDownloadFile(this.selectedEmail.attachments[i]);
+        this.fileUploadDownload.onDownloadFile(
+          this.selectedEmail.attachments[i]
+        );
       });
       attachDiv?.appendChild(tempDiv);
     }
-    
   }
   // -------------- Separator --------------
   compose_email() {

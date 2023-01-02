@@ -32,6 +32,7 @@
   display: flex;
   align-items: center;
   font-family: "Libre Caslon Text", serif;
+  /* position: relative; */
 }
 .box .SB .sortFolderDiv {
   display: flex;
@@ -40,7 +41,24 @@
   display: flex;
   margin-right: 10px;
 }
+.box .SB select#indicator {
+  color: white;
+  height: 100%;
+  width: 80px;
+  padding-inline: 5px;
+  position: absolute;
+  left: -90px;
+  outline: none;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.416);
+  border-radius: 0px 5px 5px 0px;
+  -webkit-border-radius: 0px 5px 5px 0px;
+  -moz-border-radius: 0px 5px 5px 0px;
+  -ms-border-radius: 0px 5px 5px 0px;
+  -o-border-radius: 0px 5px 5px 0px;
+}
 .box .SB input {
+  color: white;
   width: 60%;
   height: 80%;
   border: none;
@@ -61,6 +79,7 @@
   color: white;
 }
 .box .SB .searchBtnHolder {
+  position: relative;
   width: 8%;
   height: 80%;
 }
