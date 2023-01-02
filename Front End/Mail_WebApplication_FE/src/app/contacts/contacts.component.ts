@@ -33,43 +33,43 @@ export class ContactsComponent implements OnInit {
     this.myContacts=this.myUser.contacts;
     console.log("in init");
     console.log(this.myContacts)
-    this.viewContacts();
+    this.view(this.myContacts);
   }
 
-  viewContacts(){
-    const tempEmailsHolder = document.getElementById('contactsViewId');
-    if (!tempEmailsHolder) return;
-    tempEmailsHolder.innerHTML = ``;
-    console.log("In viewContacts");
-    console.log(this.myContacts)
-    this.myUser.contacts = this.myContacts;
-    for (let contact of this.myUser.contacts) {
-      tempEmailsHolder.innerHTML += `<div>${contact.name} : ${contact.emails[0]}</div>`;
-      tempEmailsHolder.lastElementChild?.classList.add('contactInfo');
-    }
-    for (let i = 0; i < tempEmailsHolder.children.length; i++) {
-      let tempButtonsHolder = document.createElement('div');
-      let tempEditButtonElement = document.createElement('button');
-      tempEditButtonElement.appendChild(document.createTextNode('Edit'));
-      tempEditButtonElement.addEventListener('click', (func1) => {
-        this.editContact(this.myContacts[i]);
-      });
-      let tempDeleteButtonElement = document.createElement('button');
-      tempDeleteButtonElement.appendChild(document.createTextNode('Delete'));
-      tempDeleteButtonElement.addEventListener('click', (func2) => {
-        this.deletContact(this.myContacts[i]);
-      });
-      let tempViewButtonElement = document.createElement('button');
-      tempViewButtonElement.appendChild(document.createTextNode('View'));
-      tempViewButtonElement.addEventListener('click', (func3) => {
-        this.ViewContact(this.myContacts[i]);
-      });
-      tempButtonsHolder.appendChild(tempViewButtonElement);
-      tempButtonsHolder.appendChild(tempDeleteButtonElement);
-      tempButtonsHolder.appendChild(tempEditButtonElement);
-      tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
-    }
-  }
+  // viewContacts(){
+  //   const tempEmailsHolder = document.getElementById('contactsViewId');
+  //   if (!tempEmailsHolder) return;
+  //   tempEmailsHolder.innerHTML = ``;
+  //   console.log("In viewContacts");
+  //   console.log(this.myContacts)
+  //   // this.myUser.contacts = this.myContacts;
+  //   for (let contact of this.myUser.contacts) {
+  //     tempEmailsHolder.innerHTML += `<div>${contact.name} : ${contact.emails[0]}</div>`;
+  //     tempEmailsHolder.lastElementChild?.classList.add('contactInfo');
+  //   }
+  //   for (let i = 0; i < tempEmailsHolder.children.length; i++) {
+  //     let tempButtonsHolder = document.createElement('div');
+  //     let tempEditButtonElement = document.createElement('button');
+  //     tempEditButtonElement.appendChild(document.createTextNode('Edit'));
+  //     tempEditButtonElement.addEventListener('click', (func1) => {
+  //       this.editContact(this.myContacts[i]);
+  //     });
+  //     let tempDeleteButtonElement = document.createElement('button');
+  //     tempDeleteButtonElement.appendChild(document.createTextNode('Delete'));
+  //     tempDeleteButtonElement.addEventListener('click', (func2) => {
+  //       this.deletContact(this.myContacts[i]);
+  //     });
+  //     let tempViewButtonElement = document.createElement('button');
+  //     tempViewButtonElement.appendChild(document.createTextNode('View'));
+  //     tempViewButtonElement.addEventListener('click', (func3) => {
+  //       this.ViewContact(this.myContacts[i]);
+  //     });
+  //     tempButtonsHolder.appendChild(tempViewButtonElement);
+  //     tempButtonsHolder.appendChild(tempDeleteButtonElement);
+  //     tempButtonsHolder.appendChild(tempEditButtonElement);
+  //     tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
+  //   }
+  // }
   
   createContact(){
     const elem = document.getElementById('contactDetailsId');
@@ -165,11 +165,27 @@ export class ContactsComponent implements OnInit {
   }
   
   async deletContact(contact:Contact){
-    let i=this.myUser.contacts.indexOf(contact);
+    console.log("in deletContact");
+    console.log(contact);
+
+    let i=this.findContactIndex(contact);
+    console.log(i);
     this.myUser = await this.myBECaller.deletContact(this.myUser,i);
     this.myContacts=this.myUser.contacts;
-    this.viewContacts();
+    this.view(this.myContacts);
     this.updateUser();
+  }
+  findContactIndex(contact:Contact) {
+    for (let i = 0; i < this.myUser.contacts.length; i++) {
+      if (this.myUser.contacts[i].name == contact.name){
+        for (let j = 0; j < this.myUser.contacts[i].emails.length; j++) {
+          if(this.myUser.contacts[i].emails[j]!== contact.emails[j]) return -1;
+        }
+        return i;
+      }
+    }
+    console.log('contact not found');
+    return -1;
   }
   
   ViewContact(contact:Contact){
@@ -195,6 +211,7 @@ export class ContactsComponent implements OnInit {
   }
 
   async saveContact(){
+    console.log("in saveContact");
     let Name: string = (document.getElementById('cName') as HTMLInputElement )?.value;
     let data=document.getElementById('Emails') as HTMLDivElement;
     let addresses =[];
@@ -209,13 +226,14 @@ export class ContactsComponent implements OnInit {
     this.myUser.contacts.push(newContact);
     this.myUser = await this.myBECaller.addNewContact(this.myUser);
     this.myContacts=this.myUser.contacts;
-    this.viewContacts();
+    this.view(this.myContacts);
     const elem = document.getElementById('contactDetailsId');
     if (elem == null) return;
     elem.innerHTML = ``;
     this.updateUser();
   }
   async edit(contact:Contact){
+    console.log("in edit");
     await this.deletContact(contact);
     await this.saveContact();
     const elem = document.getElementById('contactDetailsId');
@@ -227,10 +245,61 @@ export class ContactsComponent implements OnInit {
   }
 
   async sortContacts(){
+    const elem = document.getElementById('contactDetailsId');
+    if (elem == null) return;
+    elem.innerHTML = ``;
     this.myUser= await this.myBECaller.sortConts(this.myUser);
     this.myContacts=this.myUser.contacts;
     this.updateUser();
-    this.viewContacts();
+    this.view(this.myContacts);
+  }
+
+
+  async searchContacts(){
+    const elem = document.getElementById('contactDetailsId');
+    if (elem == null) return;
+    elem.innerHTML = ``;
+
+    let key: string = (document.getElementById('site-search') as HTMLInputElement )?.value;
+    console.log(key);
+
+    let searchResult:Contact[]=await this.myBECaller.searchConts(this.myUser,key);
+    console.log(searchResult);
+    this.view(searchResult);
+  }
+
+
+  view(contacs:Contact[]){
+    const tempEmailsHolder = document.getElementById('contactsViewId');
+    if (!tempEmailsHolder) return;
+    tempEmailsHolder.innerHTML = ``;
+    console.log("In view");
+    for (let contact of contacs) {
+      tempEmailsHolder.innerHTML += `<div>${contact.name} : ${contact.emails[0]}</div>`;
+      tempEmailsHolder.lastElementChild?.classList.add('contactInfo');
+    }
+    for (let i = 0; i < tempEmailsHolder.children.length; i++) {
+      let tempButtonsHolder = document.createElement('div');
+      let tempEditButtonElement = document.createElement('button');
+      tempEditButtonElement.appendChild(document.createTextNode('Edit'));
+      tempEditButtonElement.addEventListener('click', (func1) => {
+        this.editContact(contacs[i]);
+      });
+      let tempDeleteButtonElement = document.createElement('button');
+      tempDeleteButtonElement.appendChild(document.createTextNode('Delete'));
+      tempDeleteButtonElement.addEventListener('click', (func2) => {
+        this.deletContact(contacs[i]);
+      });
+      let tempViewButtonElement = document.createElement('button');
+      tempViewButtonElement.appendChild(document.createTextNode('View'));
+      tempViewButtonElement.addEventListener('click', (func3) => {
+        this.ViewContact(contacs[i]);
+      });
+      tempButtonsHolder.appendChild(tempViewButtonElement);
+      tempButtonsHolder.appendChild(tempDeleteButtonElement);
+      tempButtonsHolder.appendChild(tempEditButtonElement);
+      tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
+    }
   }
 
   updateUser(){

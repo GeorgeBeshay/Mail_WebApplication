@@ -73,5 +73,23 @@ public class Contacts_RC {
 		//return this.myServerCore.addContact(newContact, currentUser);
 		return myServerCore.sortConts(myUser);
 	}
+//	@PostMapping(value = {"/searchConts/{key}"})
+//	public User searchConts(@PathVariable String key, @RequestBody User myUser) {
+//		System.out.println();
+//		System.out.println("------------------------------------------------");
+//		System.out.println("Front End Server Requested to search contacts." + 
+//				"\nBack End Server is Replying By: \n");
+//		//return this.myServerCore.addContact(newContact, currentUser);
+//		return myServerCore.searchConts(key, myUser);
+//	}
+	@PostMapping(value = {"/searchConts/{key}"})
+	public ArrayList<Contact> searchConts(@PathVariable String key, @RequestBody User myUser) {
+		System.out.println();
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to search contacts." + 
+				"\nBack End Server is Replying By: \n");
+		//return this.myServerCore.addContact(newContact, currentUser);
+		return myServerCore.searchConts(key, myUser);
+	}
 
 }

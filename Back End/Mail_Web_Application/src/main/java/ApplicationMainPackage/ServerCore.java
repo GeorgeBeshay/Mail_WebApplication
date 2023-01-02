@@ -196,4 +196,14 @@ public class ServerCore {
 		ContactsController.sort(user.getContacts());
 		return this.updateUser(user);
 	}
+//	public User searchConts(String key, User user) {
+//		User temp=new User("0","0","0");
+//		temp.setContacts(ContactsController.search(user.getContacts(),key));
+//		return temp;	
+//		
+//	}
+	public ArrayList<Contact> searchConts(String key, User user) {
+		return ContactsController.search(user.getContacts(),key);	
+		
+	}
 }

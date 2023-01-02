@@ -118,5 +118,11 @@ export class BackEndCallerService {
   async sortConts(myUser: any) {
     return await firstValueFrom(this.http.post<User>(this.url + 'sortConts/', myUser));
   }
+  // async searchConts(myUser: any, key:any) {
+  //   return await firstValueFrom(this.http.post<User>(this.url + 'searchConts/'+key, myUser));
+  // }
+  async searchConts(myUser: any, key:any) {
+    return await firstValueFrom(this.http.post<Contact[]>(this.url + 'searchConts/'+key, myUser));
+  }
 
 }
