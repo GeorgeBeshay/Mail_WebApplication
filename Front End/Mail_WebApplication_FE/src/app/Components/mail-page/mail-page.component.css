@@ -33,6 +33,13 @@
   align-items: center;
   font-family: "Libre Caslon Text", serif;
 }
+.box .SB .sortFolderDiv {
+  display: flex;
+}
+.box .SB .sortFolderDiv > div {
+  display: flex;
+  margin-right: 10px;
+}
 .box .SB input {
   width: 60%;
   height: 80%;
@@ -120,6 +127,7 @@
   background-color: rgba(0, 0, 0, 0.838);
   margin-block: 10px;
   padding: 5px;
+  overflow: hidden;
   flex-direction: column;
   color: white;
   border-radius: 10px;

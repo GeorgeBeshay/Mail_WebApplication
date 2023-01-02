@@ -13,11 +13,11 @@
       </div>
       <div class="sortFolderDiv">
         <div>
-          <input type="checkbox" id="ImportanceCheckBox">
+          <input type="checkbox" id="ImportanceCheckBox" />
           <label>Importance</label>
         </div>
         <div>
-          <input type="checkbox" id="DateCheckBox">
+          <input type="checkbox" id="DateCheckBox" />
           <label>Date</label>
         </div>
         <button (click)="sortFolderEmails()">
@@ -28,8 +28,8 @@
     <div class="LTB">
       <div class="profile">
         <mat-icon>account_box</mat-icon>
-        <p>{{myUser.fullName}}</p>
-        <p>{{myUser.emailAddress}}</p>
+        <p>{{ myUser.fullName }}</p>
+        <p>{{ myUser.emailAddress }}</p>
         <button (click)="logout()">
           <mat-icon>logout</mat-icon>
         </button>
@@ -112,7 +112,6 @@
       </div>
       <div class="emails" id="emailsHolder"></div>
       <div class="emailContent" id="content"></div>
-
       <div id="movingEmailDiv">
         <div id="mButtonHolder">
           Choose The Folder
@@ -120,12 +119,11 @@
             <option value="">Choose</option>
           </select>
           <div>
-            <button id='movingEmailButton'>Move</button>
+            <button id="movingEmailButton">Move</button>
             <button (click)="cancelMoving()">Cancel</button>
           </div>
         </div>
       </div>
-
     </div>
     <div class="footer">
       <p>Designed & Implemented By:</p>

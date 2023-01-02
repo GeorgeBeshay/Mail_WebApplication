@@ -76,14 +76,15 @@ public class ServerCore {
 				tempUser =  userRepo.findById(emailAddress).get();
 			if(tempUser.getEmailPassword().compareTo(emailPassword) == 0) {
 				System.out.println("Password has been authenticated.");
-				return tempUser;
+				FolderController.checkValidityTrashFolder(tempUser.getFolders().get(2));
+				return this.updateUser(tempUser);
 			} else {
 				System.out.println("Password is incorrect.");
 				return null;
 			}
 		} catch(Exception e) {
 			System.out.println("Email Address Doesn't exist");
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}

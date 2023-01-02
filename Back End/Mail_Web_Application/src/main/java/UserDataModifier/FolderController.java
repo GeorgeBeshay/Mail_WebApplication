@@ -72,4 +72,22 @@ public class FolderController {
 		
 	}
 	
+	public static void checkValidityTrashFolder(Folder trashFolder) {
+		Date Today = new Date();
+		ArrayList<Integer> emailsIndicesToBeRemoved = new ArrayList<Integer>();
+		for(int i = 0 ; i < trashFolder.getEmails().size() ; i++) {
+			Email email = trashFolder.getEmails().get(i);
+			double timeDiff = (Today.getTime() - email.getMailDate().getTime()) / 1000.0  / 60.0 / 60.0 / 24.0; 
+			if( timeDiff >= 30) 
+				emailsIndicesToBeRemoved.add(i);
+		}
+		if(emailsIndicesToBeRemoved.size() > 0) {
+			for(int i = 0 ; i < emailsIndicesToBeRemoved.size() ; i++) {
+				System.out.println("Deleting Email With Subject: " + trashFolder.getEmails().get(i).getSubject());
+				trashFolder.getEmails().remove(i);
+			}
+		} else 
+			System.out.println("Checked: Emails In Trash Folder are still valid.");
+	}
+	
 }
