@@ -95,6 +95,12 @@ export class BackEndCallerService {
     );
   }
   // ---------------- Separator ----------------
+  async signOut(currentUser: User) {
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'signOut/', currentUser)
+    );
+  }
+  // ---------------- Separator ----------------
   async updateUserData(currentUser: User) {
     return await firstValueFrom(
       this.http.post<User>(this.url + 'updateUserInfo/', currentUser)

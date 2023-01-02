@@ -22,7 +22,7 @@ export class MailPageComponent implements OnInit {
   public selectedFolder!: Folder;
   public selectedEmail!: Email;
   private myEmails: Email[] = [];
-  private myUser!: User;
+  public myUser!: User;
   private attachedFiles!: string[];
   // -------------- Separator --------------
   constructor(
@@ -650,8 +650,15 @@ export class MailPageComponent implements OnInit {
       tempOption.value = String(i);
       tempSelectButton.appendChild(tempOption);
     }
-    // let tempDiv = document.getElementById('createFolder') as HTMLDivElement;
-    // tempDiv.style.visibility = 'visible';
+  }
+  // -------------- Separator --------------
+  logout() {
+    this.myBECaller.signOut(this.myUser);
+    console.log('Signed Out');
+    // Implement Routing To the landing page
+    this._router.navigate([''], {
+      replaceUrl: true,
+    });
   }
   // -------------- Separator --------------
   async sortFolderEmails() {

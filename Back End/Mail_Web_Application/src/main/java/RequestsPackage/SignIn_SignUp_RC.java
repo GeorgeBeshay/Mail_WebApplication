@@ -47,7 +47,7 @@ public class SignIn_SignUp_RC {
 		System.out.println(signInData+"\n");
 		System.out.println("------------------------------------------------");
 		System.out.println("Front End Server Requested a Sign In" + 
-				"\nBack End Server is Replying By: \n");
+				"\nBack End Server is Replying By: ");
 		return this.myServerCore.authenticate(signInData);
 	}
 		
@@ -61,8 +61,22 @@ public class SignIn_SignUp_RC {
 	public User signUp(@RequestBody User user) {
 		System.out.println("------------------------------------------------");
 		System.out.println("Front End Server Requested a Sign Up Request" + 
-				"\nBack End Server is Replying By: \n");
+				"\nBack End Server is Replying By: ");
 		return this.myServerCore.signUp(user);
+	}
+	
+	/**
+	 * Sign out request, function implemented in order to store the signed out accounts
+	 * to be able to retrieve them in case of signing in faster, applying the proxy cache DP
+	 * @param user
+	 * @return
+	 */
+	@PostMapping(value = {"/signOut/"})
+	public User signOut(@RequestBody User user) {
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to Sign Out" + 
+				"\nBack End Server is Replying By: ");
+		return this.myServerCore.signOut(user);
 	}
 
 }

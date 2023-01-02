@@ -116,11 +116,28 @@
   /* gap: 5px; */
   color: white;
 }
+.box .LTB .profile {
+  background-color: rgba(0, 0, 0, 0.838);
+  margin-block: 10px;
+  padding: 5px;
+  flex-direction: column;
+  color: white;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  font-size: 15px;
+}
+.box .LTB .profile button {
+  margin-top: 5px;
+}
 .box .LTB .compose button {
   flex-direction: column;
 }
 .box .LTB div p {
   width: 80%;
+  text-align: center;
 }
 .box .LTB .compose button {
   background-color: rgba(0 0 0 / 50%);
@@ -531,6 +548,7 @@ textarea {
   height: initial;
   background-color: transparent;
 }
+.LTB .profile button,
 .LTB .addFolderOption button {
   background-color: rgba(255, 255, 255, 0.739);
   padding: 10px;
@@ -542,6 +560,7 @@ textarea {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
 }
+.LTB .profile button:hover,
 .LTB .addFolderOption button:hover {
   width: initial;
   height: initial;

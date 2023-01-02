@@ -21,10 +21,12 @@ public class ServerCore {
 	 * all the front end requests and manipulating the data base.
 	 */
 	private static ServerCore serverCore;
+	private HashMap<String , User> signedOutUsers;
 	@Autowired
 	UserRepository userRepo;
 	// ---------------------------- Class Constructors ----------------------------
 	private ServerCore() {
+		this.signedOutUsers = new HashMap<String , User>();
 	}
 	public static ServerCore getServerCoreInstance() {
 		if(ServerCore.serverCore == null) 
@@ -64,8 +66,13 @@ public class ServerCore {
 		}
 		String emailAddress = signInData.getEmailAddress();
 		String emailPassword = signInData.getEmailPassword();
+		User tempUser = null;
+		if(this.signedOutUsers.get(emailAddress) != null) {
+			tempUser = this.signedOutUsers.get(emailAddress);
+		}
 		try {
-			User tempUser =  userRepo.findById(emailAddress).get();
+			if(tempUser == null)
+				tempUser =  userRepo.findById(emailAddress).get();
 			if(tempUser.getEmailPassword().compareTo(emailPassword) == 0) {
 				System.out.println("Password has been authenticated.");
 				return tempUser;
@@ -174,6 +181,12 @@ public class ServerCore {
 	
 	public User moveAnEmail(User user, int fromFolderIndex, int toFolderIndex, int emailIndex) {
 		FolderController.moveEmail(user.getFolders(), fromFolderIndex, toFolderIndex, emailIndex);
+		return this.updateUser(user);
+	}
+	
+	public User signOut(User user) {
+		this.signedOutUsers.put(user.getEmailAddress(), user);
+		System.out.println("Signed out successfully, user inserted to the temp cache.");
 		return this.updateUser(user);
 	}
 }
