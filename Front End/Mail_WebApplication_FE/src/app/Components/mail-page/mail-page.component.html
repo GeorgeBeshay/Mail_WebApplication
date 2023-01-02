@@ -11,7 +11,19 @@
       <div class="searchBtnHolder">
         <button class="searchButton"><mat-icon>search</mat-icon></button>
       </div>
-      <div class="sort">Sort</div>
+      <div class="sortFolderDiv">
+        <div>
+          <input type="checkbox" id="ImportanceCheckBox">
+          <label>Importance</label>
+        </div>
+        <div>
+          <input type="checkbox" id="DateCheckBox">
+          <label>Date</label>
+        </div>
+        <button (click)="sortFolderEmails()">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
     </div>
     <div class="LTB">
       <div class="compose">

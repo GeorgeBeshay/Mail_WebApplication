@@ -2,7 +2,7 @@ package ComponentsPackage;
 
 import java.util.*;
 
-public class Email {
+public class Email implements Cloneable{
 	// ------------------------ Class Fields ------------------------
 	private String sender;
 	private String receiver;
@@ -67,6 +67,16 @@ public class Email {
 				+ ", mailDate=" + mailDate + ", priority=" + priority + ", attachments=" + attachments + "]";
 	}
 	
+	@Override
+	public Email clone(){  
+	    try{  
+	        return (Email) super.clone();  
+	    }catch(Exception e){ 
+	    	e.printStackTrace();
+	    	return null;
+	    }
+		
+	}
 	
 
 }

@@ -101,4 +101,11 @@ export class BackEndCallerService {
     );
   }
   // ---------------- Separator ----------------
+  async reqSortEmails(folderIndex: number, flag: boolean,user: User ) {
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'sortEmails/'+ folderIndex +'/' + flag, user)
+    );
+  }
+  // ---------------- Separator ----------------
+
 }

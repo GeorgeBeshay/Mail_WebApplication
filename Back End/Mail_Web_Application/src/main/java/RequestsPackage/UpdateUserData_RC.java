@@ -79,5 +79,13 @@ public class UpdateUserData_RC {
 		// we've done this instead of creating another protocol
 	}
 	
+	@PostMapping(value = {"/sortEmails/{folderIndex}/{flag}"})
+	public User sortEmailsInFolder(@PathVariable int folderIndex,@PathVariable boolean flag, @RequestBody User user) {
+		System.out.println();
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to sort a Folder." + 
+				"\nBack End Server is Replying By:");
+		return this.myServerCore.sort(user, folderIndex,flag);
+	}
 
 }

@@ -654,4 +654,33 @@ export class MailPageComponent implements OnInit {
     // tempDiv.style.visibility = 'visible';
   }
   // -------------- Separator --------------
+  async sortFolderEmails() {
+    let dateInput = (document.getElementById("DateCheckBox")) as HTMLInputElement;
+    let dateFlag = dateInput.checked;
+    let ImportanceInput = (document.getElementById("ImportanceCheckBox")) as HTMLInputElement;
+    let impFlag = ImportanceInput.checked;
+    console.log(dateFlag);
+    let folderIndex: number = this.findFolderIndex(this.selectedFolder);
+    let flag = false;
+    if(!dateFlag && impFlag){
+      flag = false;
+      this.myUser = await this.myBECaller.reqSortEmails(
+        folderIndex,
+        flag,
+        this.myUser
+      );
+    }else if(!impFlag && dateFlag){
+      flag = true;
+      this.myUser = await this.myBECaller.reqSortEmails(
+        folderIndex,
+        flag,
+        this.myUser
+      );
+    }else{
+      
+    }
+      this.selectFolder(folderIndex);
+      this.reloadPage();
+  }
+  // -------------- Separator --------------
 }
