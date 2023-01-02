@@ -163,8 +163,9 @@
   flex-direction: column;
 }
 .box .LTB div p {
-  width: 80%;
+  width: 95%;
   text-align: center;
+  overflow: hidden;
 }
 .box .LTB .compose button {
   background-color: rgba(0 0 0 / 50%);
