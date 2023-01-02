@@ -43,7 +43,8 @@ public class ServerCore {
 			userRepo.findById(user.getEmailAddress()).get();
 			System.out.println("User Email Address is already taken.");
 			return null;
-		} catch(Exception e) {			
+		} catch(Exception e) {
+			System.out.println("User Has Been registered successfully.");
 			return userRepo.save(user);
 		}
 	}
@@ -83,6 +84,7 @@ public class ServerCore {
 	 * @param modifiedUser
 	 */
 	public User updateUser(User modifiedUser) {
+		System.out.println("MongoDB has updated the user document.");
 		return userRepo.save(modifiedUser);
 	}
 	
@@ -96,10 +98,12 @@ public class ServerCore {
 		try {
 		User receiverUser =  userRepo.findById(emailReqData.getEmail().getReceiver()).get();
 		receiverUser.getFolders().get(0).addEmail(emailReqData.getEmail());
+		System.out.println("Mail had been pushed to the inbox folder of the receiver account successfully.");
 		this.updateUser(receiverUser); 
 		} catch (Exception E) {
-			System.out.println("User Error: Receiver mail does not exist.");
+			System.out.println("User Error: Mail Receiver Account does not exist.");
 		}
+		System.out.println("Mail had been pushed to the sent folder of the sender account successfully.");
 		emailReqData.getActiveUser().getFolders().get(1).addEmail(emailReqData.getEmail());
 		return this.updateUser(emailReqData.getActiveUser());
 	}
@@ -112,7 +116,12 @@ public class ServerCore {
 	 */
 	public User deleteAnEmail(DeletingEmail_Protocol deleteEmailReqData) {
 		try {
-			deleteEmailReqData.getActiveUser().getFolders().get(deleteEmailReqData.getActiveFolderIndex()).getEmails().remove(deleteEmailReqData.getActiveEmailIndex());
+			Email tempMail = deleteEmailReqData.getActiveUser().getFolders().get(deleteEmailReqData.getActiveFolderIndex()).getEmails().remove(deleteEmailReqData.getActiveEmailIndex());
+			if(deleteEmailReqData.getActiveFolderIndex() != 2) {
+				deleteEmailReqData.getActiveUser().getFolders().get(2).addEmail(tempMail);
+				System.out.println("Mail Has Been Deleted Successfully\n Moved to the trash folder");
+			} else 
+				System.out.println("Mail Has Been Deleted Permanently");
 			return this.updateUser(deleteEmailReqData.getActiveUser());
 		} catch(Exception E) {
 			System.out.println("An Error Had Occured While Deleting An Email - Process.");

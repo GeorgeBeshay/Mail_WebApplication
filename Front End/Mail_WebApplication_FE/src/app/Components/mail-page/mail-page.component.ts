@@ -43,6 +43,7 @@ export class MailPageComponent implements OnInit {
     this.selectedFolder = this.myUser.folders[0];
     this.attachedFiles = [];
     this.generateFolders();
+    console.log('Initializing');
   }
   // -------------- Separator --------------
   generateFolders() {
@@ -114,13 +115,13 @@ export class MailPageComponent implements OnInit {
       this.myUser.folders.indexOf(this.selectedFolder),
       this.myEmails.indexOf(email)
     );
-    console.log("Reached Here1");
+    console.log('Reached Here1');
     this.reloadPage();
-    console.log("Reached Here2");
+    console.log('Reached Here2');
     this.resetSelectedEmail();
-    console.log("Reached Here3");
+    console.log('Reached Here3');
     this.selectFolder(this.myUser.folders.indexOf(this.selectedFolder));
-    console.log("Reached Here4");
+    console.log('Reached Here4');
     console.log(this.selectedFolder);
   }
   // -------------- Separator --------------
@@ -364,8 +365,18 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   refreshMailBox() {
-    this.selectFolder(this.myUser.folders.indexOf(this.selectedFolder));
+    console.log(this.myUser.folders);
+    this.selectFolder(this.findFolderIndex(this.selectedFolder));
     this.resetSelectedEmail();
+  }
+  // -------------- Separator --------------
+  findFolderIndex(folder: Folder){
+    for(let i = 0 ; i < this.myUser.folders.length ; i++){
+      if(this.myUser.folders[i].name == folder.name)
+        return i;
+    }
+    console.log("Folder not found");
+    return -1;
   }
   // -------------- Separator --------------
   resetSelectedEmail() {
