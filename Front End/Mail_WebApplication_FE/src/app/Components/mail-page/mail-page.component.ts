@@ -228,30 +228,35 @@ export class MailPageComponent implements OnInit {
     //   </select>
     // </div>
     let priorityDiv = document.createElement('div');
+    priorityDiv.classList.add('priority');
+    priorityDiv.id = 'Priority';
+    let PriorityInnerDiv = document.createElement('div');
+    PriorityInnerDiv.appendChild(document.createTextNode('Priority Level:'));
     let selectPriority = document.createElement('select');
     selectPriority.id = 'priority';
     selectPriority.name = 'priority';
     let optionPriority3 = document.createElement('option');
     optionPriority3.value = '3';
-    optionPriority3.appendChild(document.createTextNode("Top Priority"));
+    optionPriority3.appendChild(document.createTextNode('Top Priority'));
     selectPriority.appendChild(optionPriority3);
+    priorityDiv.appendChild(PriorityInnerDiv);
     priorityDiv.appendChild(selectPriority);
     composeEmailDiv.appendChild(priorityDiv);
 
     let optionPriority2 = document.createElement('option');
     optionPriority2.value = '2';
-    optionPriority2.appendChild(document.createTextNode("Medium Priority"));
+    optionPriority2.appendChild(document.createTextNode('Medium Priority'));
     selectPriority.appendChild(optionPriority2);
     priorityDiv.appendChild(selectPriority);
     composeEmailDiv.appendChild(priorityDiv);
 
     let optionPriority1 = document.createElement('option');
     optionPriority1.value = '1';
-    optionPriority1.appendChild(document.createTextNode("Low Priority"));
+    optionPriority1.appendChild(document.createTextNode('Low Priority'));
     selectPriority.appendChild(optionPriority1);
     priorityDiv.appendChild(selectPriority);
     composeEmailDiv.appendChild(priorityDiv);
-    console.log(selectPriority.value)
+    console.log(selectPriority.value);
     // ------------------- Separator -------------------
     // <div class="subject">
     //   <div>Subject:</div>
@@ -348,8 +353,8 @@ export class MailPageComponent implements OnInit {
     //     <input type="email" placeholder="JohnDoe@mail.com">
     //   </div>
     //   <div class="subject">
-    //   <div>Subject:</div>
-    //   <input type="text" placeholder="Email Subject">
+    //      <div>Subject:</div>
+    //      <input type="text" placeholder="Email Subject">
     //   </div>
     //   <div class="body">
     //     <div>Body:</div>
@@ -424,7 +429,7 @@ export class MailPageComponent implements OnInit {
       subject: 'NA',
       body: 'NA',
       attachments: [],
-      priority:3,
+      priority: 3,
     };
     const elem = document.getElementById('content');
     if (elem) elem.innerHTML = ``;
