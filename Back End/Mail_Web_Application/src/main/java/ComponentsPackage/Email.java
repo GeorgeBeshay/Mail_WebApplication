@@ -10,10 +10,10 @@ public class Email implements Cloneable{
 	private String body;
 	private Date mailDate;
 	private int priority;
-	private ArrayList<Object> attachments;
+	private ArrayList<String> attachments;
 	// ------------------------ Class Constructors ------------------------
 	public Email() {
-		this.attachments = new ArrayList<Object>();
+		this.attachments = new ArrayList<String>();
 		this.mailDate = new Date();
 	}
 
@@ -30,12 +30,15 @@ public class Email implements Cloneable{
 	public void setBody(String body) {
 		this.body = body;
 	}
-	public ArrayList<Object> getAttachments() {
+	
+	public ArrayList<String> getAttachments() {
 		return attachments;
 	}
-	public void setAttachments(ArrayList<Object> attachments) {
+
+	public void setAttachments(ArrayList<String> attachments) {
 		this.attachments = attachments;
 	}
+
 	public String getSender() {
 		return sender;
 	}

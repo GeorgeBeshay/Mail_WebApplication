@@ -155,9 +155,8 @@ export class MailPageComponent implements OnInit {
       <div>
         <div>Attachments:</div>
         <div class="attachmentsHolder" id ='attachmentsHolderID'>
-          <div>
-          <button onclick="document.getElementById('fileUpload').click()">Attach</button>
-          <input type="file" (change)="onFileSelected($event)" id = "fileUpload" multiple style="visibility: hidden;">
+          <div id="attachedFiles">
+          
           </div>
         </div>
       </div>
@@ -167,6 +166,20 @@ export class MailPageComponent implements OnInit {
     tempInput?.addEventListener('change', (event) => {
       this.onFileSelected(event);
     });
+    let attachDiv = document.getElementById('attachedFiles');
+    for(let i = 0;i < email.attachments.length;i++ ){
+      let tempDiv = document.createElement('div');
+      let tempPar = document.createElement('p');
+      tempPar.appendChild(document.createTextNode(this.selectedEmail.attachments[i]));
+      tempDiv.appendChild(tempPar);
+      tempDiv.classList.add('attachment');
+      tempPar.id = 'downloadFile';
+      tempPar.addEventListener('click', (func) => {
+        this.fileUploadDownload.onDownloadFile(this.selectedEmail.attachments[i]);
+      });
+      attachDiv?.appendChild(tempDiv);
+    }
+    
   }
   // -------------- Separator --------------
   compose_email() {

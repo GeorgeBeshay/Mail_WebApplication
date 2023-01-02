@@ -3,6 +3,6 @@ export interface Email {
   receiver: string;
   subject: string;
   body: string;
-  attachments: Object[];
+  attachments: string[];
   priority: number;
 }
