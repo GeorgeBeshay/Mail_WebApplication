@@ -171,4 +171,9 @@ public class ServerCore {
 		FolderController.sortPriority(user.getFolders().get(folderIndex), dateFlag);
 		return this.updateUser(user);
 	}
+	
+	public User moveAnEmail(User user, int fromFolderIndex, int toFolderIndex, int emailIndex) {
+		FolderController.moveEmail(user.getFolders(), fromFolderIndex, toFolderIndex, emailIndex);
+		return this.updateUser(user);
+	}
 }

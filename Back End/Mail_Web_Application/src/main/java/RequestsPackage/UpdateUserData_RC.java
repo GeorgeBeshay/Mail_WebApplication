@@ -59,6 +59,15 @@ public class UpdateUserData_RC {
 		return this.myServerCore.deleteAnEmail(deleteEmailReqData);
 	}
 	
+	@PostMapping(value = {"/moveEmail/{fromFolderIndex}/{toFolderIndex}/{emailIndex}/"})
+	public User moveAnEmail(@RequestBody User currentUser, @PathVariable int fromFolderIndex, @PathVariable int toFolderIndex, @PathVariable int emailIndex) {
+		System.out.println();
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to move a mail." + 
+				"\nBack End Server is Replying By:");
+		return this.myServerCore.moveAnEmail(currentUser, fromFolderIndex, toFolderIndex, emailIndex);
+	}
+	
 	@PostMapping(value = {"/deleteFolder/"})
 	public User deleteFolder(@RequestBody DeletingEmail_Protocol deleteFolderReqData) {
 		System.out.println();

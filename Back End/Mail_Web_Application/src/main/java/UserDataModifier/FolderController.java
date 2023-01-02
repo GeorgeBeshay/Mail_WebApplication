@@ -48,4 +48,17 @@ public class FolderController {
 		}
 		
 	}
+	
+	public static void moveEmail(ArrayList<Folder> folders, int fromFolderIndex, int toFolderIndex, int emailIndex) {
+		try {
+			Email tempEmail = folders.get(fromFolderIndex).getEmails().remove(emailIndex);
+			folders.get(toFolderIndex).addEmail(tempEmail);
+			System.out.println("Moving Process Completed.");
+			System.out.println("Email With Subject: " + tempEmail.getSubject() + 
+					"\n Has been moved from folder: " + folders.get(fromFolderIndex).getName() + 
+					"\nTo folder: " + folders.get(toFolderIndex).getName());
+		} catch (Exception E) {
+			System.out.println("An Error had occured while moving the email from a folder to another");
+		}
+	}
 }

@@ -80,6 +80,21 @@ export class BackEndCallerService {
     );
   }
   // ---------------- Separator ----------------
+  async moveEmail(
+    currentUser: User,
+    fromFolderIndex: number,
+    toFolderIndex: number,
+    emailIndex: number
+  ) {
+    return await firstValueFrom(
+      this.http.post<User>(
+        this.url +
+          `moveEmail/${fromFolderIndex}/${toFolderIndex}/${emailIndex}/`,
+        currentUser
+      )
+    );
+  }
+  // ---------------- Separator ----------------
   async updateUserData(currentUser: User) {
     return await firstValueFrom(
       this.http.post<User>(this.url + 'updateUserInfo/', currentUser)

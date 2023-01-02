@@ -93,7 +93,13 @@ export class MailPageComponent implements OnInit {
       tempDeleteButtonElement.addEventListener('click', (func2) => {
         this.deleteEmail(this.myEmails[i]);
       });
+      let tempMoveButtonElement = document.createElement('button');
+      tempMoveButtonElement.appendChild(document.createTextNode('Move'));
+      tempMoveButtonElement.addEventListener('click', (func4) => {
+        this.showMovingPage(i);
+      });
       tempButtonsHolder.appendChild(tempViewButtonElement);
+      tempButtonsHolder.appendChild(tempMoveButtonElement);
       tempButtonsHolder.appendChild(tempDeleteButtonElement);
       tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
     }
@@ -589,6 +595,63 @@ export class MailPageComponent implements OnInit {
       this.selectFolder(0);
       this.reloadPage();
     } else alert("Default Folders Can't Be Deleted");
+  }
+  // -------------- Separator --------------
+  async moveEmail(emailIndex: number) {
+    let fromFolderIndex = this.findFolderIndex(this.selectedFolder);
+    let tempSelectButton = document.getElementById(
+      'newFolder'
+    ) as HTMLSelectElement;
+    let toFolderIndex = Number(tempSelectButton.value);
+    console.log(
+      'From Folder: ',
+      fromFolderIndex,
+      '\nTo Folder: ',
+      toFolderIndex,
+      '\nEmail Index: ',
+      emailIndex
+    );
+    this.myUser = await this.myBECaller.moveEmail(
+      this.myUser,
+      fromFolderIndex,
+      toFolderIndex,
+      emailIndex
+    );
+    this.selectFolder(this.findFolderIndex(this.selectedFolder));
+    this.resetSelectedEmail();
+    this.reloadPage();
+    this.cancelMoving();
+  }
+  // -------------- Separator --------------
+  cancelMoving() {
+    let tempDiv = document.getElementById('movingEmailDiv') as HTMLDivElement;
+    tempDiv.style.visibility = 'hidden';
+  }
+  // -------------- Separator --------------
+  showMovingPage(emailIndex: number) {
+    let tempDiv = document.getElementById('movingEmailDiv') as HTMLDivElement;
+    tempDiv.style.visibility = 'visible';
+    let tempButton = document.getElementById(
+      'movingEmailButton'
+    ) as HTMLButtonElement;
+    tempButton.addEventListener('click', (func) => {
+      this.moveEmail(emailIndex);
+    });
+    let tempSelectButton = document.getElementById(
+      'newFolder'
+    ) as HTMLSelectElement;
+    tempSelectButton.innerHTML = '';
+    for (let i = 0; i < this.myUser.folders.length; i++) {
+      if (this.myUser.folders[i] == this.selectedFolder) continue;
+      let tempOption = document.createElement('option');
+      tempOption.appendChild(
+        document.createTextNode(this.myUser.folders[i].name)
+      );
+      tempOption.value = String(i);
+      tempSelectButton.appendChild(tempOption);
+    }
+    // let tempDiv = document.getElementById('createFolder') as HTMLDivElement;
+    // tempDiv.style.visibility = 'visible';
   }
   // -------------- Separator --------------
 }

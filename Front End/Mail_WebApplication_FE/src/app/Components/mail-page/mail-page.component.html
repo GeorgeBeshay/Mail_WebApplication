@@ -62,7 +62,7 @@
           <mat-icon> create_new_folder </mat-icon>
         </button>
       </div>
-      <div id="createFolder" style="visibility: hidden">
+      <div id="createFolder">
         <div id="cfButtonHolder">
           Enter The Folder Name
           <input id="newFolderName" type="text" />
@@ -92,6 +92,20 @@
       </div>
       <div class="emails" id="emailsHolder"></div>
       <div class="emailContent" id="content"></div>
+
+      <div id="movingEmailDiv">
+        <div id="mButtonHolder">
+          Choose The Folder
+          <select name="" id="newFolder">
+            <option value="">Choose</option>
+          </select>
+          <div>
+            <button id='movingEmailButton'>Move</button>
+            <button (click)="cancelMoving()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="footer">
       <p>Designed & Implemented By:</p>
