@@ -28,7 +28,7 @@ public class UpdateUserData_RC {
 		System.out.println();
 		System.out.println("------------------------------------------------");
 		System.out.println("Front End Server Requested an update for the user data." + 
-				"\nBack End Server is Replying By: \n");
+				"\nBack End Server is Replying By:");
 		this.myServerCore.updateUser(modifiedUser);
 	}
 	
@@ -37,7 +37,7 @@ public class UpdateUserData_RC {
 		System.out.println();
 		System.out.println("------------------------------------------------");
 		System.out.println("Front End Server Requested to create a new Folder." + 
-				"\nBack End Server is Replying By: \n");
+				"\nBack End Server is Replying By:");
 		return this.myServerCore.addFolder(user, folderName);
 	}
 	
@@ -46,7 +46,7 @@ public class UpdateUserData_RC {
 		System.out.println();
 		System.out.println("------------------------------------------------");
 		System.out.println("Front End Server Requested to send a mail." + 
-				"\nBack End Server is Replying \n");
+				"\nBack End Server is Replying By:");
 		return this.myServerCore.sendAnEmail(emailReqData);
 	}
 	
@@ -55,8 +55,19 @@ public class UpdateUserData_RC {
 		System.out.println();
 		System.out.println("------------------------------------------------");
 		System.out.println("Front End Server Requested to delete a mail." + 
-				"\nBack End Server is Replying \n");
+				"\nBack End Server is Replying By:");
 		return this.myServerCore.deleteAnEmail(deleteEmailReqData);
+	}
+	
+	@PostMapping(value = {"/deleteFolder/"})
+	public User deleteFolder(@RequestBody DeletingEmail_Protocol deleteFolderReqData) {
+		System.out.println();
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to delete a folder." + 
+				"\nBack End Server is Replying By:");
+		return this.myServerCore.deleteFolder(deleteFolderReqData);
+		// Notice that the "DeletingEmail_Protocol" class is used although we won't use the third parameter
+		// we've done this instead of creating another protocol
 	}
 	
 

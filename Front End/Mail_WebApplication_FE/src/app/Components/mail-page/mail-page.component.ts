@@ -365,17 +365,16 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   refreshMailBox() {
-    console.log(this.myUser.folders);
+    // console.log(this.myUser.folders);
     this.selectFolder(this.findFolderIndex(this.selectedFolder));
     this.resetSelectedEmail();
   }
   // -------------- Separator --------------
-  findFolderIndex(folder: Folder){
-    for(let i = 0 ; i < this.myUser.folders.length ; i++){
-      if(this.myUser.folders[i].name == folder.name)
-        return i;
+  findFolderIndex(folder: Folder) {
+    for (let i = 0; i < this.myUser.folders.length; i++) {
+      if (this.myUser.folders[i].name == folder.name) return i;
     }
-    console.log("Folder not found");
+    console.log('Folder not found');
     return -1;
   }
   // -------------- Separator --------------
@@ -507,6 +506,7 @@ export class MailPageComponent implements OnInit {
       replaceUrl: true,
     });
     this.refreshMailBox();
+    this.generateFolders();
   }
   // -------------- Separator --------------
   async sendTheEmail() {
@@ -529,6 +529,18 @@ export class MailPageComponent implements OnInit {
       emailBuilder.buildEmail()
     );
     this.reloadPage();
+  }
+  // -------------- Separator --------------
+  async deleteFolder() {
+    let folderIndex: number = this.findFolderIndex(this.selectedFolder);
+    if (folderIndex > 4) {
+      this.myUser = await this.myBECaller.deleteFolder(
+        this.myUser,
+        folderIndex
+      );
+      this.selectFolder(0);
+      this.reloadPage();
+    } else alert("Default Folders Can't Be Deleted");
   }
   // -------------- Separator --------------
 }

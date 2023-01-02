@@ -120,7 +120,7 @@
   flex-direction: column;
 }
 .box .LTB div p {
-  width: 50%;
+  width: 80%;
 }
 .box .LTB .compose button {
   background-color: rgba(0 0 0 / 50%);
@@ -165,8 +165,12 @@ button {
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: 0.65fr repeat(8, 1fr);
 }
-.box .board .optionBar {
+/* .box .board .optionBar {
   grid-area: 1 / 1 / 2 / 10;
+  padding-inline: 10px;
+} */
+.box .board .optionBar .deleteFolderDiv {
+  justify-self: flex-end;
 }
 .box .board .emails {
   grid-area: 2 / 1 / 4 / 10;
@@ -216,7 +220,10 @@ button {
   padding-bottom: 5px;
 }
 .box .board .optionBar {
+  grid-area: 1 / 1 / 2 / 10;
+  padding-inline: 10px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   font-size: 13px;
   background-color: rgb(0 0 0 / 70%);
@@ -224,10 +231,12 @@ button {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
+.box .board .optionBar .deleteFolderDiv,
 .box .board .optionBar .refreshBtn {
   font-size: 10px;
   margin-left: 5px;
 }
+.box .board .optionBar .deleteFolderDiv button,
 .box .board .optionBar .refreshBtn button {
   border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -238,10 +247,12 @@ button {
   border: none;
   outline: none;
 }
+.box .board .optionBar .deleteFolderDiv button:hover,
 .box .board .optionBar .refreshBtn button:hover {
   background-color: rgb(0 0 0 / 60%);
   color: white;
 }
+.box .board .optionBar .deleteFolderDiv button:active,
 .box .board .optionBar .refreshBtn button:active {
   transform: translateY(1px);
   -webkit-transform: translateY(1px);

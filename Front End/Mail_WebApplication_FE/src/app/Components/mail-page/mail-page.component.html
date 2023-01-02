@@ -84,6 +84,11 @@
           <mat-icon>folder</mat-icon>: {{ selectedFolder.name }} -
           {{ selectedEmail.subject }}
         </div>
+        <div class="deleteFolderDiv">
+          <button (click)="deleteFolder()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </div>
       <div class="emails" id="emailsHolder"></div>
       <div class="emailContent" id="content"></div>

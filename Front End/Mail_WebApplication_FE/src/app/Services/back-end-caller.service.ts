@@ -70,6 +70,16 @@ export class BackEndCallerService {
     );
   }
   // ---------------- Separator ----------------
+  async deleteFolder(currentUser: User, folderIndex: number) {
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'deleteFolder/', {
+        activeUser: currentUser,
+        activeFolderIndex: folderIndex,
+        activeEmailIndex: -1,
+      })
+    );
+  }
+  // ---------------- Separator ----------------
   async updateUserData(currentUser: User) {
     return await firstValueFrom(
       this.http.post<User>(this.url + 'updateUserInfo/', currentUser)

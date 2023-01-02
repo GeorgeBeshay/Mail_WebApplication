@@ -140,6 +140,22 @@ public class ServerCore {
 		return this.updateUser(modifiedUser);
 	}
 	
+	/**
+	 * Method performs the deletion process of a previously created folder.
+	 * @param modifiedUser
+	 * @param folderIndex
+	 * @return
+	 */
+	public User deleteFolder(DeletingEmail_Protocol deleteFolderReqData) {
+		if(deleteFolderReqData.getActiveFolderIndex() > 4) {
+			deleteFolderReqData.getActiveUser().getFolders().remove(deleteFolderReqData.getActiveFolderIndex());
+			System.out.println("Folder Has Been Deleted.");
+		} else {
+			System.out.println("Default Folders can't be deleted.");
+		}
+		return this.updateUser(deleteFolderReqData.getActiveUser());
+	}
+	
 	public User addContact(Contact newContact, User user) {
 		user.getContacts().add(newContact);
 		return this.updateUser(user);
