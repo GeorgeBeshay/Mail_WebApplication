@@ -10,13 +10,15 @@ export class EmailBuilderService {
   private Subject!: string;
   private Body!: string;
   private Attachments!: string[];
-
+  private Priority!: number;
+  
   constructor() {
     this.Sender = 'Default Sender';
     this.Receiver = 'Default Receiver';
     this.Subject = 'Default Subject';
     this.Body = 'Default Body';
     this.Attachments = [];
+    this.Priority = 3;
   }
   buildSender(sender: string): EmailBuilderService {
     this.Sender = sender;
@@ -38,6 +40,10 @@ export class EmailBuilderService {
     this.Attachments = attachs;
     return this;
   }
+  buildPriority(prior: number){
+    this.Priority = prior;
+    return this;
+  }
   buildEmail(): Email {
     let concreteEmail: Email = {
       sender: this.Sender,
@@ -45,6 +51,7 @@ export class EmailBuilderService {
       subject: this.Subject,
       body: this.Body,
       attachments: this.Attachments,
+      priority: this.Priority,
     };
     return concreteEmail;
   }

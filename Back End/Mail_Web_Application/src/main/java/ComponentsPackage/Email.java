@@ -9,12 +9,24 @@ public class Email {
 	private String subject;
 	private String body;
 	private Date mailDate;
+	private int priority;
 	private ArrayList<Object> attachments;
 	// ------------------------ Class Constructors ------------------------
 	public Email() {
 		this.attachments = new ArrayList<Object>();
 		this.mailDate = new Date();
 	}
+//	public Email(String sender, String receiver, String subject, String body, Date mailDate, int priority,
+//			ArrayList<Object> attachments) {
+//		super();
+//		this.sender = sender;
+//		this.receiver = receiver;
+//		this.subject = subject;
+//		this.body = body;
+//		this.mailDate = mailDate;
+//		this.priority = priority;
+//		this.attachments = attachments;
+//	}
 	// ------------------------ Class Methods ------------------------
 	public String getSubject() {
 		return subject;
@@ -51,6 +63,12 @@ public class Email {
 	}
 	public void setMailDate(Date mailDate) {
 		this.mailDate = mailDate;
+	}
+	public int getPriority() {
+		return priority;
+	}
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 	// --------------------------- Separator ---------------------------
 	@Override

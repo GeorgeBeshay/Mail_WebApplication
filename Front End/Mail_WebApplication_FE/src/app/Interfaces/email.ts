@@ -4,4 +4,5 @@ export interface Email {
   subject: string;
   body: string;
   attachments: Object[];
+  priority: number;
 }

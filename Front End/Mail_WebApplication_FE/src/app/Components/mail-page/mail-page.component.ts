@@ -137,6 +137,10 @@ export class MailPageComponent implements OnInit {
         <input value="${this.selectedEmail.sender}" disabled type="email">
       </div>
       <div>
+        <div>Priority:</div>
+        <input value="${this.selectedEmail.priority}" disabled type="text">
+      </div>
+      <div>
         <div>To:</div>
         <input value="${this.selectedEmail.receiver}" disabled type="email">
       </div>
@@ -214,6 +218,40 @@ export class MailPageComponent implements OnInit {
     toInput.addEventListener('input', (func) => {
       this.recievers();
     });
+
+    // ------------------- Separator -------------------
+    // </div>
+    //   <select name="priority" id="priority">
+    //     <option value="3">Top Priority</option>
+    //     <option value="2">Medium Priority</option>
+    //     <option value="1">Low Priority</option>
+    //   </select>
+    // </div>
+    let priorityDiv = document.createElement('div');
+    let selectPriority = document.createElement('select');
+    selectPriority.id = 'priority';
+    selectPriority.name = 'priority';
+    let optionPriority3 = document.createElement('option');
+    optionPriority3.value = '3';
+    optionPriority3.appendChild(document.createTextNode("Top Priority"));
+    selectPriority.appendChild(optionPriority3);
+    priorityDiv.appendChild(selectPriority);
+    composeEmailDiv.appendChild(priorityDiv);
+
+    let optionPriority2 = document.createElement('option');
+    optionPriority2.value = '2';
+    optionPriority2.appendChild(document.createTextNode("Medium Priority"));
+    selectPriority.appendChild(optionPriority2);
+    priorityDiv.appendChild(selectPriority);
+    composeEmailDiv.appendChild(priorityDiv);
+
+    let optionPriority1 = document.createElement('option');
+    optionPriority1.value = '1';
+    optionPriority1.appendChild(document.createTextNode("Low Priority"));
+    selectPriority.appendChild(optionPriority1);
+    priorityDiv.appendChild(selectPriority);
+    composeEmailDiv.appendChild(priorityDiv);
+    console.log(selectPriority.value)
     // ------------------- Separator -------------------
     // <div class="subject">
     //   <div>Subject:</div>
@@ -230,6 +268,7 @@ export class MailPageComponent implements OnInit {
     subjectDiv.appendChild(subjectInnerDiv);
     subjectDiv.appendChild(subjectInput);
     composeEmailDiv.appendChild(subjectDiv);
+
     // ------------------- Separator -------------------
     // <div class="body">
     //     <div>Body:</div>
@@ -385,6 +424,7 @@ export class MailPageComponent implements OnInit {
       subject: 'NA',
       body: 'NA',
       attachments: [],
+      priority:3,
     };
     const elem = document.getElementById('content');
     if (elem) elem.innerHTML = ``;
@@ -523,6 +563,9 @@ export class MailPageComponent implements OnInit {
     let bodyContent = document.getElementById(
       'bodyInputId'
     ) as HTMLTextAreaElement;
+    let selectPrior = document.getElementById('priority') as HTMLSelectElement;
+    emailBuilder.buildPriority(Number(selectPrior.value));
+    console.log(Number(selectPrior.value));
     emailBuilder.buildBody(bodyContent.value);
     this.myUser = await this.myBECaller.sendAnEmail(
       this.myUser,
