@@ -104,7 +104,28 @@ public class ServerCore {
 		return this.updateUser(emailReqData.getActiveUser());
 	}
 	
+	/**
+	 * Method Performs the deletion process of an email, taking the folder index and the email index
+	 * as a method arguments, also the user concrete object, all wrapped inside the protocol defined.
+	 * @param deleteEmailReqData
+	 * @return
+	 */
+	public User deleteAnEmail(DeletingEmail_Protocol deleteEmailReqData) {
+		try {
+			deleteEmailReqData.getActiveUser().getFolders().get(deleteEmailReqData.getActiveFolderIndex()).getEmails().remove(deleteEmailReqData.getActiveEmailIndex());
+			return this.updateUser(deleteEmailReqData.getActiveUser());
+		} catch(Exception E) {
+			System.out.println("An Error Had Occured While Deleting An Email - Process.");
+			return deleteEmailReqData.getActiveUser();
+		}
+	}
 	
+	/**
+	 * Method performs adding a new custom folder to the folders list of a user.
+	 * @param modifiedUser
+	 * @param newFolderName
+	 * @return
+	 */
 	public User addFolder(User modifiedUser, String newFolderName) {
 		modifiedUser.getFolders().add(new Folder(newFolderName));
 		return this.updateUser(modifiedUser);
@@ -114,8 +135,11 @@ public class ServerCore {
 		user.getContacts().add(newContact);
 		return this.updateUser(user);
 	}
+	
 	public User deleContact(int i, User user) {
 		user.getContacts().remove(i);
 		return this.updateUser(user);
 	}
+	
+	
 }

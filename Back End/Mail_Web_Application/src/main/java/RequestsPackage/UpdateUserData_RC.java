@@ -50,5 +50,14 @@ public class UpdateUserData_RC {
 		return this.myServerCore.sendAnEmail(emailReqData);
 	}
 	
+	@PostMapping(value = {"/deleteEmail/"})
+	public User deleteAnEmail(@RequestBody DeletingEmail_Protocol deleteEmailReqData) {
+		System.out.println();
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to delete a mail." + 
+				"\nBack End Server is Replying \n");
+		return this.myServerCore.deleteAnEmail(deleteEmailReqData);
+	}
+	
 
 }

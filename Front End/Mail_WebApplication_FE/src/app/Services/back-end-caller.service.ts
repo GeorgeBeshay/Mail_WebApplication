@@ -56,6 +56,20 @@ export class BackEndCallerService {
     );
   }
   // ---------------- Separator ----------------
+  async deleteAnEmail(
+    currentUser: User,
+    folderIndex: number,
+    emailIndex: number
+  ) {
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'deleteEmail/', {
+        activeUser: currentUser,
+        activeFolderIndex: folderIndex,
+        activeEmailIndex: emailIndex,
+      })
+    );
+  }
+  // ---------------- Separator ----------------
   async updateUserData(currentUser: User) {
     return await firstValueFrom(
       this.http.post<User>(this.url + 'updateUserInfo/', currentUser)

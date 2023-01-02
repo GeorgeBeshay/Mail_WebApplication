@@ -19,7 +19,7 @@ import { EmailBuilderService } from 'src/app/Services/email-builder.service';
 export class MailPageComponent implements OnInit {
   private myBECaller: BackEndCallerService;
   private fileUploadDownload: FileUploadDownloadService;
-  public selectedFolder: string = '';
+  public selectedFolder!: Folder;
   public selectedEmail!: Email;
   private myEmails: Email[] = [];
   private myUser!: User;
@@ -40,7 +40,7 @@ export class MailPageComponent implements OnInit {
   ngOnInit(): void {
     this.resetSelectedEmail();
     // this.generateMails();
-    this.selectedFolder = this.myUser.folders[0].name;
+    this.selectedFolder = this.myUser.folders[0];
     this.attachedFiles = [];
     this.generateFolders();
   }
@@ -65,13 +65,17 @@ export class MailPageComponent implements OnInit {
     }
   }
   // -------------- Separator --------------
-  selectFolder(folderName: any) {
-    this.selectedFolder = folderName;
+  selectFolder(folderIndex: any) {
+    this.selectedFolder = this.myUser.folders[folderIndex];
     this.resetSelectedEmail();
-    this.myEmails = this.myUser.folders[folderName].emails;
+    if (this.myUser.folders[folderIndex].emails.length > 0) {
+      this.myEmails = this.myUser.folders[folderIndex].emails;
+      console.log(this.myEmails);
+    } else this.myEmails = [];
     const tempEmailsHolder = document.getElementById('emailsHolder');
     if (!tempEmailsHolder) return;
     tempEmailsHolder.innerHTML = ``;
+    if (this.myEmails.length <= 0) return;
     for (let email of this.myEmails) {
       tempEmailsHolder.innerHTML += `<div>${email.subject}</div>`;
       tempEmailsHolder.lastElementChild?.classList.add('emailSubj');
@@ -100,11 +104,24 @@ export class MailPageComponent implements OnInit {
     }
   }
   // -------------- Separator --------------
-  deleteEmail(email: Email) {
+  async deleteEmail(email: Email) {
     console.log('Delete Email');
-    this.myEmails.splice(this.myEmails.indexOf(email), 1);
-    this.selectFolder(this.selectedFolder);
-    // this.resetSelectedEmail();
+    // this.myEmails.splice(this.myEmails.indexOf(email), 1);
+    // this.myUser.folders.indexOf(this.selectedFolder);
+    // this.myEmails.indexOf(email);
+    this.myUser = await this.myBECaller.deleteAnEmail(
+      this.myUser,
+      this.myUser.folders.indexOf(this.selectedFolder),
+      this.myEmails.indexOf(email)
+    );
+    console.log("Reached Here1");
+    this.reloadPage();
+    console.log("Reached Here2");
+    this.resetSelectedEmail();
+    console.log("Reached Here3");
+    this.selectFolder(this.myUser.folders.indexOf(this.selectedFolder));
+    console.log("Reached Here4");
+    console.log(this.selectedFolder);
   }
   // -------------- Separator --------------
   selectEmail(email: Email) {
@@ -347,7 +364,7 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   refreshMailBox() {
-    this.selectFolder(this.selectedFolder);
+    this.selectFolder(this.myUser.folders.indexOf(this.selectedFolder));
     this.resetSelectedEmail();
   }
   // -------------- Separator --------------
@@ -363,36 +380,36 @@ export class MailPageComponent implements OnInit {
     if (elem) elem.innerHTML = ``;
   }
   // -------------- Separator --------------
-  generateMails() {
-    this.myEmails.push({
-      sender: 'UserA',
-      receiver: 'UserB',
-      subject: 'Party Invitation',
-      body: "Hey UserB, I'd like to invite you to my birthday party next tuesday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-      attachments: [{ Name: 'Invitation Card', 'Card Number': '#22342342' }],
-    });
-    this.myEmails.push({
-      sender: 'UserX',
-      receiver: 'UserB',
-      subject: 'Wedding Invitation',
-      body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-      attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
-    });
-    this.myEmails.push({
-      sender: 'UserZ',
-      receiver: 'UserY',
-      subject: 'Wedding Invitationnnn',
-      body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-      attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
-    });
-    this.myEmails.push({
-      sender: 'UserZ',
-      receiver: 'UserY',
-      subject: 'Wedding Invitationnnn',
-      body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-      attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
-    });
-  }
+  // generateMails() {
+  //   this.myEmails.push({
+  //     sender: 'UserA',
+  //     receiver: 'UserB',
+  //     subject: 'Party Invitation',
+  //     body: "Hey UserB, I'd like to invite you to my birthday party next tuesday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
+  //     attachments: [{ Name: 'Invitation Card', 'Card Number': '#22342342' }],
+  //   });
+  //   this.myEmails.push({
+  //     sender: 'UserX',
+  //     receiver: 'UserB',
+  //     subject: 'Wedding Invitation',
+  //     body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
+  //     attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
+  //   });
+  //   this.myEmails.push({
+  //     sender: 'UserZ',
+  //     receiver: 'UserY',
+  //     subject: 'Wedding Invitationnnn',
+  //     body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
+  //     attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
+  //   });
+  //   this.myEmails.push({
+  //     sender: 'UserZ',
+  //     receiver: 'UserY',
+  //     subject: 'Wedding Invitationnnn',
+  //     body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
+  //     attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
+  //   });
+  // }
   // -------------- Separator --------------
   onFileSelected(event: any) {
     let selectedFiles = event.target.files;
@@ -478,6 +495,7 @@ export class MailPageComponent implements OnInit {
       queryParams: { userObj: JSON.stringify(this.myUser) },
       replaceUrl: true,
     });
+    this.refreshMailBox();
   }
   // -------------- Separator --------------
   async sendTheEmail() {
