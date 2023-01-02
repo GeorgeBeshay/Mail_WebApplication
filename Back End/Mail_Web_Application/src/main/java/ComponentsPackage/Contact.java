@@ -2,7 +2,7 @@ package ComponentsPackage;
 
 import java.util.*;
 
-public class Contact {
+public class Contact implements Cloneable {
 	
 	String name;
 	ArrayList<String> emails;
@@ -23,6 +23,22 @@ public class Contact {
 	}
 	public void setEmails(ArrayList<String> emails) {
 		this.emails = emails;
+	}
+	
+	@Override
+	public Contact clone(){  
+	    try{  
+	        return (Contact) super.clone();  
+	    }catch(Exception e){ 
+	    	e.printStackTrace();
+	    	return null;
+	    }
+		
+	}
+
+	@Override
+	public String toString() {
+		return "Contact [name=" + name + ", emails=" + emails + "]";
 	}
 
 }

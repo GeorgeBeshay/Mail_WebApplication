@@ -63,5 +63,15 @@ public class Contacts_RC {
 		//return this.myServerCore.addContact(newContact, currentUser);
 		return myServerCore.sort(currentUser,folderIndex,dateFlag);
 	}
+	
+	@PostMapping(value = {"/sortConts/"})
+	public User sortConts( @RequestBody User myUser) {
+		System.out.println();
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to sort contacts." + 
+				"\nBack End Server is Replying By: \n");
+		//return this.myServerCore.addContact(newContact, currentUser);
+		return myServerCore.sortConts(myUser);
+	}
 
 }

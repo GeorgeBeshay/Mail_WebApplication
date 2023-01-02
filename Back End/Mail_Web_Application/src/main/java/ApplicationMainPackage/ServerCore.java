@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import ComponentsPackage.*;
+import UserDataModifier.ContactsController;
 import UserDataModifier.FolderController;
 import java.util.*;
 
@@ -187,6 +188,11 @@ public class ServerCore {
 	public User signOut(User user) {
 		this.signedOutUsers.put(user.getEmailAddress(), user);
 		System.out.println("Signed out successfully, user inserted to the temp cache.");
+		return this.updateUser(user);
+	}
+	
+	public User sortConts(User user) {
+		ContactsController.sort(user.getContacts());
 		return this.updateUser(user);
 	}
 }

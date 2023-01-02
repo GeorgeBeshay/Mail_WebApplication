@@ -226,6 +226,13 @@ export class ContactsComponent implements OnInit {
     this.updateUser();
   }
 
+  async sortContacts(){
+    this.myUser= await this.myBECaller.sortConts(this.myUser);
+    this.myContacts=this.myUser.contacts;
+    this.updateUser();
+    this.viewContacts();
+  }
+
   updateUser(){
     this._router.navigate(['Contacts'],
      {

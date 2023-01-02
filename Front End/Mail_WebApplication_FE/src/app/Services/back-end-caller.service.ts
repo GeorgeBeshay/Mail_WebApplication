@@ -113,5 +113,8 @@ export class BackEndCallerService {
     );
   }
   // ---------------- Separator ----------------
+  async sortConts(myUser: any) {
+    return await firstValueFrom(this.http.post<User>(this.url + 'sortConts/', myUser));
+  }
 
 }
