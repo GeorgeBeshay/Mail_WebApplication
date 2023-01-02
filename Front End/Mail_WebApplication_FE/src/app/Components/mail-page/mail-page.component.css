@@ -346,14 +346,15 @@ button {
 }
 .composeEmail .body {
   position: relative;
+  flex-direction: row;
 }
-.composeEmail .sendB {
+.composeEmail .sendSave {
   position: absolute;
   right: 2%;
   bottom: 3%;
   /* grid-area: 4 / 2 / 5 / 3; */
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-end;
   align-items: center;
   /* width: 10%; */

@@ -23,13 +23,13 @@ public class UpdateUserData_RC {
 	 * Request handles the updates / changes created on a user object.
 	 * @param modifiedUser
 	 */
-	@PostMapping(value = {"/updateUser"})
-	public void updateUser(@RequestBody User modifiedUser) {
+	@PostMapping(value = {"/updateUser/"})
+	public User updateUserData(@RequestBody User modifiedUser) {
 		System.out.println();
 		System.out.println("------------------------------------------------");
 		System.out.println("Front End Server Requested an update for the user data." + 
 				"\nBack End Server is Replying By:");
-		this.myServerCore.updateUser(modifiedUser);
+		return this.myServerCore.updateUser(modifiedUser);
 	}
 	
 	@PostMapping(value = {"/createNewFolder/{folderName}"})

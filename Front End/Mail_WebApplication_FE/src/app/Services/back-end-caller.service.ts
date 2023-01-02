@@ -101,10 +101,12 @@ export class BackEndCallerService {
     );
   }
   // ---------------- Separator ----------------
-  async updateUserData(currentUser: User) {
+  async updateUserData(modifiedUser: User) {
+    console.log("in update user data before");
     return await firstValueFrom(
-      this.http.post<User>(this.url + 'updateUserInfo/', currentUser)
+      this.http.post<User>(this.url + 'updateUser/', modifiedUser)
     );
+    
   }
   // ---------------- Separator ----------------
   async reqSortEmails(folderIndex: number, flag: boolean,user: User ) {

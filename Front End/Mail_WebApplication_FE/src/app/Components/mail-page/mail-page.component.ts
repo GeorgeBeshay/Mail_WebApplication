@@ -129,6 +129,14 @@ export class MailPageComponent implements OnInit {
     console.log('in select email');
     const elem = document.getElementById('content');
     if (elem == null) return;
+    let priorityString = "";
+    if(this.selectedEmail.priority == 1){
+      priorityString = "Low Priority";
+    }else if(this.selectedEmail.priority == 2){
+      priorityString = "Medium Priority";
+    }else if(this.selectedEmail.priority == 3){
+      priorityString = "Top Priority";
+    }
     elem.innerHTML = `
     <div class="composeEmail">
       <div>
@@ -137,7 +145,7 @@ export class MailPageComponent implements OnInit {
       </div>
       <div>
         <div>Priority:</div>
-        <input value="${this.selectedEmail.priority}" disabled type="text">
+        <input value="${priorityString}" disabled type="text">
       </div>
       <div>
         <div>To:</div>
@@ -290,9 +298,12 @@ export class MailPageComponent implements OnInit {
     // <div class="body">
     //     <div>Body:</div>
     //     <textarea style="font-size: 17px;"></textarea>
-    //     <div class="sendB">
+    //     <div class="sendSave">
     //       <button>
     //         SEND
+    //       </button>
+    //       <button>
+    //         SAVE
     //       </button>
     //     </div>
     // </div>
@@ -304,13 +315,21 @@ export class MailPageComponent implements OnInit {
     bodyText.style.fontSize = '17px';
     bodyText.id = 'bodyInputId';
     let buttonDiv = document.createElement('div');
-    buttonDiv.classList.add('sendB');
-    let buttonElement = document.createElement('button');
-    buttonElement.appendChild(document.createTextNode('SEND'));
-    buttonElement.addEventListener('click', (func) => {
+    buttonDiv.classList.add('sendSave');
+    let sendButton = document.createElement('button');
+    sendButton.appendChild(document.createTextNode('SEND'));
+    sendButton.addEventListener('click', async (func) => {
       this.sendTheEmail();
     });
-    buttonDiv.appendChild(buttonElement);
+    buttonDiv.appendChild(sendButton);
+    let saveButton = document.createElement('button');
+    saveButton.appendChild(document.createTextNode('SAVE'));
+    saveButton.addEventListener('click', async () => {
+      await this.sendToDraft();
+      console.log("after the save to draft1");
+     });
+     console.log("after the save to draft2");
+    buttonDiv.appendChild(saveButton);
     bodyDiv.appendChild(bodyInnerDiv);
     bodyDiv.appendChild(bodyText);
     bodyDiv.appendChild(buttonDiv);
@@ -393,6 +412,17 @@ export class MailPageComponent implements OnInit {
     tempInput?.addEventListener('change', (event) => {
       this.onFileSelected(event);
     });
+  }
+  // -------------- Separator --------------
+  async sendToDraft(){
+    let builtEmail = this.buildMyEmail();
+    let DraftFolderNumber = 4;
+    (this.myUser.folders[DraftFolderNumber].emails).push(builtEmail);
+    this.myUser = await this.myBECaller.updateUserData(
+      this.myUser
+    );
+    console.log("in update user data after");
+    this.reloadPage();
   }
   // -------------- Separator --------------
   recievers() {
@@ -481,17 +511,16 @@ export class MailPageComponent implements OnInit {
   onFileSelected(event: any) {
     let selectedFiles = event.target.files;
     let fileArray: File[] = [];
-    let filenames: string[] = [];
     for (let i = 0; i < selectedFiles.length; i++) {
       fileArray[i] = selectedFiles[i];
-      filenames.push(fileArray[i].name);
+      this.attachedFiles.push(fileArray[i].name);
     }
     this.fileUploadDownload.onUploadFiles(fileArray);
-    this.showFilesAttached(filenames);
+    this.showFilesAttached(this.attachedFiles);
   }
   // -------------- Separator --------------
   showFilesAttached(fileNames: string[]) {
-    this.attachedFiles = fileNames;
+    // this.attachedFiles = fileNames;
     let attachmentsHolder = document.getElementById('attachedFiles');
     if (attachmentsHolder) attachmentsHolder.innerHTML = ``;
     console.log(attachmentsHolder);
@@ -566,7 +595,7 @@ export class MailPageComponent implements OnInit {
     this.generateFolders();
   }
   // -------------- Separator --------------
-  async sendTheEmail() {
+  buildMyEmail(){
     let emailBuilder: EmailBuilderService = new EmailBuilderService();
     let tempContent = document.getElementById(
       'fromInputId'
@@ -584,9 +613,14 @@ export class MailPageComponent implements OnInit {
     emailBuilder.buildPriority(Number(selectPrior.value));
     console.log(Number(selectPrior.value));
     emailBuilder.buildBody(bodyContent.value);
+    return emailBuilder.buildEmail();
+  }
+  // -------------- Separator --------------
+  async sendTheEmail() {
+    let myBuiltEmail = this.buildMyEmail();
     this.myUser = await this.myBECaller.sendAnEmail(
       this.myUser,
-      emailBuilder.buildEmail()
+      myBuiltEmail
     );
     this.reloadPage();
   }
