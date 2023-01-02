@@ -113,21 +113,14 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   async deleteEmail(email: Email) {
     console.log('Delete Email');
-    // this.myEmails.splice(this.myEmails.indexOf(email), 1);
-    // this.myUser.folders.indexOf(this.selectedFolder);
-    // this.myEmails.indexOf(email);
     this.myUser = await this.myBECaller.deleteAnEmail(
       this.myUser,
-      this.myUser.folders.indexOf(this.selectedFolder),
+      this.findFolderIndex(this.selectedFolder),
       this.myEmails.indexOf(email)
     );
-    console.log('Reached Here1');
     this.reloadPage();
-    console.log('Reached Here2');
     this.resetSelectedEmail();
-    console.log('Reached Here3');
     this.selectFolder(this.myUser.folders.indexOf(this.selectedFolder));
-    console.log('Reached Here4');
     console.log(this.selectedFolder);
   }
   // -------------- Separator --------------
@@ -662,32 +655,33 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   async sortFolderEmails() {
-    let dateInput = (document.getElementById("DateCheckBox")) as HTMLInputElement;
+    let dateInput = document.getElementById('DateCheckBox') as HTMLInputElement;
     let dateFlag = dateInput.checked;
-    let ImportanceInput = (document.getElementById("ImportanceCheckBox")) as HTMLInputElement;
+    let ImportanceInput = document.getElementById(
+      'ImportanceCheckBox'
+    ) as HTMLInputElement;
     let impFlag = ImportanceInput.checked;
     console.log(dateFlag);
     let folderIndex: number = this.findFolderIndex(this.selectedFolder);
     let flag = false;
-    if(!dateFlag && impFlag){
+    if (!dateFlag && impFlag) {
       flag = false;
       this.myUser = await this.myBECaller.reqSortEmails(
         folderIndex,
         flag,
         this.myUser
       );
-    }else if(!impFlag && dateFlag){
+    } else if (!impFlag && dateFlag) {
       flag = true;
       this.myUser = await this.myBECaller.reqSortEmails(
         folderIndex,
         flag,
         this.myUser
       );
-    }else{
-      
+    } else {
     }
-      this.selectFolder(folderIndex);
-      this.reloadPage();
+    this.selectFolder(folderIndex);
+    this.reloadPage();
   }
   // -------------- Separator --------------
 }

@@ -30,6 +30,11 @@ public class DeletingEmail_Protocol {
 	public void setActiveEmailIndex(int activeEmailIndex) {
 		this.activeEmailIndex = activeEmailIndex;
 	}
+	@Override
+	public String toString() {
+		return "DeletingEmail_Protocol [activeUser=" + activeUser + ", activeFolderIndex=" + activeFolderIndex
+				+ ", activeEmailIndex=" + activeEmailIndex + "]";
+	}
 	
 
 }
