@@ -9,13 +9,13 @@ public class SubjectCriteria implements EmailCriteria{
 
 	@Override
 	public ArrayList<Email> meetCriteria(Folder folder, String subject) {
-		ArrayList<Email> emailsSentFrom = new ArrayList<Email>();
+		ArrayList<Email> emailsWithSubject = new ArrayList<Email>();
 		for(Email tempMail : folder.getEmails()) {
-			if(tempMail.getSubject().equalsIgnoreCase(subject)) {
-				emailsSentFrom.add(tempMail);
+			if(tempMail.getSubject().contains(subject)) {
+				emailsWithSubject.add(tempMail);
 			}
 		}
-		return emailsSentFrom;
+		return emailsWithSubject;
 	}
 
 }

@@ -2,10 +2,9 @@ package ApplicationMainPackage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import ComponentsPackage.*;
 import UserDataModifier.ContactsController;
+import UserDataModifier.EmailController;
 import UserDataModifier.FolderController;
 import java.util.*;
 
@@ -204,6 +203,31 @@ public class ServerCore {
 //	}
 	public ArrayList<Contact> searchConts(String key, User user) {
 		return ContactsController.search(user.getContacts(),key);	
-		
+	}
+	
+	public ArrayList<Email> searchEmails( User currentUser, int folderIndex, int searchBasedOn, String searchAbout){
+		/*
+		 * subject -> 0
+		 * sender -> 1
+		 * receiver -> 2
+		 */
+		ArrayList<Email> tempList = null;
+		if(searchBasedOn == 0) {
+			tempList = EmailController.getEmailsWithSubject(currentUser.getFolders().get(folderIndex), searchAbout);
+		} else if(searchBasedOn == 1) {
+			tempList = EmailController.getEmailsSentFrom(currentUser.getFolders().get(folderIndex), searchAbout);
+		} else if(searchBasedOn == 2) {
+			tempList = EmailController.getEmailsSentTo(currentUser.getFolders().get(folderIndex), searchAbout);
+		} else if(searchBasedOn == 3) {
+			tempList = EmailController.getEmailsWithBody(currentUser.getFolders().get(folderIndex), searchAbout);
+		}
+		if(tempList != null) {
+			System.out.println("Emails have been filtered successfully.");
+			System.out.println("Found Emails: \n" + tempList.toString());
+			return tempList;
+		} else {
+			System.out.println("An Error Had Occured in search Emails Method.");
+			return null;
+		}
 	}
 }

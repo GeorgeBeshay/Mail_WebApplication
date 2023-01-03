@@ -43,6 +43,17 @@ public class EmailController {
 	}
 	
 	/**
+	 * Method designed to filter out the mails sent to a specific user.
+	 * @param folder: folder filtering the mails from.
+	 * @param receiver: email receiver name.
+	 * @return List of mails sent to the required user.
+	 */
+	public static ArrayList<Email> getEmailsWithBody(Folder folder, String body){
+		EmailCriteria bodyCriteria = new BodyCriteria();
+		return bodyCriteria.meetCriteria(folder, body);
+	}
+	
+	/**
 	 * The following method is designed to search for a specific email among ALL THE USER FOLDERS
 	 * by the email subject.
 	 * Method complexity is O(n^2)

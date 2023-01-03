@@ -9,13 +9,13 @@ public class ReceiverCriteria implements EmailCriteria{
 
 	@Override
 	public ArrayList<Email> meetCriteria(Folder folder, String receiver) {
-		ArrayList<Email> emailsSentFrom = new ArrayList<Email>();
+		ArrayList<Email> emailsSentTo = new ArrayList<Email>();
 		for(Email tempMail : folder.getEmails()) {
-			if(tempMail.getReceiver().equalsIgnoreCase(receiver)) {
-				emailsSentFrom.add(tempMail);
+			if(tempMail.getReceiver().contains(receiver)) {
+				emailsSentTo.add(tempMail);
 			}
 		}
-		return emailsSentFrom;
+		return emailsSentTo;
 	}
 
 }

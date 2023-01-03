@@ -66,18 +66,14 @@ export class MailPageComponent implements OnInit {
     }
   }
   // -------------- Separator --------------
-  selectFolder(folderIndex: any) {
-    this.selectedFolder = this.myUser.folders[folderIndex];
-    this.resetSelectedEmail();
-    if (this.myUser.folders[folderIndex].emails.length > 0) {
-      this.myEmails = this.myUser.folders[folderIndex].emails;
-      console.log(this.myEmails);
-    } else this.myEmails = [];
+  showEmails(emails: Email[]) {
     const tempEmailsHolder = document.getElementById('emailsHolder');
     if (!tempEmailsHolder) return;
     tempEmailsHolder.innerHTML = ``;
-    if (this.myEmails.length <= 0) return;
-    for (let email of this.myEmails) {
+    if (emails.length > 3) tempEmailsHolder.style.overflowY = 'scroll';
+    else tempEmailsHolder.style.overflowY = 'hidden';
+    if (emails.length <= 0) return;
+    for (let email of emails) {
       tempEmailsHolder.innerHTML += `<div>${email.subject}</div>`;
       tempEmailsHolder.lastElementChild?.classList.add('emailSubj');
     }
@@ -86,29 +82,65 @@ export class MailPageComponent implements OnInit {
       let tempViewButtonElement = document.createElement('button');
       tempViewButtonElement.appendChild(document.createTextNode('View'));
       tempViewButtonElement.addEventListener('click', (func3) => {
-        this.selectEmail(this.myEmails[i]);
+        this.selectEmail(emails[i]);
       });
       let tempDeleteButtonElement = document.createElement('button');
       tempDeleteButtonElement.appendChild(document.createTextNode('Delete'));
       tempDeleteButtonElement.addEventListener('click', (func2) => {
-        this.deleteEmail(this.myEmails[i]);
+        this.deleteEmail(emails[i]);
       });
       let tempMoveButtonElement = document.createElement('button');
       tempMoveButtonElement.appendChild(document.createTextNode('Move'));
       tempMoveButtonElement.addEventListener('click', (func4) => {
-        this.showMovingPage(i);
+        this.showMovingPage(emails[i]);
       });
       tempButtonsHolder.appendChild(tempViewButtonElement);
       tempButtonsHolder.appendChild(tempMoveButtonElement);
       tempButtonsHolder.appendChild(tempDeleteButtonElement);
       tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
     }
-    if (this.myEmails.length > 3) {
-      console.log('reached');
-      tempEmailsHolder.style.overflowY = 'scroll';
-    } else {
-      tempEmailsHolder.style.overflowY = 'hidden';
-    }
+  }
+  // -------------- Separator --------------
+  selectFolder(folderIndex: any) {
+    this.selectedFolder = this.myUser.folders[folderIndex];
+    this.resetSelectedEmail();
+    if (this.myUser.folders[folderIndex].emails.length > 0) {
+      this.myEmails = this.myUser.folders[folderIndex].emails;
+    } else this.myEmails = [];
+    this.showEmails(this.myEmails);
+
+    // const tempEmailsHolder = document.getElementById('emailsHolder');
+    // if (!tempEmailsHolder) return;
+    // tempEmailsHolder.innerHTML = ``;
+    // if (this.myEmails.length > 3) tempEmailsHolder.style.overflowY = 'scroll';
+    // else tempEmailsHolder.style.overflowY = 'hidden';
+    // if (this.myEmails.length <= 0) return;
+    // for (let email of this.myEmails) {
+    //   tempEmailsHolder.innerHTML += `<div>${email.subject}</div>`;
+    //   tempEmailsHolder.lastElementChild?.classList.add('emailSubj');
+    // }
+    // for (let i = 0; i < tempEmailsHolder.children.length; i++) {
+    //   let tempButtonsHolder = document.createElement('div');
+    //   let tempViewButtonElement = document.createElement('button');
+    //   tempViewButtonElement.appendChild(document.createTextNode('View'));
+    //   tempViewButtonElement.addEventListener('click', (func3) => {
+    //     this.selectEmail(this.myEmails[i]);
+    //   });
+    //   let tempDeleteButtonElement = document.createElement('button');
+    //   tempDeleteButtonElement.appendChild(document.createTextNode('Delete'));
+    //   tempDeleteButtonElement.addEventListener('click', (func2) => {
+    //     this.deleteEmail(this.myEmails[i]);
+    //   });
+    //   let tempMoveButtonElement = document.createElement('button');
+    //   tempMoveButtonElement.appendChild(document.createTextNode('Move'));
+    //   tempMoveButtonElement.addEventListener('click', (func4) => {
+    //     this.showMovingPage(this.myEmails[i]);
+    //   });
+    //   tempButtonsHolder.appendChild(tempViewButtonElement);
+    //   tempButtonsHolder.appendChild(tempMoveButtonElement);
+    //   tempButtonsHolder.appendChild(tempDeleteButtonElement);
+    //   tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
+    // }
   }
   // -------------- Separator --------------
   async deleteEmail(email: Email) {
@@ -116,7 +148,7 @@ export class MailPageComponent implements OnInit {
     this.myUser = await this.myBECaller.deleteAnEmail(
       this.myUser,
       this.findFolderIndex(this.selectedFolder),
-      this.myEmails.indexOf(email)
+      this.findEmailIndex(email)
     );
     this.reloadPage();
     this.resetSelectedEmail();
@@ -129,13 +161,13 @@ export class MailPageComponent implements OnInit {
     console.log('in select email');
     const elem = document.getElementById('content');
     if (elem == null) return;
-    let priorityString = "";
-    if(this.selectedEmail.priority == 1){
-      priorityString = "Low Priority";
-    }else if(this.selectedEmail.priority == 2){
-      priorityString = "Medium Priority";
-    }else if(this.selectedEmail.priority == 3){
-      priorityString = "Top Priority";
+    let priorityString = '';
+    if (this.selectedEmail.priority == 1) {
+      priorityString = 'Low Priority';
+    } else if (this.selectedEmail.priority == 2) {
+      priorityString = 'Medium Priority';
+    } else if (this.selectedEmail.priority == 3) {
+      priorityString = 'Top Priority';
     }
     elem.innerHTML = `
     <div class="composeEmail">
@@ -164,7 +196,6 @@ export class MailPageComponent implements OnInit {
         <div>Attachments:</div>
         <div class="attachmentsHolder" id ='attachmentsHolderID'>
           <div id="attachedFiles">
-
           </div>
         </div>
       </div>
@@ -329,9 +360,9 @@ export class MailPageComponent implements OnInit {
     saveButton.appendChild(document.createTextNode('SAVE'));
     saveButton.addEventListener('click', async () => {
       await this.sendToDraft();
-      console.log("after the save to draft1");
-     });
-     console.log("after the save to draft2");
+      console.log('after the save to draft1');
+    });
+    console.log('after the save to draft2');
     buttonDiv.appendChild(saveButton);
     bodyDiv.appendChild(bodyInnerDiv);
     bodyDiv.appendChild(bodyText);
@@ -375,7 +406,6 @@ export class MailPageComponent implements OnInit {
     composeEmailDiv.appendChild(attachmentsDiv);
     // ------------------- Separator -------------------
     elem.appendChild(composeEmailDiv);
-
     // elem.innerHTML += `
     // <div class="composeEmail">
     //   <div class="from" >
@@ -417,14 +447,12 @@ export class MailPageComponent implements OnInit {
     });
   }
   // -------------- Separator --------------
-  async sendToDraft(){
+  async sendToDraft() {
     let builtEmail = this.buildMyEmail();
     let DraftFolderNumber = 4;
-    (this.myUser.folders[DraftFolderNumber].emails).push(builtEmail);
-    this.myUser = await this.myBECaller.updateUserData(
-      this.myUser
-    );
-    console.log("in update user data after");
+    this.myUser.folders[DraftFolderNumber].emails.push(builtEmail);
+    this.myUser = await this.myBECaller.updateUserData(this.myUser);
+    console.log('in update user data after');
     this.reloadPage();
   }
   // -------------- Separator --------------
@@ -598,7 +626,7 @@ export class MailPageComponent implements OnInit {
     this.generateFolders();
   }
   // -------------- Separator --------------
-  buildMyEmail(){
+  buildMyEmail() {
     let emailBuilder: EmailBuilderService = new EmailBuilderService();
     let tempContent = document.getElementById(
       'fromInputId'
@@ -621,10 +649,7 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   async sendTheEmail() {
     let myBuiltEmail = this.buildMyEmail();
-    this.myUser = await this.myBECaller.sendAnEmail(
-      this.myUser,
-      myBuiltEmail
-    );
+    this.myUser = await this.myBECaller.sendAnEmail(this.myUser, myBuiltEmail);
     this.reloadPage();
   }
   // -------------- Separator --------------
@@ -640,7 +665,22 @@ export class MailPageComponent implements OnInit {
     } else alert("Default Folders Can't Be Deleted");
   }
   // -------------- Separator --------------
-  async moveEmail(emailIndex: number) {
+  findEmailIndex(email: Email) {
+    for (let i = 0; i < this.selectedFolder.emails.length; i++) {
+      if (
+        this.selectedFolder.emails[i].subject == email.subject &&
+        this.selectedFolder.emails[i].body == email.body &&
+        this.selectedFolder.emails[i].sender === email.sender &&
+        this.selectedFolder.emails[i].receiver == email.receiver
+      )
+        return i;
+    }
+    console.log('Emails Was not found using the findEmailIndex Method');
+    return -1;
+  }
+  // -------------- Separator --------------
+  async moveEmail(email: Email) {
+    let emailIndex = this.findEmailIndex(email);
     let fromFolderIndex = this.findFolderIndex(this.selectedFolder);
     let tempSelectButton = document.getElementById(
       'newFolder'
@@ -671,14 +711,15 @@ export class MailPageComponent implements OnInit {
     tempDiv.style.visibility = 'hidden';
   }
   // -------------- Separator --------------
-  showMovingPage(emailIndex: number) {
+  showMovingPage(email: Email) {
+    // let emailIndex = this.findEmailIndex(email);
     let tempDiv = document.getElementById('movingEmailDiv') as HTMLDivElement;
     tempDiv.style.visibility = 'visible';
     let tempButton = document.getElementById(
       'movingEmailButton'
     ) as HTMLButtonElement;
     tempButton.addEventListener('click', (func) => {
-      this.moveEmail(emailIndex);
+      this.moveEmail(email);
     });
     let tempSelectButton = document.getElementById(
       'newFolder'
@@ -732,6 +773,49 @@ export class MailPageComponent implements OnInit {
     }
     this.selectFolder(folderIndex);
     this.reloadPage();
+  }
+  // -------------- Separator --------------
+  async searchEmails() {
+    let tempSelectElement = document.getElementById(
+      'indicator'
+    ) as HTMLSelectElement;
+    let tempInputElement = document.getElementById(
+      'site-search'
+    ) as HTMLInputElement;
+    let searchBasedOn;
+    switch (tempSelectElement.value) {
+      case 'subject': {
+        searchBasedOn = 0;
+        break;
+      }
+      case 'sender': {
+        searchBasedOn = 1;
+        break;
+      }
+      case 'receiver': {
+        searchBasedOn = 2;
+        break;
+      }
+      case 'body': {
+        searchBasedOn = 3;
+        break;
+      }
+      default: {
+        searchBasedOn = 0;
+        ('Non valid search based on.');
+        break;
+      }
+    }
+    let searchAbout = tempInputElement.value;
+    let FolderIndex = this.findFolderIndex(this.selectedFolder);
+    this.showEmails(
+      await this.myBECaller.searchEmails(
+        this.myUser,
+        FolderIndex,
+        searchBasedOn,
+        searchAbout
+      )
+    );
   }
   // -------------- Separator --------------
 }

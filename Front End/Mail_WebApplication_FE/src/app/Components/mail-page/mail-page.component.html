@@ -2,7 +2,6 @@
   <div class="overlay"></div>
   <div class="box">
     <div class="SB">
-
       <input
         type="search"
         id="site-search"
@@ -10,11 +9,14 @@
         placeholder="Search Via Your Emails"
       />
       <div class="searchBtnHolder">
-        <button class="searchButton"><mat-icon>search</mat-icon></button>
+        <button class="searchButton" (click)="searchEmails()">
+          <mat-icon>search</mat-icon>
+        </button>
         <select name="" id="indicator">
-          <option value="sender">Subject</option>
+          <option value="subject">Subject</option>
           <option value="sender">Sender</option>
-          <option value="sender">Receiver</option>
+          <option value="receiver">Receiver</option>
+          <option value="body">Body</option>
         </select>
       </div>
       <div class="sortFolderDiv">

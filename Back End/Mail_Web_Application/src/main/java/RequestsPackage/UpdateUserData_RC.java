@@ -1,5 +1,7 @@
 package RequestsPackage;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,6 +88,14 @@ public class UpdateUserData_RC {
 		System.out.println("Front End Server Requested to sort a Folder." + 
 				"\nBack End Server is Replying By:");
 		return this.myServerCore.sort(user, folderIndex,flag);
+	}
+	
+	@PostMapping(value = {"/searchEmails/{folderIndex}/{searchBasedOn}/{searchAbout}/"})
+	public ArrayList<Email> searchEmails(@RequestBody User currentUser, @PathVariable int folderIndex, @PathVariable int searchBasedOn, @PathVariable String searchAbout) {
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to filter Emails." + 
+				"\nBack End Server is Replying By:");
+		return this.myServerCore.searchEmails(currentUser, folderIndex, searchBasedOn, searchAbout);
 	}
 
 }

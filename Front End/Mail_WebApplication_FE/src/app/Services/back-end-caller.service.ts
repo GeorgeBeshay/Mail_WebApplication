@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ComponentFactoryResolver, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { User } from '../Interfaces/user';
@@ -102,27 +102,48 @@ export class BackEndCallerService {
   }
   // ---------------- Separator ----------------
   async updateUserData(modifiedUser: User) {
-    console.log("in update user data before");
+    console.log('in update user data before');
     return await firstValueFrom(
       this.http.post<User>(this.url + 'updateUser/', modifiedUser)
     );
-    
   }
   // ---------------- Separator ----------------
-  async reqSortEmails(folderIndex: number, flag: boolean,user: User ) {
+  async reqSortEmails(folderIndex: number, flag: boolean, user: User) {
     return await firstValueFrom(
-      this.http.post<User>(this.url + 'sortEmails/'+ folderIndex +'/' + flag, user)
+      this.http.post<User>(
+        this.url + 'sortEmails/' + folderIndex + '/' + flag,
+        user
+      )
     );
   }
   // ---------------- Separator ----------------
   async sortConts(myUser: any) {
-    return await firstValueFrom(this.http.post<User>(this.url + 'sortConts/', myUser));
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'sortConts/', myUser)
+    );
   }
   // async searchConts(myUser: any, key:any) {
   //   return await firstValueFrom(this.http.post<User>(this.url + 'searchConts/'+key, myUser));
   // }
-  async searchConts(myUser: any, key:any) {
-    return await firstValueFrom(this.http.post<Contact[]>(this.url + 'searchConts/'+key, myUser));
+  async searchConts(myUser: any, key: any) {
+    return await firstValueFrom(
+      this.http.post<Contact[]>(this.url + 'searchConts/' + key, myUser)
+    );
   }
-
+  // ---------------- Separator ----------------
+  async searchEmails(
+    currentUser: User,
+    folderIndex: number,
+    searchBasedOn: number,
+    searchAbout: string
+  ) {
+    return await firstValueFrom(
+      this.http.post<Email[]>(
+        this.url +
+          `searchEmails/${folderIndex}/${searchBasedOn}/${searchAbout}/`,
+        currentUser
+      )
+    );
+  }
+  // ---------------- Separator ----------------
 }

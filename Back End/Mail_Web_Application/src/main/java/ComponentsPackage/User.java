@@ -32,15 +32,6 @@ public class User {
 		this.emailAddress = emailAddress;
 		this.emailPassword = emailPassword;
 		this.bd = bd;
-		
-		// SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		try {
-//			bd = new SimpleDateFormat("yyyy-MM-dd").parse(birthDate);
-////			this.birthDate = simpleDateFormat.parse(birthDate);
-////			System.out.println(birthDate+"\t"+bd);
-//		} catch (ParseException e) {
-//			System.out.println("Birth Date Invalid");
-//		}
 		this.folders = new ArrayList<Folder>();
 		this.contacts = new ArrayList<Contact>();
 		this.folders.add(new Folder("Inbox"));
@@ -48,7 +39,6 @@ public class User {
 		this.folders.add(new Folder("Trash"));		
 		this.folders.add(new Folder("Starred"));
 		this.folders.add(new Folder("Draft"));
-		this.folders.add(new Folder("Test Folder"));
 	}
 	// ------------------------ Class Methods ------------------------	
 	public String getEmailAddress() {
