@@ -269,24 +269,17 @@ export class MailPageComponent implements OnInit {
     optionPriority4.value = '4';
     optionPriority4.appendChild(document.createTextNode('Critical'));
     selectPriority.appendChild(optionPriority4);
-    // priorityDiv.appendChild(PriorityInnerDiv);
-    // priorityDiv.appendChild(selectPriority);
-    // composeEmailDiv.appendChild(priorityDiv);
 
     let optionPriority3 = document.createElement('option');
     optionPriority3.value = '3';
     optionPriority3.appendChild(document.createTextNode('Top Priority'));
     selectPriority.appendChild(optionPriority3);
     priorityDiv.appendChild(PriorityInnerDiv);
-    // priorityDiv.appendChild(selectPriority);
-    // composeEmailDiv.appendChild(priorityDiv);
 
     let optionPriority2 = document.createElement('option');
     optionPriority2.value = '2';
     optionPriority2.appendChild(document.createTextNode('Medium Priority'));
     selectPriority.appendChild(optionPriority2);
-    // priorityDiv.appendChild(selectPriority);
-    // composeEmailDiv.appendChild(priorityDiv);
 
     let optionPriority1 = document.createElement('option');
     optionPriority1.value = '1';
@@ -395,41 +388,7 @@ export class MailPageComponent implements OnInit {
     composeEmailDiv.appendChild(attachmentsDiv);
     // ------------------- Separator -------------------
     elem.appendChild(composeEmailDiv);
-    // elem.innerHTML += `
-    // <div class="composeEmail">
-    //   <div class="from" >
-    //     <div>From:</div>
-    //     <input disabled type="email" placeholder="userAccount@mail.com"">
-    //   </div>
-    //   <div class="to">
-    //     <div>To:</div>
-    //     <input type="email" placeholder="JohnDoe@mail.com">
-    //   </div>
-    //   <div class="subject">
-    //      <div>Subject:</div>
-    //      <input type="text" placeholder="Email Subject">
-    //   </div>
-    //   <div class="body">
-    //     <div>Body:</div>
-    //     <textarea style="font-size: 17px;"></textarea>
-    //     <div class="sendB">
-    //       <button>
-    //         SEND
-    //       </button>
-    //     </div>
-    //   </div>
-    //   <div>
-    //     <div>Attachments:</div>
-    //     <div class="attachmentsHolder">
-    //       <div>
-    //       <button onclick="document.getElementById('fileUpload').click()">Attach</button>
-    //       <input type="file" id = "fileUpload" multiple style="visibility: hidden;">
-    //       </div>
-    //       <div id="attachedFiles"></div>
-    //     </div>
-    //   </div>
-    // </div>
-    // `;
+    
     let tempInput = document.getElementById('fileUpload');
     tempInput?.addEventListener('change', (event) => {
       this.onFileSelected(event);
@@ -668,20 +627,6 @@ export class MailPageComponent implements OnInit {
     console.log('Emails Was not found using the findEmailIndex Method');
     return -1;
   }
-  // -------------- Separator --------------
-  // findEmailBySubject(email: Email) {
-  //   for (let i = 0; i < this.selectedFolder.emails.length; i++) {
-  //     if (
-  //       this.selectedFolder.emails[i].subject == email.subject &&
-  //       this.selectedFolder.emails[i].body == email.body &&
-  //       this.selectedFolder.emails[i].sender === email.sender &&
-  //       this.selectedFolder.emails[i].receiver == email.receiver
-  //     )
-  //       return i;
-  //   }
-  //   console.log('Emails Was not found using the findEmailIndex Method');
-  //   return -1;
-  // }
   // -------------- Separator --------------
   async moveEmail(email: Email) {
     let emailIndex = this.findEmailIndex(email);
