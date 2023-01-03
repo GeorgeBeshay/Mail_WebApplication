@@ -12,6 +12,6 @@
 ***
 ### Notes
 - Both of the front end & back end source code is available, each one separately.
-- A [Live Preview]() link is available for the front end interface **ONLY** with no any logical operations / actions available.
+- A [Live Preview](https://georgebeshay.github.io/Mail_WebApplication/) link is available for the front end interface **ONLY** with no any logical operations / actions available.
 	- **PS:** The back end is not available due to the absence of a back end server host, however if you are interested to run the application and experience all the implemented features, please download the project source code and generate the back end server on your local device on port 8081, Enjoy !
 ***
