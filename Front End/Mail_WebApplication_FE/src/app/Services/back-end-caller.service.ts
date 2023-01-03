@@ -152,4 +152,10 @@ export class BackEndCallerService {
     );
   }
   // ---------------- Separator ----------------
+  async renameFolder(currentUser: User, folderIndex: Number, newFolderName: string) {
+    return await firstValueFrom(
+      this.http.post<User>(this.url + `renameFolder/${folderIndex}/${newFolderName}`, currentUser)
+    );
+  }
+  // ---------------- Separator ----------------
 }

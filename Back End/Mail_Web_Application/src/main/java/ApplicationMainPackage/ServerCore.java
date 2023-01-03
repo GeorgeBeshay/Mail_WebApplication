@@ -258,4 +258,10 @@ public class ServerCore {
 		System.out.println("MongoDB Documents have been deleted.");
 	}
 	
+	public User renameFolder(User currentUser, int fodlerIndex, String newName) {
+		FolderController.renameFolder(currentUser.getFolders(), fodlerIndex, newName);
+		System.out.println("Folder name has been changed successfully.");
+		return this.updateUser(currentUser);
+	}
+	
 }

@@ -114,5 +114,10 @@ public class UpdateUserData_RC {
 				"\nBack End Server is Replying By:");
 		this.myServerCore.emptyTheDB();
 	}
+	
+	@PostMapping(value = {"/renameFolder/{folderIndex}/{newFolderName}"})
+	public User renameFolder(@RequestBody User currentUser, @PathVariable int folderIndex, @PathVariable String newFolderName) {
+		return this.myServerCore.renameFolder(currentUser, folderIndex, newFolderName);
+	}
 
 }

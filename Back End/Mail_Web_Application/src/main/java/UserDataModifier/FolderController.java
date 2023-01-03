@@ -90,4 +90,8 @@ public class FolderController {
 			System.out.println("Checked: Emails In Trash Folder are still valid.");
 	}
 	
+	public static void renameFolder(ArrayList<Folder> folders, int index, String newName) {
+		folders.get(index).setName(newName);
+	}
+	
 }

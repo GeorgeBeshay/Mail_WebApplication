@@ -276,11 +276,17 @@ button {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
+.box .board .optionBar > div {
+  display: flex;
+  align-items: center;
+}
+.box .board .optionBar .renameFolderDiv,
 .box .board .optionBar .deleteFolderDiv,
 .box .board .optionBar .refreshBtn {
   font-size: 10px;
   margin-left: 5px;
 }
+.box .board .optionBar .renameFolderDiv button,
 .box .board .optionBar .deleteFolderDiv button,
 .box .board .optionBar .refreshBtn button {
   border-radius: 50%;
@@ -292,11 +298,13 @@ button {
   border: none;
   outline: none;
 }
+.box .board .optionBar .renameFolderDiv button:hover,
 .box .board .optionBar .deleteFolderDiv button:hover,
 .box .board .optionBar .refreshBtn button:hover {
   background-color: rgb(0 0 0 / 60%);
   color: white;
 }
+.box .board .optionBar .renameFolderDiv button:active,
 .box .board .optionBar .deleteFolderDiv button:active,
 .box .board .optionBar .refreshBtn button:active {
   transform: translateY(1px);
@@ -636,4 +644,23 @@ textarea {
   width: 45%;
   background-color: black;
   color: white;
+}
+.box .board .optionBar > div.renameFolderDiv input {
+  margin-right: 10px;
+  border: none;
+  outline: none;
+  color: white;
+  height: 90%;
+  background-color: rgb(0 0 0 / 50%);
+  padding: 5px;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  transition-duration: 250ms;
+}
+.box .board .optionBar > div.renameFolderDiv input:focus {
+  background-color: black;
+  padding: 5px 10px;
 }

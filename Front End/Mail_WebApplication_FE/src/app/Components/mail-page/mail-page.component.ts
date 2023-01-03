@@ -774,4 +774,36 @@ export class MailPageComponent implements OnInit {
     );
   }
   // -------------- Separator --------------
+  async renameFolder() {
+    if (
+      this.selectedFolder.name == 'Inbox' ||
+      this.selectedFolder.name == 'Sent' ||
+      this.selectedFolder.name == 'Trash' ||
+      this.selectedFolder.name == 'Draft' ||
+      this.selectedFolder.name == 'Starred'
+    ) {
+      alert("Default Folder Name Can't Be Changed.");
+      return;
+    }
+    let tempInputElement = document.getElementById(
+      'newFolderNameID'
+    ) as HTMLInputElement;
+    let newName = tempInputElement.value;
+    for (let i = 0; i < this.myUser.folders.length; i++) {
+      if (this.myUser.folders[i].name == newName) {
+        alert('Folder name is already taken');
+        return;
+      }
+    }
+    let tempIndex = this.findFolderIndex(this.selectedFolder);
+    this.myUser = await this.myBECaller.renameFolder(
+      this.myUser,
+      this.findFolderIndex(this.selectedFolder),
+      newName
+    );
+    this.generateFolders();
+    this.selectFolder(tempIndex);
+    await this.reloadPage();
+  }
+  // -------------- Separator --------------
 }

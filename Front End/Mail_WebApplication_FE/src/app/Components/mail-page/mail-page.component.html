@@ -112,6 +112,12 @@
           <mat-icon>folder</mat-icon>: {{ selectedFolder.name }} -
           {{ selectedEmail.subject }}
         </div>
+        <div class="renameFolderDiv">
+          <input id="newFolderNameID" type="text" placeholder="Enter New Folder Name"/>
+          <button (click)="renameFolder()">
+            <mat-icon> drive_file_rename_outline </mat-icon>
+          </button>
+        </div>
         <div class="deleteFolderDiv">
           <button (click)="deleteFolder()">
             <mat-icon>delete</mat-icon>
