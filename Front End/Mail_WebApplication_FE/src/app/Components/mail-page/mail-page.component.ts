@@ -168,6 +168,8 @@ export class MailPageComponent implements OnInit {
       priorityString = 'Medium Priority';
     } else if (this.selectedEmail.priority == 3) {
       priorityString = 'Top Priority';
+    }else if (this.selectedEmail.priority == 4) {
+      priorityString = 'Critical';
     }
     elem.innerHTML = `
     <div class="composeEmail">
@@ -276,6 +278,7 @@ export class MailPageComponent implements OnInit {
     // ------------------- Separator -------------------
     // </div>
     //   <select name="priority" id="priority">
+    //     <option value="4">Critical</option>
     //     <option value="3">Top Priority</option>
     //     <option value="2">Medium Priority</option>
     //     <option value="1">Low Priority</option>
@@ -289,20 +292,29 @@ export class MailPageComponent implements OnInit {
     let selectPriority = document.createElement('select');
     selectPriority.id = 'priority';
     selectPriority.name = 'priority';
+
+    let optionPriority4 = document.createElement('option');
+    optionPriority4.value = '4';
+    optionPriority4.appendChild(document.createTextNode('Critical'));
+    selectPriority.appendChild(optionPriority4);
+    // priorityDiv.appendChild(PriorityInnerDiv);
+    // priorityDiv.appendChild(selectPriority);
+    // composeEmailDiv.appendChild(priorityDiv);
+
     let optionPriority3 = document.createElement('option');
     optionPriority3.value = '3';
     optionPriority3.appendChild(document.createTextNode('Top Priority'));
     selectPriority.appendChild(optionPriority3);
     priorityDiv.appendChild(PriorityInnerDiv);
-    priorityDiv.appendChild(selectPriority);
-    composeEmailDiv.appendChild(priorityDiv);
+    // priorityDiv.appendChild(selectPriority);
+    // composeEmailDiv.appendChild(priorityDiv);
 
     let optionPriority2 = document.createElement('option');
     optionPriority2.value = '2';
     optionPriority2.appendChild(document.createTextNode('Medium Priority'));
     selectPriority.appendChild(optionPriority2);
-    priorityDiv.appendChild(selectPriority);
-    composeEmailDiv.appendChild(priorityDiv);
+    // priorityDiv.appendChild(selectPriority);
+    // composeEmailDiv.appendChild(priorityDiv);
 
     let optionPriority1 = document.createElement('option');
     optionPriority1.value = '1';
@@ -350,20 +362,20 @@ export class MailPageComponent implements OnInit {
     bodyText.id = 'bodyInputId';
     let buttonDiv = document.createElement('div');
     buttonDiv.classList.add('sendSave');
+    let DraftButton = document.createElement('button');
+    DraftButton.appendChild(document.createTextNode('DRAFT'));
+    DraftButton.addEventListener('click', async () => {
+      await this.sendToDraft();
+      console.log('after the save to draft1');
+    });
+    console.log('after the save to draft2');
+    buttonDiv.appendChild(DraftButton);
     let sendButton = document.createElement('button');
     sendButton.appendChild(document.createTextNode('SEND'));
     sendButton.addEventListener('click', async (func) => {
       this.sendTheEmail();
     });
     buttonDiv.appendChild(sendButton);
-    let saveButton = document.createElement('button');
-    saveButton.appendChild(document.createTextNode('SAVE'));
-    saveButton.addEventListener('click', async () => {
-      await this.sendToDraft();
-      console.log('after the save to draft1');
-    });
-    console.log('after the save to draft2');
-    buttonDiv.appendChild(saveButton);
     bodyDiv.appendChild(bodyInnerDiv);
     bodyDiv.appendChild(bodyText);
     bodyDiv.appendChild(buttonDiv);
