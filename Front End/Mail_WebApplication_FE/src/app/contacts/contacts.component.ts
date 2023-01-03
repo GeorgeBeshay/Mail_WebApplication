@@ -24,52 +24,14 @@ export class ContactsComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.myUser = JSON.parse(params['userObj']);
     });
-    console.log("In constructor");
-    console.log(this.myUser);
     this.myContacts=this.myUser.contacts;
    }
 
   ngOnInit(): void {
     this.myContacts=this.myUser.contacts;
-    console.log("in init");
-    console.log(this.myContacts)
     this.view(this.myContacts);
   }
 
-  // viewContacts(){
-  //   const tempEmailsHolder = document.getElementById('contactsViewId');
-  //   if (!tempEmailsHolder) return;
-  //   tempEmailsHolder.innerHTML = ``;
-  //   console.log("In viewContacts");
-  //   console.log(this.myContacts)
-  //   // this.myUser.contacts = this.myContacts;
-  //   for (let contact of this.myUser.contacts) {
-  //     tempEmailsHolder.innerHTML += `<div>${contact.name} : ${contact.emails[0]}</div>`;
-  //     tempEmailsHolder.lastElementChild?.classList.add('contactInfo');
-  //   }
-  //   for (let i = 0; i < tempEmailsHolder.children.length; i++) {
-  //     let tempButtonsHolder = document.createElement('div');
-  //     let tempEditButtonElement = document.createElement('button');
-  //     tempEditButtonElement.appendChild(document.createTextNode('Edit'));
-  //     tempEditButtonElement.addEventListener('click', (func1) => {
-  //       this.editContact(this.myContacts[i]);
-  //     });
-  //     let tempDeleteButtonElement = document.createElement('button');
-  //     tempDeleteButtonElement.appendChild(document.createTextNode('Delete'));
-  //     tempDeleteButtonElement.addEventListener('click', (func2) => {
-  //       this.deletContact(this.myContacts[i]);
-  //     });
-  //     let tempViewButtonElement = document.createElement('button');
-  //     tempViewButtonElement.appendChild(document.createTextNode('View'));
-  //     tempViewButtonElement.addEventListener('click', (func3) => {
-  //       this.ViewContact(this.myContacts[i]);
-  //     });
-  //     tempButtonsHolder.appendChild(tempViewButtonElement);
-  //     tempButtonsHolder.appendChild(tempDeleteButtonElement);
-  //     tempButtonsHolder.appendChild(tempEditButtonElement);
-  //     tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
-  //   }
-  // }
   
   createContact(){
     const elem = document.getElementById('contactDetailsId');
@@ -165,11 +127,8 @@ export class ContactsComponent implements OnInit {
   }
   
   async deletContact(contact:Contact){
-    console.log("in deletContact");
-    console.log(contact);
 
     let i=this.findContactIndex(contact);
-    console.log(i);
     this.myUser = await this.myBECaller.deletContact(this.myUser,i);
     this.myContacts=this.myUser.contacts;
     this.view(this.myContacts);
@@ -211,7 +170,6 @@ export class ContactsComponent implements OnInit {
   }
 
   async saveContact(){
-    console.log("in saveContact");
     let Name: string = (document.getElementById('cName') as HTMLInputElement )?.value;
     let data=document.getElementById('Emails') as HTMLDivElement;
     let addresses =[];
@@ -219,10 +177,7 @@ export class ContactsComponent implements OnInit {
       addresses.push((data.children[i] as HTMLInputElement).value);
       this.updateUser();
     }
-    console.log(addresses);
-    console.log(Name);
     let newContact: Contact=  {name:Name,emails:addresses};
-    console.log(newContact);
     this.myUser.contacts.push(newContact);
     this.myUser = await this.myBECaller.addNewContact(this.myUser);
     this.myContacts=this.myUser.contacts;
@@ -233,14 +188,11 @@ export class ContactsComponent implements OnInit {
     this.updateUser();
   }
   async edit(contact:Contact){
-    console.log("in edit");
     await this.deletContact(contact);
     await this.saveContact();
     const elem = document.getElementById('contactDetailsId');
     if (elem == null) return;
     elem.innerHTML = ``;
-    console.log("in edit")
-    console.log(this.myUser);
     this.updateUser();
   }
 
@@ -261,10 +213,8 @@ export class ContactsComponent implements OnInit {
     elem.innerHTML = ``;
 
     let key: string = (document.getElementById('site-search') as HTMLInputElement )?.value;
-    console.log(key);
 
     let searchResult:Contact[]=await this.myBECaller.searchConts(this.myUser,key);
-    console.log(searchResult);
     this.view(searchResult);
   }
 
@@ -273,7 +223,6 @@ export class ContactsComponent implements OnInit {
     const tempEmailsHolder = document.getElementById('contactsViewId');
     if (!tempEmailsHolder) return;
     tempEmailsHolder.innerHTML = ``;
-    console.log("In view");
     for (let contact of contacs) {
       tempEmailsHolder.innerHTML += `<div>${contact.name} : ${contact.emails[0]}</div>`;
       tempEmailsHolder.lastElementChild?.classList.add('contactInfo');

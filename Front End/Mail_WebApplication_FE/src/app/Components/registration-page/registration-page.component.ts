@@ -49,7 +49,6 @@ export class RegistrationPageComponent implements OnInit {
     };
     // Call the sign up request method
     let tempReturned = await this.myBECaller.reqSignUp(user);
-    console.log(tempReturned);
     if (tempReturned !== null) {
       this._router.navigate(['ViewEmails'], {
         queryParams: { userObj: JSON.stringify(tempReturned) },

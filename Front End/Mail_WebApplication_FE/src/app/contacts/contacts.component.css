@@ -91,10 +91,6 @@
     justify-content: center;
     flex-direction: column;
   }
-  /* .Box .ltb .Add{
-    display: flex;
-    justify-content: center;
-  } */
   .Box .ltb button {
     width: 100%;
     display: flex;
@@ -208,9 +204,6 @@
     -o-border-radius: 4px;
   }
   .Box .contactDetails .ButtonsDiv{
-    /* display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr; */
     display: flex;
     margin-left: 15px;
     padding: 10px,10px;

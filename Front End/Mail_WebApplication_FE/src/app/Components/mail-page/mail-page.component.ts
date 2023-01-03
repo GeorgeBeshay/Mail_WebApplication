@@ -43,7 +43,6 @@ export class MailPageComponent implements OnInit {
     this.selectedFolder = this.myUser.folders[0];
     this.attachedFiles = [];
     this.generateFolders();
-    console.log('Initializing');
   }
   // -------------- Separator --------------
   generateFolders() {
@@ -62,7 +61,6 @@ export class MailPageComponent implements OnInit {
       tempButton.appendChild(tempPar);
       tempFolder.appendChild(tempButton);
       foldersHolders.appendChild(tempFolder);
-      console.log(tempFolder);
     }
   }
   // -------------- Separator --------------
@@ -111,7 +109,6 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   async deleteEmail(email: Email) {
-    console.log('Delete Email');
     this.myUser = await this.myBECaller.deleteAnEmail(
       this.myUser,
       this.findFolderIndex(this.selectedFolder),
@@ -120,7 +117,6 @@ export class MailPageComponent implements OnInit {
     await this.reloadPage();
     this.resetSelectedEmail();
     this.selectFolder(this.myUser.folders.indexOf(this.selectedFolder));
-    console.log(this.selectedFolder);
   }
   // -------------- Separator --------------
   selectEmail(email: Email) {
@@ -129,7 +125,6 @@ export class MailPageComponent implements OnInit {
       this.compose_email(email);
       return;
     }
-    console.log('in select email');
     const elem = document.getElementById('content');
     if (elem == null) return;
     let priorityString = '';
@@ -198,9 +193,6 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   compose_email(draftedEmail?: Email) {
-    console.log(draftedEmail);
-    console.log(this.selectedEmail);
-    console.log('in compose email');
     const elem = document.getElementById('content');
     if (elem == null) return;
     elem.innerHTML = '';
@@ -287,7 +279,6 @@ export class MailPageComponent implements OnInit {
     selectPriority.appendChild(optionPriority1);
     priorityDiv.appendChild(selectPriority);
     composeEmailDiv.appendChild(priorityDiv);
-    console.log(selectPriority.value);
     // ------------------- Separator -------------------
     // <div class="subject">
     //   <div>Subject:</div>
@@ -336,9 +327,7 @@ export class MailPageComponent implements OnInit {
       } else {
         await this.sendToDraft(-1);
       }
-      console.log('after the save to draft1');
     });
-    console.log('after the save to draft2');
     buttonDiv.appendChild(DraftButton);
     let sendButton = document.createElement('button');
     sendButton.appendChild(document.createTextNode('SEND'));
@@ -396,7 +385,6 @@ export class MailPageComponent implements OnInit {
     this.attachedFiles.splice(0, this.attachedFiles.length);
     // --------------------------
     if (draftedEmail !== undefined) {
-      console.log('Heree');
       let tempTo = document.getElementById('toInputId') as HTMLInputElement;
       tempTo.value = draftedEmail.receiver;
       let tempSubject = document.getElementById(
@@ -425,12 +413,10 @@ export class MailPageComponent implements OnInit {
     }
     this.myUser.folders[DraftFolderNumber].emails.push(builtEmail);
     this.myUser = await this.myBECaller.updateUserData(this.myUser);
-    console.log('in update user data after');
     await this.reloadPage();
   }
   // -------------- Separator --------------
   recievers() {
-    console.log('in receivers');
     let toEmails = [];
     let myContacts: Contact[] = this.myUser.contacts;
     for (let contact of myContacts) {
@@ -455,7 +441,6 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   async refreshMailBox() {
-    // console.log(this.myUser.folders);
     this.myUser = await this.myBECaller.fetchUser(this.myUser);
     this.selectFolder(this.findFolderIndex(this.selectedFolder));
     this.resetSelectedEmail();
@@ -494,10 +479,8 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   showFilesAttached(fileNames: string[]) {
-    // this.attachedFiles = fileNames;
     let attachmentsHolder = document.getElementById('attachedFiles');
     if (attachmentsHolder) attachmentsHolder.innerHTML = ``;
-    console.log(attachmentsHolder);
     for (let i = 0; i < fileNames.length; i++) {
       let tempDiv = document.createElement('div');
       let tempPar = document.createElement('p');
@@ -518,7 +501,6 @@ export class MailPageComponent implements OnInit {
           fileNames[i],
           fileNames
         );
-        console.log(fileNames);
         this.attachedFiles=fileNames;
         this.showFilesAttached(fileNames);
       });
@@ -555,7 +537,6 @@ export class MailPageComponent implements OnInit {
   }
   // -------------- Separator --------------
   ContactsInfo() {
-    console.log('Going to contacts');
     this._router.navigate(['Contacts'], {
       queryParams: { userObj: JSON.stringify(this.myUser) },
     });
@@ -586,7 +567,6 @@ export class MailPageComponent implements OnInit {
     ) as HTMLTextAreaElement;
     let selectPrior = document.getElementById('priority') as HTMLSelectElement;
     emailBuilder.buildPriority(Number(selectPrior.value));
-    console.log(Number(selectPrior.value));
     emailBuilder.buildBody(bodyContent.value);
     return emailBuilder.buildEmail();
   }
@@ -598,8 +578,6 @@ export class MailPageComponent implements OnInit {
       let emailIndex = this.findEmailIndex(myBuiltEmail);
       this.selectedFolder.emails.splice(emailIndex, 1);
     }
-    console.log('Hereeeeee');
-    console.log(this.myUser);
     this.myUser = await this.myBECaller.sendAnEmail(this.myUser, myBuiltEmail);
     await this.reloadPage();
   }
@@ -637,14 +615,6 @@ export class MailPageComponent implements OnInit {
       'newFolder'
     ) as HTMLSelectElement;
     let toFolderIndex = Number(tempSelectButton.value);
-    console.log(
-      'From Folder: ',
-      fromFolderIndex,
-      '\nTo Folder: ',
-      toFolderIndex,
-      '\nEmail Index: ',
-      emailIndex
-    );
     this.myUser = await this.myBECaller.moveEmail(
       this.myUser,
       fromFolderIndex,
@@ -695,7 +665,6 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   logout() {
     this.myBECaller.signOut(this.myUser);
-    console.log('Signed Out');
     // Implement Routing To the landing page
     this._router.navigate([''], {
       replaceUrl: true,
@@ -709,7 +678,6 @@ export class MailPageComponent implements OnInit {
       'ImportanceCheckBox'
     ) as HTMLInputElement;
     let impFlag = ImportanceInput.checked;
-    console.log(dateFlag);
     let folderIndex: number = this.findFolderIndex(this.selectedFolder);
     let flag = false;
     if (!dateFlag && impFlag) {

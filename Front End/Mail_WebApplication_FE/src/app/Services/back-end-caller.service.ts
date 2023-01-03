@@ -102,7 +102,6 @@ export class BackEndCallerService {
   }
   // ---------------- Separator ----------------
   async updateUserData(modifiedUser: User) {
-    console.log('in update user data before');
     return await firstValueFrom(
       this.http.post<User>(this.url + 'updateUser/', modifiedUser)
     );
