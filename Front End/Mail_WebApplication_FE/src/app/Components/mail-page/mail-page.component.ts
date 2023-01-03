@@ -337,7 +337,12 @@ export class MailPageComponent implements OnInit {
     let DraftButton = document.createElement('button');
     DraftButton.appendChild(document.createTextNode('DRAFT'));
     DraftButton.addEventListener('click', async () => {
-      await this.sendToDraft();
+      if (draftedEmail !== undefined) {
+        let oldEmailIndex = this.findEmailIndex(draftedEmail);
+        await this.sendToDraft(oldEmailIndex);
+      }else{
+        await this.sendToDraft(-1);
+      }
       console.log('after the save to draft1');
     });
     console.log('after the save to draft2');
@@ -453,9 +458,12 @@ export class MailPageComponent implements OnInit {
     }
   }
   // -------------- Separator --------------
-  async sendToDraft() {
+  async sendToDraft(draftedIndex: number) {
     let builtEmail = this.buildMyEmail();
     let DraftFolderNumber = 4;
+    if(this.selectedFolder.name === "Draft"){
+      this.myUser.folders[DraftFolderNumber].emails.splice(draftedIndex,1);
+    }
     this.myUser.folders[DraftFolderNumber].emails.push(builtEmail);
     this.myUser = await this.myBECaller.updateUserData(this.myUser);
     console.log('in update user data after');
@@ -625,6 +633,12 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   async sendTheEmail() {
     let myBuiltEmail = this.buildMyEmail();
+    console.log("In sendTheEmail: Folder name:",this.selectedFolder.name);
+    if(this.selectedFolder.name === "Draft"){
+      let emailIndex = this.findEmailIndex(myBuiltEmail);
+      this.selectedFolder.emails.splice(emailIndex,1);
+    }console.log("Hereeeeee");
+    console.log(this.myUser);
     this.myUser = await this.myBECaller.sendAnEmail(this.myUser, myBuiltEmail);
     await this.reloadPage();
   }
@@ -654,6 +668,20 @@ export class MailPageComponent implements OnInit {
     console.log('Emails Was not found using the findEmailIndex Method');
     return -1;
   }
+  // -------------- Separator --------------
+  // findEmailBySubject(email: Email) {
+  //   for (let i = 0; i < this.selectedFolder.emails.length; i++) {
+  //     if (
+  //       this.selectedFolder.emails[i].subject == email.subject &&
+  //       this.selectedFolder.emails[i].body == email.body &&
+  //       this.selectedFolder.emails[i].sender === email.sender &&
+  //       this.selectedFolder.emails[i].receiver == email.receiver
+  //     )
+  //       return i;
+  //   }
+  //   console.log('Emails Was not found using the findEmailIndex Method');
+  //   return -1;
+  // }
   // -------------- Separator --------------
   async moveEmail(email: Email) {
     let emailIndex = this.findEmailIndex(email);
