@@ -97,5 +97,13 @@ public class UpdateUserData_RC {
 				"\nBack End Server is Replying By:");
 		return this.myServerCore.searchEmails(currentUser, folderIndex, searchBasedOn, searchAbout);
 	}
+	
+	@PostMapping(value = {"/fetchUser/"})
+	public User fetchUser(@RequestBody User  currentUser) {
+		System.out.println("------------------------------------------------");
+		System.out.println("Front End Server Requested to fetch the user document from the DB" + 
+				"\nBack End Server is Replying By:");
+		return this.myServerCore.fetchUser(currentUser);
+	}
 
 }

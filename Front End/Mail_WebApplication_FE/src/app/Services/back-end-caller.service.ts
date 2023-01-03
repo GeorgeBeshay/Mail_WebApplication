@@ -146,4 +146,10 @@ export class BackEndCallerService {
     );
   }
   // ---------------- Separator ----------------
+  async fetchUser(currentUser: User) {
+    return await firstValueFrom(
+      this.http.post<User>(this.url + 'fetchUser/', currentUser)
+    );
+  }
+  // ---------------- Separator ----------------
 }

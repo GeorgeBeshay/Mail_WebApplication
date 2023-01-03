@@ -150,7 +150,7 @@ export class MailPageComponent implements OnInit {
       this.findFolderIndex(this.selectedFolder),
       this.findEmailIndex(email)
     );
-    this.reloadPage();
+    await this.reloadPage();
     this.resetSelectedEmail();
     this.selectFolder(this.myUser.folders.indexOf(this.selectedFolder));
     console.log(this.selectedFolder);
@@ -453,7 +453,7 @@ export class MailPageComponent implements OnInit {
     this.myUser.folders[DraftFolderNumber].emails.push(builtEmail);
     this.myUser = await this.myBECaller.updateUserData(this.myUser);
     console.log('in update user data after');
-    this.reloadPage();
+    await this.reloadPage();
   }
   // -------------- Separator --------------
   recievers() {
@@ -481,8 +481,9 @@ export class MailPageComponent implements OnInit {
     div.appendChild(tempData);
   }
   // -------------- Separator --------------
-  refreshMailBox() {
+  async refreshMailBox() {
     // console.log(this.myUser.folders);
+    this.myUser = await this.myBECaller.fetchUser(this.myUser);
     this.selectFolder(this.findFolderIndex(this.selectedFolder));
     this.resetSelectedEmail();
   }
@@ -591,7 +592,7 @@ export class MailPageComponent implements OnInit {
         folderName.value
       );
       this.generateFolders();
-      this.reloadPage();
+      await this.reloadPage();
       let tempDiv = document.getElementById('createFolder') as HTMLDivElement;
       tempDiv.style.visibility = 'hidden';
     } else {
@@ -617,12 +618,12 @@ export class MailPageComponent implements OnInit {
     });
   }
   // -------------- Separator --------------
-  reloadPage() {
+  async reloadPage() {
     this._router.navigate(['ViewEmails'], {
       queryParams: { userObj: JSON.stringify(this.myUser) },
       replaceUrl: true,
     });
-    this.refreshMailBox();
+    await this.refreshMailBox();
     this.generateFolders();
   }
   // -------------- Separator --------------
@@ -650,7 +651,7 @@ export class MailPageComponent implements OnInit {
   async sendTheEmail() {
     let myBuiltEmail = this.buildMyEmail();
     this.myUser = await this.myBECaller.sendAnEmail(this.myUser, myBuiltEmail);
-    this.reloadPage();
+    await this.reloadPage();
   }
   // -------------- Separator --------------
   async deleteFolder() {
@@ -661,7 +662,7 @@ export class MailPageComponent implements OnInit {
         folderIndex
       );
       this.selectFolder(0);
-      this.reloadPage();
+      await this.reloadPage();
     } else alert("Default Folders Can't Be Deleted");
   }
   // -------------- Separator --------------
@@ -702,7 +703,7 @@ export class MailPageComponent implements OnInit {
     );
     this.selectFolder(this.findFolderIndex(this.selectedFolder));
     this.resetSelectedEmail();
-    this.reloadPage();
+    await this.reloadPage();
     this.cancelMoving();
   }
   // -------------- Separator --------------
@@ -726,7 +727,12 @@ export class MailPageComponent implements OnInit {
     ) as HTMLSelectElement;
     tempSelectButton.innerHTML = '';
     for (let i = 0; i < this.myUser.folders.length; i++) {
-      if (this.myUser.folders[i] == this.selectedFolder) continue;
+      if (
+        this.myUser.folders[i] == this.selectedFolder ||
+        this.myUser.folders[i].name == 'Inbox' ||
+        this.myUser.folders[i].name == 'Sent'
+      )
+        continue;
       let tempOption = document.createElement('option');
       tempOption.appendChild(
         document.createTextNode(this.myUser.folders[i].name)
@@ -772,7 +778,7 @@ export class MailPageComponent implements OnInit {
     } else {
     }
     this.selectFolder(folderIndex);
-    this.reloadPage();
+    await this.reloadPage();
   }
   // -------------- Separator --------------
   async searchEmails() {

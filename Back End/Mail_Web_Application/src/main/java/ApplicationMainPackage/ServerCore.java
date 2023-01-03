@@ -230,4 +230,18 @@ public class ServerCore {
 			return null;
 		}
 	}
+	
+	public User fetchUser(User user) {
+		User tempUser = null;
+		try {
+			tempUser = userRepo.findById(user.getEmailAddress()).get();
+			System.out.println("User has been fetched successfully from the MongoDB");
+		} catch(Exception E) {
+			tempUser = null;
+			System.out.println("An Error Had Occured While fetching.");
+		}
+		if(tempUser == null)
+			tempUser = user;
+		return tempUser;
+	}
 }
