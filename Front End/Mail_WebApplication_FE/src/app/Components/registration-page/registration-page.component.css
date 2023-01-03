@@ -1,4 +1,4 @@
-.container {
+.registerationContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,7 +17,7 @@
   height: 100%;
   background-color: rgb(0 0 0 / 40%);
 }
-.box {
+.registerationBox {
   z-index: 1;
   width: 50%;
   height: 70%;
@@ -103,7 +103,7 @@ button:hover {
   font-size: 15px;
   text-align: right;
 }
-.container .footer {
+.registerationContainer .footer {
   width: 100%;
   padding: 10px;
   z-index: 1;
