@@ -519,6 +519,7 @@ export class MailPageComponent implements OnInit {
           fileNames
         );
         console.log(fileNames);
+        this.attachedFiles=fileNames;
         this.showFilesAttached(fileNames);
       });
     }
