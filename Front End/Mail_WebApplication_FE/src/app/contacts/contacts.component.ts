@@ -312,11 +312,19 @@ export class ContactsComponent implements OnInit {
   }
 
   goBack(){
-      this._router.navigate(['ViewEmails'],
-     {
-        queryParams: { userObj: JSON.stringify(this.myUser) },
-        replaceUrl: true,
-    }); 
+    let searchbar=document.getElementById('site-search') as HTMLInputElement ;
+    let key: string = (searchbar)?.value;
+    if(key===''){
+       this._router.navigate(['ViewEmails'],
+      {
+       queryParams: { userObj: JSON.stringify(this.myUser) },
+       replaceUrl: true,
+      });
+    }else{
+      this.view(this.myUser.contacts);
+      searchbar.value='';
+    }
+      
   }
 }
 
