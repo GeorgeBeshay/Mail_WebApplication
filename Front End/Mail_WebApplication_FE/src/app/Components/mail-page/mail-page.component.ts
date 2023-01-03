@@ -388,7 +388,7 @@ export class MailPageComponent implements OnInit {
     composeEmailDiv.appendChild(attachmentsDiv);
     // ------------------- Separator -------------------
     elem.appendChild(composeEmailDiv);
-    
+
     let tempInput = document.getElementById('fileUpload');
     tempInput?.addEventListener('change', (event) => {
       this.onFileSelected(event);

@@ -16,6 +16,15 @@ public class Email implements Cloneable{
 		this.attachments = new ArrayList<String>();
 		this.mailDate = new Date();
 	}
+	public Email(Email E) {
+		this.sender = E.sender;
+		this.receiver = E.receiver;
+		this.subject = E.subject;
+		this.body = E.body;
+		this.mailDate = new Date(E.getMailDate().getTime());
+		this.priority = E.priority;
+		this.attachments = new ArrayList<String>(E.getAttachments());
+	}
 
 	// ------------------------ Class Methods ------------------------
 	public String getSubject() {
@@ -72,13 +81,7 @@ public class Email implements Cloneable{
 	
 	@Override
 	public Email clone(){  
-	    try{  
-	        return (Email) super.clone();  
-	    }catch(Exception e){ 
-	    	e.printStackTrace();
-	    	return null;
-	    }
-		
+	    return new Email(this);
 	}
 	
 

@@ -104,16 +104,23 @@ public class ServerCore {
 	 * @return
 	 */
 	public User sendAnEmail(SendingEmail_Template emailReqData) {
-		try {
-		User receiverUser =  userRepo.findById(emailReqData.getEmail().getReceiver()).get();
-		receiverUser.getFolders().get(0).addEmail(emailReqData.getEmail());
-		System.out.println("Mail had been pushed to the inbox folder of the receiver account successfully.");
-		this.updateUser(receiverUser); 
-		} catch (Exception E) {
-			System.out.println("User Error: Mail Receiver Account does not exist.");
+		String[] Receivers = emailReqData.getEmail().getReceiver().split(", ");
+		for(int i = 0 ; i < Receivers.length ; i++) {
+			System.out.println(Receivers[i]);
 		}
-		System.out.println("Mail had been pushed to the sent folder of the sender account successfully.");
-		emailReqData.getActiveUser().getFolders().get(1).addEmail(emailReqData.getEmail());
+		for(int i = 0 ; i < Receivers.length ; i++) {
+			emailReqData.getEmail().setReceiver(Receivers[i]);
+			try {
+			User receiverUser =  userRepo.findById(emailReqData.getEmail().getReceiver()).get();
+			receiverUser.getFolders().get(0).addEmail(emailReqData.getEmail());
+			System.out.println("Mail had been pushed to the inbox folder of the receiver account successfully.");
+			this.updateUser(receiverUser); 
+			} catch (Exception E) {
+				System.out.println("User Error: Mail Receiver Account does not exist.");
+			}
+			System.out.println("Mail had been pushed to the sent folder of the sender account successfully.");
+			emailReqData.getActiveUser().getFolders().get(1).addEmail(emailReqData.getEmail().clone());
+		}
 		return this.updateUser(emailReqData.getActiveUser());
 	}
 	
