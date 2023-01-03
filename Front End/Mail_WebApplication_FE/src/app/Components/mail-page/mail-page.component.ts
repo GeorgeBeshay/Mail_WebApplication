@@ -108,39 +108,6 @@ export class MailPageComponent implements OnInit {
       this.myEmails = this.myUser.folders[folderIndex].emails;
     } else this.myEmails = [];
     this.showEmails(this.myEmails);
-
-    // const tempEmailsHolder = document.getElementById('emailsHolder');
-    // if (!tempEmailsHolder) return;
-    // tempEmailsHolder.innerHTML = ``;
-    // if (this.myEmails.length > 3) tempEmailsHolder.style.overflowY = 'scroll';
-    // else tempEmailsHolder.style.overflowY = 'hidden';
-    // if (this.myEmails.length <= 0) return;
-    // for (let email of this.myEmails) {
-    //   tempEmailsHolder.innerHTML += `<div>${email.subject}</div>`;
-    //   tempEmailsHolder.lastElementChild?.classList.add('emailSubj');
-    // }
-    // for (let i = 0; i < tempEmailsHolder.children.length; i++) {
-    //   let tempButtonsHolder = document.createElement('div');
-    //   let tempViewButtonElement = document.createElement('button');
-    //   tempViewButtonElement.appendChild(document.createTextNode('View'));
-    //   tempViewButtonElement.addEventListener('click', (func3) => {
-    //     this.selectEmail(this.myEmails[i]);
-    //   });
-    //   let tempDeleteButtonElement = document.createElement('button');
-    //   tempDeleteButtonElement.appendChild(document.createTextNode('Delete'));
-    //   tempDeleteButtonElement.addEventListener('click', (func2) => {
-    //     this.deleteEmail(this.myEmails[i]);
-    //   });
-    //   let tempMoveButtonElement = document.createElement('button');
-    //   tempMoveButtonElement.appendChild(document.createTextNode('Move'));
-    //   tempMoveButtonElement.addEventListener('click', (func4) => {
-    //     this.showMovingPage(this.myEmails[i]);
-    //   });
-    //   tempButtonsHolder.appendChild(tempViewButtonElement);
-    //   tempButtonsHolder.appendChild(tempMoveButtonElement);
-    //   tempButtonsHolder.appendChild(tempDeleteButtonElement);
-    //   tempEmailsHolder.children[i].appendChild(tempButtonsHolder);
-    // }
   }
   // -------------- Separator --------------
   async deleteEmail(email: Email) {
@@ -158,6 +125,10 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   selectEmail(email: Email) {
     this.selectedEmail = email;
+    if (this.selectedFolder.name == 'Draft') {
+      this.compose_email(email);
+      return;
+    }
     console.log('in select email');
     const elem = document.getElementById('content');
     if (elem == null) return;
@@ -168,7 +139,7 @@ export class MailPageComponent implements OnInit {
       priorityString = 'Medium Priority';
     } else if (this.selectedEmail.priority == 3) {
       priorityString = 'Top Priority';
-    }else if (this.selectedEmail.priority == 4) {
+    } else if (this.selectedEmail.priority == 4) {
       priorityString = 'Critical';
     }
     elem.innerHTML = `
@@ -226,7 +197,9 @@ export class MailPageComponent implements OnInit {
     }
   }
   // -------------- Separator --------------
-  compose_email() {
+  compose_email(draftedEmail?: Email) {
+    console.log(draftedEmail);
+    console.log(this.selectedEmail);
     console.log('in compose email');
     const elem = document.getElementById('content');
     if (elem == null) return;
@@ -274,7 +247,6 @@ export class MailPageComponent implements OnInit {
     toInput.addEventListener('input', (func) => {
       this.recievers();
     });
-
     // ------------------- Separator -------------------
     // </div>
     //   <select name="priority" id="priority">
@@ -457,6 +429,28 @@ export class MailPageComponent implements OnInit {
     tempInput?.addEventListener('change', (event) => {
       this.onFileSelected(event);
     });
+    this.attachedFiles.splice(0, this.attachedFiles.length);
+    // --------------------------
+    if (draftedEmail !== undefined) {
+      console.log('Heree');
+      let tempTo = document.getElementById('toInputId') as HTMLInputElement;
+      tempTo.value = draftedEmail.receiver;
+      let tempSubject = document.getElementById(
+        'subjectInputId'
+      ) as HTMLInputElement;
+      tempSubject.value = draftedEmail.subject;
+      let tempPriority = document.getElementById(
+        'priority'
+      ) as HTMLSelectElement;
+      tempPriority.value = String(draftedEmail.priority);
+      let tempBody = document.getElementById(
+        'bodyInputId'
+      ) as HTMLTextAreaElement;
+      tempBody.value = draftedEmail.body;
+      this.attachedFiles.splice(0, this.attachedFiles.length);
+      this.attachedFiles = draftedEmail.attachments;
+      this.showFilesAttached(this.attachedFiles);
+    }
   }
   // -------------- Separator --------------
   async sendToDraft() {
@@ -520,37 +514,6 @@ export class MailPageComponent implements OnInit {
     const elem = document.getElementById('content');
     if (elem) elem.innerHTML = ``;
   }
-  // -------------- Separator --------------
-  // generateMails() {
-  //   this.myEmails.push({
-  //     sender: 'UserA',
-  //     receiver: 'UserB',
-  //     subject: 'Party Invitation',
-  //     body: "Hey UserB, I'd like to invite you to my birthday party next tuesday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-  //     attachments: [{ Name: 'Invitation Card', 'Card Number': '#22342342' }],
-  //   });
-  //   this.myEmails.push({
-  //     sender: 'UserX',
-  //     receiver: 'UserB',
-  //     subject: 'Wedding Invitation',
-  //     body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-  //     attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
-  //   });
-  //   this.myEmails.push({
-  //     sender: 'UserZ',
-  //     receiver: 'UserY',
-  //     subject: 'Wedding Invitationnnn',
-  //     body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-  //     attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
-  //   });
-  //   this.myEmails.push({
-  //     sender: 'UserZ',
-  //     receiver: 'UserY',
-  //     subject: 'Wedding Invitationnnn',
-  //     body: "Hey UserB, I'd like to invite you to my wedding party next thursday morning at 12:00 AM, kindly check the invitation card at the attachments section.",
-  //     attachments: [{ Name: 'Invitation Card', 'Card Number': '#654651' }],
-  //   });
-  // }
   // -------------- Separator --------------
   onFileSelected(event: any) {
     let selectedFiles = event.target.files;
