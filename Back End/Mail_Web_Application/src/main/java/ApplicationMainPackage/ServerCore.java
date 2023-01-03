@@ -244,4 +244,11 @@ public class ServerCore {
 			tempUser = user;
 		return tempUser;
 	}
+	
+	
+	public void emptyTheDB() {
+		userRepo.deleteAll();
+		System.out.println("MongoDB Documents have been deleted.");
+	}
+	
 }

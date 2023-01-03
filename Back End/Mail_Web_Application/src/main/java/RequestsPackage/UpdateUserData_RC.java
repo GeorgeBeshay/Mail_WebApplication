@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -104,6 +105,14 @@ public class UpdateUserData_RC {
 		System.out.println("Front End Server Requested to fetch the user document from the DB" + 
 				"\nBack End Server is Replying By:");
 		return this.myServerCore.fetchUser(currentUser);
+	}
+	
+	@DeleteMapping(value = {"/admin/emptyTheDB/"})
+	public void emptyTheDB() {
+		System.out.println("------------------------------------------------");
+		System.out.println("Administrative Request: Empty The MongoDB" + 
+				"\nBack End Server is Replying By:");
+		this.myServerCore.emptyTheDB();
 	}
 
 }
