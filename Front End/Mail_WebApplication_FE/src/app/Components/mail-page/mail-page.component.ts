@@ -333,7 +333,7 @@ export class MailPageComponent implements OnInit {
       if (draftedEmail !== undefined) {
         let oldEmailIndex = this.findEmailIndex(draftedEmail);
         await this.sendToDraft(oldEmailIndex);
-      }else{
+      } else {
         await this.sendToDraft(-1);
       }
       console.log('after the save to draft1');
@@ -420,8 +420,8 @@ export class MailPageComponent implements OnInit {
   async sendToDraft(draftedIndex: number) {
     let builtEmail = this.buildMyEmail();
     let DraftFolderNumber = 4;
-    if(this.selectedFolder.name === "Draft"){
-      this.myUser.folders[DraftFolderNumber].emails.splice(draftedIndex,1);
+    if (this.selectedFolder.name === 'Draft') {
+      this.myUser.folders[DraftFolderNumber].emails.splice(draftedIndex, 1);
     }
     this.myUser.folders[DraftFolderNumber].emails.push(builtEmail);
     this.myUser = await this.myBECaller.updateUserData(this.myUser);
@@ -592,11 +592,12 @@ export class MailPageComponent implements OnInit {
   // -------------- Separator --------------
   async sendTheEmail() {
     let myBuiltEmail = this.buildMyEmail();
-    console.log("In sendTheEmail: Folder name:",this.selectedFolder.name);
-    if(this.selectedFolder.name === "Draft"){
+    console.log('In sendTheEmail: Folder name:', this.selectedFolder.name);
+    if (this.selectedFolder.name === 'Draft') {
       let emailIndex = this.findEmailIndex(myBuiltEmail);
-      this.selectedFolder.emails.splice(emailIndex,1);
-    }console.log("Hereeeeee");
+      this.selectedFolder.emails.splice(emailIndex, 1);
+    }
+    console.log('Hereeeeee');
     console.log(this.myUser);
     this.myUser = await this.myBECaller.sendAnEmail(this.myUser, myBuiltEmail);
     await this.reloadPage();
@@ -678,7 +679,8 @@ export class MailPageComponent implements OnInit {
       if (
         this.myUser.folders[i] == this.selectedFolder ||
         this.myUser.folders[i].name == 'Inbox' ||
-        this.myUser.folders[i].name == 'Sent'
+        this.myUser.folders[i].name == 'Sent' ||
+        this.myUser.folders[i].name == 'Draft'
       )
         continue;
       let tempOption = document.createElement('option');
